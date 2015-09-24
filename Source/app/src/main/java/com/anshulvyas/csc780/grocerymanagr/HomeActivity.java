@@ -1,4 +1,4 @@
-package com.anshulvyas.csc780.grocerymangr;
+package com.anshulvyas.csc780.grocerymanagr;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        applicationId "com.anshulvyas.csc780.grocerymangr"
+        applicationId "com.anshulvyas.csc780.grocerymanagr"
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1

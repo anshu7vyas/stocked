@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.anshulvyas.csc780.grocerymangr" >
+    package="com.anshulvyas.csc780.grocerymanagr" >
 
     <application
         android:allowBackup="true"
