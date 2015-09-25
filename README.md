@@ -12,3 +12,5 @@ App name -
  <br/>
 (cuz even the groceries need managing!)
 
+[For JOURNAL, please click here (or go to the wiki pages tab in the project repository.)](https://github.com/av-7/GroceryManagR/wiki/JOURNAL)
+
