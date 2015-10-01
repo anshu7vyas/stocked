@@ -4,13 +4,13 @@ package com.anshulvyas.csc780.grocerymanagr;
  * Created by av7 on 9/24/15.
  */
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
 
 
-public class SplashActivity extends Activity {
+public class SplashActivity extends AppCompatActivity {
 
     //
     private static int SPLASH_TIME_OUT = 2000;
