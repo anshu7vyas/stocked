@@ -8,6 +8,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/fooded"
         android:layout_centerInParent="true"
+        android:background="@color/primary"
         />
 
     <TextView
