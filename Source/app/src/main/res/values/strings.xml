@@ -1,6 +1,14 @@
 <resources>
-    <string name="app_name">GroceryManagR</string>
+    <string name="app_name">FooDeD</string>
     <string name="add_item">Add Item</string>
     <string name="hello_world">Managing your groceries just got easier...</string>
     <string name="action_settings">Settings</string>
+    <string name="drawer_open">Drawer Opened</string>
+    <string name="drawer_close">Drawer Closed</string>
+    <string name="navHome">Home</string>
+    <string name="naveShoppingList">Items to buy</string>
+    <string name="navTimeline">Timeline</string>
+    <string name="navSettings">Settings</string>
+    <string name="navLogout">Logout</string>
+    <string name="navHeader">FooDeD</string>
 </resources>
