@@ -31,6 +31,16 @@
             android:name=".AddItemActivity"
             android:label="@string/add_item">
         </activity>
+
+        <!--Add Item to Shopping Cart Screen-->
+        <activity android:name=".ShoppingItemActivity"
+            android:label="@string/cart_item"/>
+
+        <!-- Content Provider -->
+        <provider
+            android:authorities="com.anshulvyas.csc780.grocerymanagr.cartprovider"
+            android:name=".AppDatabase.CartProvider"
+            android:exported="false"/>
     </application>
 
 </manifest>

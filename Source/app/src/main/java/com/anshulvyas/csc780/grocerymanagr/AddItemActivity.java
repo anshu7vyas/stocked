@@ -27,6 +27,7 @@ public class AddItemActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle("Add Item");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Spinner spinner = (Spinner) findViewById(R.id.spinner);
 

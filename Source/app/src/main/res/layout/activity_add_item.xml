@@ -44,7 +44,7 @@
             </TextView>
 
             <EditText
-                android:id="@+id/Edit_item"
+                android:id="@+id/edit_item"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:layout_width="fill_parent"
