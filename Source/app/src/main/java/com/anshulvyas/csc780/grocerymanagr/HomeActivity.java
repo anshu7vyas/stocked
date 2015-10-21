@@ -1,10 +1,8 @@
 package com.anshulvyas.csc780.grocerymanagr;
 
 import android.content.ContentValues;
-import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -13,12 +11,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 import com.anshulvyas.csc780.grocerymanagr.Adapters.PagerAdapter;
-import com.anshulvyas.csc780.grocerymanagr.AppDatabase.CartProvider;
-import com.anshulvyas.csc780.grocerymanagr.AppDatabase.DBOpenHelper;
+//mport com.anshulvyas.csc780.grocerymanagr.Model.CartProvider;
+import com.anshulvyas.csc780.grocerymanagr.Model.DBOpenHelper;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -32,7 +28,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        insertItem("New Item");
+        //insertItem("New Item");
 
         /*
         Instantiate ToolBar
@@ -91,13 +87,13 @@ public class HomeActivity extends AppCompatActivity {
         //});
     }
 
-    private void insertItem(String itemText) {
-
-        ContentValues values = new ContentValues();
-        values.put(DBOpenHelper.CART_ITEM_TEXT, itemText);
-        Uri cartUri = getContentResolver().insert(CartProvider.CONTENT_URI, values);
-        Log.d("HomeActivity", "Inserted item " + cartUri.getLastPathSegment());
-    }
+//    private void insertItem(String itemText) {
+//
+//        ContentValues values = new ContentValues();
+//        values.put(DBOpenHelper.CART_ITEM_TEXT, itemText);
+//        Uri cartUri = getContentResolver().insert(CartProvider.CONTENT_URI, values);
+//        Log.d("HomeActivity", "Inserted item " + cartUri.getLastPathSegment());
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

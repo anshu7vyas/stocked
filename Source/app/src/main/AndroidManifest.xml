@@ -37,10 +37,11 @@
             android:label="@string/cart_item"/>
 
         <!-- Content Provider -->
-        <provider
+        <!--<provider
             android:authorities="com.anshulvyas.csc780.grocerymanagr.cartprovider"
-            android:name=".AppDatabase.CartProvider"
+            android:name=".Model.CartProvider"
             android:exported="false"/>
+            -->
     </application>
 
 </manifest>

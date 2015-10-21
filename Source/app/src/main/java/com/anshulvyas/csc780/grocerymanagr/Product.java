@@ -9,6 +9,9 @@ public class Product  {
     String expiryDate, category;
     boolean stocked, consumed, expired;
 
+    public Product() {
+    }
+
     @Override
     public String toString() {
         return "Product{" +

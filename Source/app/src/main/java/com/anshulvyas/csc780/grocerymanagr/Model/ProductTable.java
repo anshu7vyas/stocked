@@ -1,4 +1,4 @@
-package com.anshulvyas.csc780.grocerymanagr.AppDatabase;
+package com.anshulvyas.csc780.grocerymanagr.Model;
 
 import android.database.sqlite.SQLiteDatabase;
 
