@@ -1,25 +1,26 @@
 package com.anshulvyas.csc780.grocerymanagr;
 
-import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.content.ContentValues;
+import android.graphics.Color;
+import android.net.Uri;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
+
+import com.anshulvyas.csc780.grocerymanagr.Adapters.PagerAdapter;
+//mport com.anshulvyas.csc780.grocerymanagr.Model.CartProvider;
+import com.anshulvyas.csc780.grocerymanagr.Model.DBOpenHelper;
 
 public class HomeActivity extends AppCompatActivity {
 
     private Toolbar mToolBar;
-    private DrawerLayout mDrawerLayout;
-    private FloatingActionButton mFAB;
-    private ActionBarDrawerToggle mDrawerToggle;
+    private TabLayout mTabLayout;
+    //private FloatingActionButton mFAB;
 
 
     @Override
@@ -27,52 +28,48 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        //insertItem("New Item");
+
         /*
         Instantiate ToolBar
          */
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolBar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setIcon(R.mipmap.ic_launcher);
 
         /*
-         * Obtain out DrawerLayout */
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerRoot);
+        Tab layout
+         */
+        mTabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        mTabLayout.addTab(mTabLayout.newTab().setText("Home"));
+        mTabLayout.addTab(mTabLayout.newTab().setText("Shopping List"));
+        mTabLayout.addTab(mTabLayout.newTab().setText("Timeline"));
+        mTabLayout.setTabTextColors(Color.WHITE, Color.BLACK);
+        mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        mDrawerToggle = new ActionBarDrawerToggle(this,
-                mDrawerLayout,
-                mToolBar,
-                R.string.drawer_open,
-                R.string.drawer_close);
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-        NavigationView nv = (NavigationView) findViewById(R.id.navView);
-        nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        /*
+        ViewPager Adapter
+         */
+        final ViewPager mViewPager = (ViewPager) findViewById(R.id.pager);
+        final PagerAdapter mPagerAdapter = new PagerAdapter(getSupportFragmentManager(), mTabLayout.getTabCount());
+        mViewPager.setAdapter(mPagerAdapter);
+        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
+        mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
             @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-                String txt;
-                switch (menuItem.getItemId()) {
-                    case R.id.item_1:
-                        txt = "Home Selected";
-                        break;
-                    case R.id.item_2:
-                        txt = "Items to buy Selected";
-                        break;
-                    case R.id.item_3:
-                        txt = "Timeline Selected";
-                        break;
-                    case R.id.item_4:
-                        txt = "Settings Selected";
-                        break;
-                    case R.id.item_5:
-                        txt = "Logout Selected";
-                        break;
-                    default:
-                        txt = "Invalid Item Selected";
-                }
-                Toast.makeText(getApplicationContext(), txt, Toast.LENGTH_LONG).show();
-                mDrawerLayout.closeDrawers();
-                return true;
+            public void onTabSelected(TabLayout.Tab tab) {
+                mViewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
             }
         });
 
@@ -80,15 +77,23 @@ public class HomeActivity extends AppCompatActivity {
         /*
         Instantiate Floating Action button
          */
-        mFAB= (FloatingActionButton)  findViewById(R.id.FAB);
-        mFAB.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, AddItemActivity.class);
-                startActivity(intent);
+        //mFAB = (FloatingActionButton)  findViewById(R.id.FAB);
+        //mFAB.setOnClickListener(new View.OnClickListener() {
+        //    public void onClick(View v) {
+        //        Intent intent = new Intent(HomeActivity.this, AddItemActivity.class);
+        //        startActivity(intent);
                 //Snackbar.make(v, "Hello Snackbar", Snackbar.LENGTH_LONG).show();
-            }
-        });
+        //    }
+        //});
     }
+
+//    private void insertItem(String itemText) {
+//
+//        ContentValues values = new ContentValues();
+//        values.put(DBOpenHelper.CART_ITEM_TEXT, itemText);
+//        Uri cartUri = getContentResolver().insert(CartProvider.CONTENT_URI, values);
+//        Log.d("HomeActivity", "Inserted item " + cartUri.getLastPathSegment());
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -116,6 +121,6 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        mDrawerToggle.syncState();
+
     }
 }
