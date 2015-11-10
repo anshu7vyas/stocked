@@ -1,6 +1,7 @@
 package com.anshulvyas.csc780.grocerymanagr.Model;
 
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 /**
  * Created by av7 on 10/20/15.
@@ -24,12 +25,13 @@ public class ProductTable {
     public static final String[] HOME_ALL_COLUMNS = {COLUMN_PRODUCT_ID, COLUMN_PRODUCT_CATEGORY, COLUMN_PRODUCT_NAME, COLUMN_PRODUCT_EXPIRY, COLUMN_PRODUCT_NOTIFY, COLUMN_CONSUMED, COLUMN_EXPIRED, COLUMN_STOCKED};
 
     public static void onCreate(SQLiteDatabase db) {
+        Log.i("~!@#$","onCreateReached");
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("CREATE TABLE " + ProductTable.TABLE_NAME + " (");
         stringBuilder.append(COLUMN_PRODUCT_ID + " integer primary key autoincrement, ");
         stringBuilder.append(COLUMN_PRODUCT_NAME + " text not null, ");
         stringBuilder.append(COLUMN_PRODUCT_CATEGORY + " text not null, ");
-        stringBuilder.append(COLUMN_PRODUCT_EXPIRY + " date not null, ");
+        stringBuilder.append(COLUMN_PRODUCT_EXPIRY + " text not null, ");
         stringBuilder.append(COLUMN_PRODUCT_NOTIFY + " integer not null, ");
         stringBuilder.append(COLUMN_STOCKED + " boolean not null, ");
         stringBuilder.append(COLUMN_CONSUMED + " boolean not null, ");

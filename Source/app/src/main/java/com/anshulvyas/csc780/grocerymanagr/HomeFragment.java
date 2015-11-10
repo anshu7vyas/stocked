@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +18,27 @@ public class HomeFragment extends Fragment {
     private FloatingActionButton mFAB;
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(getArguments() != null ) {
+            Product productObj = getArguments().getParcelable(Product.PRODUCT_KEY);
+
+            try {
+                Log.i("~!@#FRAGMENT", productObj.toString());
+            } catch (Exception e) {
+                Log.i("~!@#FRAGMENT", e.getMessage());
+            }
+        } else {
+            Log.i("~!@#FRAGMENT","ARGS are null");
+        }
+    }
+
+    @Override
     public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+
 
         /*
         Instantiate Floating Action button
@@ -28,7 +47,6 @@ public class HomeFragment extends Fragment {
         mFAB.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 nextActivity();
-                //Snackbar.make(v, "Hello Snackbar", Snackbar.LENGTH_LONG).show();
             }
         });
 

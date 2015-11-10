@@ -44,7 +44,7 @@
             </TextView>
 
             <EditText
-                android:id="@+id/edit_item"
+                android:id="@+id/editText_itemName"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:layout_width="fill_parent"
@@ -63,8 +63,8 @@
                 android:layout_marginRight="15dp">
             </TextView>
 
-            <SeekBar
-                android:id="@+id/seekbar"
+            <EditText
+                android:id="@+id/editText_expiry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -72,10 +72,10 @@
                 android:max="50"
                 android:minWidth="300dp" >
 
-            </SeekBar>
+            </EditText>
 
             <TextView
-                android:id="@+id/item_notify"
+                android:id="@+id/textView_notify"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/item_notify"
@@ -85,8 +85,8 @@
                 android:layout_marginRight="15dp">
             </TextView>
 
-            <SeekBar
-                android:id="@+id/seekbar1"
+            <EditText
+                android:id="@+id/editText_notify"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -94,7 +94,7 @@
                 android:max="50"
                 android:padding="@dimen/activity_vertical_margin"
                 android:minWidth="300dp" >
-            </SeekBar>
+            </EditText>
 
             <CheckBox
                 android:id="@+id/checkbox"
