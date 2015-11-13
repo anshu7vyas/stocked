@@ -77,7 +77,7 @@ public class ProductDAO {
     }
 
     public List<Product> getAll() {
-        List<Product> newsList = new ArrayList<Product>();
+        List<Product> productList = new ArrayList<Product>();
 
         Cursor c = db.query(ProductTable.TABLE_NAME, productEntryArray, null, null, null, null, null);
 
@@ -85,11 +85,11 @@ public class ProductDAO {
             do {
                 Product productItem = buildFromCursor(c);
                 if (productItem != null) {
-                    newsList.add(productItem);
+                    productList.add(productItem);
                 }
             } while (c.moveToNext());
         }
-        return newsList;
+        return productList;
     }
 
 

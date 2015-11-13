@@ -14,4 +14,9 @@
         android:text="Timeline"
         android:textAppearance="?android:attr/textAppearanceLarge"/>
 
+    <ListView
+        android:id="@+id/listView_timeline_product"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 </RelativeLayout>

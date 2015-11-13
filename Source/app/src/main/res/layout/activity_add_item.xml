@@ -96,15 +96,6 @@
                 android:minWidth="300dp" >
             </EditText>
 
-            <CheckBox
-                android:id="@+id/checkbox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/checkBox1"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp" >
-
-            </CheckBox>
 
         </LinearLayout>
 
