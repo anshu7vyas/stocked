@@ -4,4 +4,6 @@
     <color name="primary">#00933B</color>
     <color name="primary_dark">#085108</color>
     <color name="accent">#00933B</color>
+    <color name="textView">#000000</color>
+
 </resources>

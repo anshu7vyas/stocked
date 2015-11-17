@@ -1,5 +1,6 @@
 package com.anshulvyas.csc780.grocerymanagr;
 
+import android.app.FragmentManager;
 import android.content.ContentValues;
 import android.graphics.Color;
 import android.net.Uri;
@@ -20,7 +21,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private Toolbar mToolBar;
     private TabLayout mTabLayout;
-    //private FloatingActionButton mFAB;
+    private Product mProductObj;
 
 
     @Override
@@ -28,7 +29,6 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        //insertItem("New Item");
 
         /*
         Instantiate ToolBar
@@ -37,6 +37,10 @@ public class HomeActivity extends AppCompatActivity {
         setSupportActionBar(mToolBar);
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setIcon(R.mipmap.ic_launcher);
+
+        if (getIntent().getExtras() != null) {
+            mProductObj = getIntent().getExtras().getParcelable(Product.PRODUCT_KEY);
+        }
 
         /*
         Tab layout
@@ -73,27 +77,22 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        try {
+            Log.i("~!@#$HOMEACTIVITY", mProductObj.toString());
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(Product.PRODUCT_KEY, mProductObj);
 
-        /*
-        Instantiate Floating Action button
-         */
-        //mFAB = (FloatingActionButton)  findViewById(R.id.FAB);
-        //mFAB.setOnClickListener(new View.OnClickListener() {
-        //    public void onClick(View v) {
-        //        Intent intent = new Intent(HomeActivity.this, AddItemActivity.class);
-        //        startActivity(intent);
-                //Snackbar.make(v, "Hello Snackbar", Snackbar.LENGTH_LONG).show();
-        //    }
-        //});
+            HomeFragment homeObj = new HomeFragment();
+            homeObj.setArguments(bundle);
+            getSupportFragmentManager().beginTransaction().replace(R.id.pager, homeObj).commit();
+
+        } catch (Exception e) {
+            Log.i("~!@#$HOMEACTIVITY", e.getMessage());
+        }
+
+
+
     }
-
-//    private void insertItem(String itemText) {
-//
-//        ContentValues values = new ContentValues();
-//        values.put(DBOpenHelper.CART_ITEM_TEXT, itemText);
-//        Uri cartUri = getContentResolver().insert(CartProvider.CONTENT_URI, values);
-//        Log.d("HomeActivity", "Inserted item " + cartUri.getLastPathSegment());
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

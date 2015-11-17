@@ -55,13 +55,13 @@ public class ProductDAO {
                 String[]{productItem.getProductId() + ""}) > 0;
     }
 
-    // delete will delete the NewsItem based on Title.
+    // delete will delete the ProductItem based on Title.
     public boolean delete(Product productItem) {
         return db.delete(ProductTable.TABLE_NAME, ProductTable.COLUMN_PRODUCT_ID + "=?", new String[]{productItem.getProductId() +
                 ""}) > 0;
     }
 
-    // get News item by id
+    // get Product item by id
     public Product get(long id) {
         Product productItem = null;
         Cursor c = db.query(true, ProductTable.TABLE_NAME, productEntryArray, ProductTable.COLUMN_PRODUCT_ID + "=?", new String[]{id +
@@ -76,13 +76,8 @@ public class ProductDAO {
         return productItem;
     }
 
-    /**
-     * <h1>getAll()</h1>A method that retrieves all the Records for NewsItem
-     *
-     * @return
-     */
     public List<Product> getAll() {
-        List<Product> newsList = new ArrayList<Product>();
+        List<Product> productList = new ArrayList<Product>();
 
         Cursor c = db.query(ProductTable.TABLE_NAME, productEntryArray, null, null, null, null, null);
 
@@ -90,11 +85,11 @@ public class ProductDAO {
             do {
                 Product productItem = buildFromCursor(c);
                 if (productItem != null) {
-                    newsList.add(productItem);
+                    productList.add(productItem);
                 }
             } while (c.moveToNext());
         }
-        return newsList;
+        return productList;
     }
 
 

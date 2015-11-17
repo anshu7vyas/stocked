@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="?android:attr/listPreferredItemHeight"
+              android:padding="6dip">
+
+    <ImageView
+        android:id="@+id/listView_icon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="6dip"
+        android:layout_marginRight="6dip"
+        android:src="@drawable/fooded_icon"/>
+
+    <TextView
+        android:id="@+id/textView_product_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/listView_icon"
+        android:textSize="16sp"
+        android:textColor="@color/textView"/>
+
+    <TextView
+        android:id="@+id/textView_product_expiry"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/listView_icon"
+        android:textSize="12sp"
+        android:textColor="@color/textView"
+        android:layout_alignParentBottom="true"/>
+<!--
+    <TextView
+        android:id="@+id/textView_product_expiry"
+        android:layout_width="fill_parent"
+        android:layout_height="26dip"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/listView_icon"
+        android:singleLine="true"
+        android:textSize="16sp"
+        android:textColor="@color/textView"
+        android:layout_alignParentBottom="true"/>
+
+    <TextView
+        android:id="@+id/textView_product_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView_product_expiry"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_toRightOf="@id/listView_icon"
+        android:gravity="center_vertical"
+        android:textSize="12sp"
+        android:textColor="@color/textView"/>
+
+
+        -->
+
+</RelativeLayout>
