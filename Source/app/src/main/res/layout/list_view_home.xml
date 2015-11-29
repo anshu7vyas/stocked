@@ -33,32 +33,6 @@
         android:textSize="12sp"
         android:textColor="@color/textView"
         android:layout_alignParentBottom="true"/>
-<!--
-    <TextView
-        android:id="@+id/textView_product_expiry"
-        android:layout_width="fill_parent"
-        android:layout_height="26dip"
-        android:layout_alignParentRight="true"
-        android:layout_toRightOf="@id/listView_icon"
-        android:singleLine="true"
-        android:textSize="16sp"
-        android:textColor="@color/textView"
-        android:layout_alignParentBottom="true"/>
 
-    <TextView
-        android:id="@+id/textView_product_name"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textView_product_expiry"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignWithParentIfMissing="true"
-        android:layout_toRightOf="@id/listView_icon"
-        android:gravity="center_vertical"
-        android:textSize="12sp"
-        android:textColor="@color/textView"/>
-
-
-        -->
 
 </RelativeLayout>

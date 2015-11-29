@@ -9,11 +9,13 @@ import android.os.Parcelable;
 public class Product implements Parcelable {
 
     public final static String PRODUCT_KEY = "product_key";
+    public final static String SHOPPING_KEY = "shopping_key";
+
 
     String productName;
     int notifyMe, productId;
     String expiryDate, category;
-    boolean stocked, consumed, expired;
+    boolean stocked, consumed, expired, shoppingCheck;
 
     public Product() {
     }
@@ -38,6 +40,11 @@ public class Product implements Parcelable {
         }
     };
 
+    public Product(String productName, boolean isShoppingCheck) {
+        this.productName = productName;
+        this.shoppingCheck = isShoppingCheck;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
@@ -49,10 +56,14 @@ public class Product implements Parcelable {
                 ", stocked=" + stocked +
                 ", consumed=" + consumed +
                 ", expired=" + expired +
+                ", shoppingCheck=" + shoppingCheck +
                 '}';
     }
 
-    public Product(String productName, int notifyMe, int productId, String expiryDate, String category, boolean stocked, boolean consumed, boolean expired) {
+
+
+    public Product(String productName, int notifyMe, int productId, String expiryDate, String category, boolean stocked,
+                   boolean consumed, boolean expired, boolean shoppingCheck) {
         this.productName = productName;
         this.notifyMe = notifyMe;
         this.productId = productId;
@@ -61,9 +72,12 @@ public class Product implements Parcelable {
         this.stocked = stocked;
         this.consumed = consumed;
         this.expired = expired;
+        this.shoppingCheck = shoppingCheck;
+
     }
 
-    public Product(String productName, int notifyMe, String category, String expiryDate, boolean stocked, boolean consumed, boolean expired) {
+    public Product(String productName, int notifyMe, String category, String expiryDate, boolean stocked, boolean consumed,
+                   boolean expired, boolean shoppingCheck) {
         this.productName = productName;
         this.notifyMe = notifyMe;
         this.category = category;
@@ -71,6 +85,16 @@ public class Product implements Parcelable {
         this.stocked = stocked;
         this.consumed = consumed;
         this.expired = expired;
+        this.shoppingCheck = shoppingCheck;
+
+    }
+
+    public boolean isShoppingCheck() {
+        return shoppingCheck;
+    }
+
+    public void setShoppingCheck(boolean shoppingCheck) {
+        this.shoppingCheck = shoppingCheck;
     }
 
     public String getProductName() {
@@ -152,5 +176,6 @@ public class Product implements Parcelable {
         dest.writeByte((byte) (stocked ? 1 : 0));
         dest.writeByte((byte) (expired ? 1 : 0));
         dest.writeByte((byte) (consumed ? 1 : 0));
+        dest.writeByte((byte) (shoppingCheck ? 1 : 0));
     }
 }

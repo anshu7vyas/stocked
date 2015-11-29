@@ -17,6 +17,7 @@ public class ProductTable {
 
     public static final String COLUMN_PRODUCT_EXPIRY = "expiryIn";
     public static final String COLUMN_PRODUCT_NOTIFY = "notifyIn";
+    public static final String COLUMN_SHOPPING_CHECK = "shoppingCheck";
     public static final String COLUMN_STOCKED = "stocked";
     public static final String COLUMN_CONSUMED = "consumed";
     public static final String COLUMN_EXPIRED = "expired";
@@ -33,9 +34,11 @@ public class ProductTable {
         stringBuilder.append(COLUMN_PRODUCT_CATEGORY + " text not null, ");
         stringBuilder.append(COLUMN_PRODUCT_EXPIRY + " text not null, ");
         stringBuilder.append(COLUMN_PRODUCT_NOTIFY + " integer not null, ");
+        stringBuilder.append(COLUMN_SHOPPING_CHECK + " boolean not null, ");
         stringBuilder.append(COLUMN_STOCKED + " boolean not null, ");
         stringBuilder.append(COLUMN_CONSUMED + " boolean not null, ");
         stringBuilder.append(COLUMN_EXPIRED + " boolean not null); ");
+        //stringBuilder.append("ORDER BY" + COLUMN_PRODUCT_EXPIRY + "ASC;");
 
         try {
             db.execSQL(stringBuilder.toString());

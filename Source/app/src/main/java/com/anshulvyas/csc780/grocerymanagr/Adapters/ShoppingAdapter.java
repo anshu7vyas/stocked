@@ -14,48 +14,48 @@ import com.anshulvyas.csc780.grocerymanagr.R;
 import java.util.List;
 
 /**
- * Created by av7 on 11/12/15.
+ * Created by av7 on 11/18/15.
  */
-public class ProductAdapter extends ArrayAdapter<Product> {
-    private List<Product> productList;
+public class ShoppingAdapter extends ArrayAdapter<Product> {
+    private List<Product> shoppingList;
     Context myContext;
     int mResource;
 
-
-    public ProductAdapter(Context context, int resource, List<Product> objects) {
+    public ShoppingAdapter(Context context, int resource, List<Product> objects) {
         super(context, resource, objects);
-        Log.i("~!@#PRODUCTADAPTER", "Constructor reached!");
+        Log.i("~!@#SHOPPINGADAPTER", "Constructor reached!");
         this.myContext = context;
-        this.productList = objects;
+        this.shoppingList = objects;
         this.mResource = resource;
     }
 
     @Override
     public View getView (int position, View convertView, ViewGroup parent) {
 
-        Log.i("~!@#PRODUCTADAPTER", "getView reached");
+        Log.i("~!@#SHOPPINGADAPTER", "getView reached");
         if(convertView == null) {
-            Log.i("~!@#PRODUCTADAPTER", "convert view is null");
+            Log.i("~!@#SHOPPINGADAPTER", "convert view is null");
 
             LayoutInflater inflater = (LayoutInflater) myContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(mResource, parent, false);
         }
 
 
-        Log.i("~!@#PRODUCTADAPTER", "convert view is not null");
-        Product productObj = productList.get(position);
+        Log.i("~!@#SHOPPINGADAPTER", "convert view is not null");
+        Product shopObj = shoppingList.get(position);
 
-        if(productObj != null) {
-            Log.i("~!@#PRODUCTADAPTER", productObj.toString());
-            TextView productName = (TextView) convertView.findViewById(R.id.textView_product_name);
-            TextView productExpiry = (TextView) convertView.findViewById(R.id.textView_product_expiry);
+        if(shopObj != null) {
+            Log.i("~!@#SHOPPINGADAPTER", shopObj.toString());
+            TextView productName = (TextView) convertView.findViewById(R.id.textView_shopping_item_name);
+            //TextView productExpiry = (TextView) convertView.findViewById(R.id.textView_product_expiry);
             //TextView productCategory = (TextView) convertView.findViewById(R.id.textView_product_category);
 
-            productName.setText(productObj.getProductName());
-            productExpiry.setText("expire in " + productObj.getExpiryDate() + " days");
+            productName.setText(shopObj.getProductName());
+            //productExpiry.setText("expire in " + shopObj.getExpiryDate() + " days");
             //productCategory.setText(" (" + productObj.getCategory() + ") ");
 
         }
         return convertView;
     }
+
 }

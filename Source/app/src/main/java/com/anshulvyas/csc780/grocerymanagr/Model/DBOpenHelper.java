@@ -11,7 +11,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     //Constants for db name and version
     private static final String DATABASE_NAME = "Fooded.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     public DBOpenHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

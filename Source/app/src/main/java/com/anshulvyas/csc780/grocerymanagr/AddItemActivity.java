@@ -27,7 +27,7 @@ public class AddItemActivity extends AppCompatActivity {
     Spinner spinnerCategory;
 
     EditText et_itemName, et_expiry, et_notify;
-
+    final static boolean SHOPPING_CHECK = false;
 
 
     @Override
@@ -65,7 +65,7 @@ public class AddItemActivity extends AppCompatActivity {
                 String productExpiry = et_expiry.getText().toString();
                 Integer productNotify = Integer.parseInt(et_notify.getText().toString());
 
-                Product newProduct = new Product(productName, productNotify, category, productExpiry, true, false, false);
+                Product newProduct = new Product(productName, productNotify, category, productExpiry, true, false, false, SHOPPING_CHECK);
 
                 db.saveProduct(newProduct);
 //                List<Product> productList = db.getAllProducts();
@@ -74,7 +74,7 @@ public class AddItemActivity extends AppCompatActivity {
 //                }
 
                 Intent intentHome = new Intent(AddItemActivity.this, HomeActivity.class);
-                intentHome.putExtra(Product.PRODUCT_KEY, newProduct);
+                intentHome.putExtra(Product.PRODUCT_KEY, 0);
                 startActivity(intentHome);
                 finish();
             }
