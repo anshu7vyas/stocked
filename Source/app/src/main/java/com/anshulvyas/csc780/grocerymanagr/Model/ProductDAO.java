@@ -83,7 +83,9 @@ public class ProductDAO {
     public List<Product> getAll() {
         List<Product> productList = new ArrayList<Product>();
 
-        Cursor c = db.query(ProductTable.TABLE_NAME, productEntryArray, null, null, null, null, null);
+        //Cursor c = db.query(ProductTable.TABLE_NAME, productEntryArray, null, null, null, null, null);
+        String dbQuery = "SELECT * FROM " + ProductTable.TABLE_NAME + " ORDER BY " + ProductTable.COLUMN_PRODUCT_EXPIRY + " ASC;";
+        Cursor c = db.rawQuery(dbQuery, null);
 
         if (c != null && c.moveToFirst()) {
             do {
