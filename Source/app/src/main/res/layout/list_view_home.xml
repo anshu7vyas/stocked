@@ -25,6 +25,16 @@
         android:textColor="@color/textView"/>
 
     <TextView
+        android:id="@+id/textView_product_category"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/listView_icon"
+        android:textSize="12sp"
+        android:textColor="@color/textView"
+        android:layout_below="@+id/textView_product_name"/>
+
+    <TextView
         android:id="@+id/textView_product_expiry"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

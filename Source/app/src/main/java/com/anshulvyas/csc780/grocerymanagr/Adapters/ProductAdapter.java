@@ -48,13 +48,13 @@ public class ProductAdapter extends ArrayAdapter<Product> {
         if(productObj != null) {
             Log.i("~!@#PRODUCTADAPTER", productObj.toString());
             TextView productName = (TextView) convertView.findViewById(R.id.textView_product_name);
+            TextView productCategory = (TextView) convertView.findViewById(R.id.textView_product_category);
             TextView productExpiry = (TextView) convertView.findViewById(R.id.textView_product_expiry);
             //TextView productCategory = (TextView) convertView.findViewById(R.id.textView_product_category);
 
             productName.setText(productObj.getProductName());
+            productCategory.setText(" (" + productObj.getCategory() + ") ");
             productExpiry.setText("expire in " + productObj.getExpiryDate() + " days");
-            //productCategory.setText(" (" + productObj.getCategory() + ") ");
-
         }
         return convertView;
     }
