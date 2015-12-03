@@ -38,9 +38,6 @@ public class HomeActivity extends AppCompatActivity {
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setIcon(R.mipmap.ic_launcher);
 
-        if (getIntent().getExtras() != null) {
-            mProductObj = getIntent().getExtras().getParcelable(Product.PRODUCT_KEY);
-        }
 
         /*
         Tab layout
@@ -77,22 +74,53 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        try {
-            Log.i("~!@#$HOMEACTIVITY", mProductObj.toString());
-            Bundle bundle = new Bundle();
-            bundle.putParcelable(Product.PRODUCT_KEY, mProductObj);
+        if (getIntent().getExtras() != null) {
+//            mProductObj = getIntent().getExtras().getParcelable(Product.PRODUCT_KEY);
+            int pagerNumber = getIntent().getExtras().getInt(Product.PRODUCT_KEY);
+            mViewPager.setCurrentItem(pagerNumber);
+            //setViewPager(pagerNumber);
 
-            HomeFragment homeObj = new HomeFragment();
-            homeObj.setArguments(bundle);
-            getSupportFragmentManager().beginTransaction().replace(R.id.pager, homeObj).commit();
-
-        } catch (Exception e) {
-            Log.i("~!@#$HOMEACTIVITY", e.getMessage());
         }
 
-
-
     }
+
+//    public void setViewPager(int pagerNumber) {
+//        if (pagerNumber == 0) {
+//            try {
+////                Log.i("~!@#$HOMEACTIVITY", mProductObj.toString());
+////                Bundle bundle = new Bundle();
+////                bundle.putParcelable(Product.PRODUCT_KEY, mProductObj);
+//
+//                HomeFragment homeObj = new HomeFragment();
+//                //homeObj.setArguments(bundle);
+//                getSupportFragmentManager().beginTransaction().replace(R.id.pager, homeObj).commit();
+//
+////            ShoppingListFragment shoppingObj = new ShoppingListFragment();
+////            shoppingObj.setArguments(bundle);
+////            getSupportFragmentManager().beginTransaction().replace(R.id.pager, shoppingObj).commit();
+//
+//            } catch (Exception e) {
+//                Log.i("~!@#$HOMEACTIVITY", e.getMessage());
+//            }
+//        } else if (pagerNumber == 1) {
+//            try {
+////                Log.i("~!@#$HOMEACTIVITY", mProductObj.toString());
+////                Bundle bundle = new Bundle();
+////                bundle.putParcelable(Product.PRODUCT_KEY, mProductObj);
+//
+//                ShoppingListFragment shoppingObj = new ShoppingListFragment();
+//                //homeObj.setArguments(bundle);
+//                getSupportFragmentManager().beginTransaction().replace(R.id.pager, shoppingObj).commit();
+//
+////            ShoppingListFragment shoppingObj = new ShoppingListFragment();
+////            shoppingObj.setArguments(bundle);
+////            getSupportFragmentManager().beginTransaction().replace(R.id.pager, shoppingObj).commit();
+//
+//            } catch (Exception e) {
+//                Log.i("~!@#$HOMEACTIVITY", e.getMessage());
+//            }
+//        }
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

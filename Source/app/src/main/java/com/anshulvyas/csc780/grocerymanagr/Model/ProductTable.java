@@ -16,13 +16,13 @@ public class ProductTable {
     //public static final String HOME_ITEM_IMG = "homeItemImg";
 
     public static final String COLUMN_PRODUCT_EXPIRY = "expiryIn";
-    public static final String COLUMN_PRODUCT_NOTIFY = "notifyIn";
+    public static final String COLUMN_SHOPPING_CHECK = "shoppingCheck";
     public static final String COLUMN_STOCKED = "stocked";
     public static final String COLUMN_CONSUMED = "consumed";
     public static final String COLUMN_EXPIRED = "expired";
 
 
-    public static final String[] HOME_ALL_COLUMNS = {COLUMN_PRODUCT_ID, COLUMN_PRODUCT_CATEGORY, COLUMN_PRODUCT_NAME, COLUMN_PRODUCT_EXPIRY, COLUMN_PRODUCT_NOTIFY, COLUMN_CONSUMED, COLUMN_EXPIRED, COLUMN_STOCKED};
+    public static final String[] HOME_ALL_COLUMNS = {COLUMN_PRODUCT_ID, COLUMN_PRODUCT_CATEGORY, COLUMN_PRODUCT_NAME, COLUMN_PRODUCT_EXPIRY, COLUMN_CONSUMED, COLUMN_EXPIRED, COLUMN_STOCKED};
 
     public static void onCreate(SQLiteDatabase db) {
         Log.i("~!@#$","onCreateReached");
@@ -32,7 +32,7 @@ public class ProductTable {
         stringBuilder.append(COLUMN_PRODUCT_NAME + " text not null, ");
         stringBuilder.append(COLUMN_PRODUCT_CATEGORY + " text not null, ");
         stringBuilder.append(COLUMN_PRODUCT_EXPIRY + " text not null, ");
-        stringBuilder.append(COLUMN_PRODUCT_NOTIFY + " integer not null, ");
+        stringBuilder.append(COLUMN_SHOPPING_CHECK + " boolean not null, ");
         stringBuilder.append(COLUMN_STOCKED + " boolean not null, ");
         stringBuilder.append(COLUMN_CONSUMED + " boolean not null, ");
         stringBuilder.append(COLUMN_EXPIRED + " boolean not null); ");

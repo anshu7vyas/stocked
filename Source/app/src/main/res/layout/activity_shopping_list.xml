@@ -22,9 +22,45 @@
             android:orientation="vertical"
             android:paddingTop="?attr/actionBarSize">
 
+            <TextView
+                android:id="@+id/textView_shopping_item_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/item_name"
+                android:textSize="10pt"
+                android:padding="@dimen/activity_vertical_margin"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp">
+            </TextView>
+
+            <EditText
+                android:id="@+id/editText_shopping_item_name"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:layout_width="fill_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp">
+            </EditText>
+
 
         </LinearLayout>
 
     </RelativeLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/FAB_check_shop"
+        android:src="@drawable/ic_check_white_12dp"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_gravity="bottom|center"
+
+        app:fabSize="normal"
+        app:rippleColor="@color/primary_dark"
+
+        app:layout_anchorGravity="bottom|center"
+        app:elevation="6dp"
+        app:pressedTranslationZ="12dp"/>
 
 </android.support.design.widget.CoordinatorLayout>

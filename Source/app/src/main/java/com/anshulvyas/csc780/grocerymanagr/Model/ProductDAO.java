@@ -17,7 +17,8 @@ import java.util.List;
 
 public class ProductDAO {
     String[] productEntryArray = new String[]{ProductTable.COLUMN_PRODUCT_ID, ProductTable.COLUMN_PRODUCT_NAME, ProductTable
-            .COLUMN_PRODUCT_CATEGORY, ProductTable.COLUMN_PRODUCT_EXPIRY, ProductTable.COLUMN_PRODUCT_NOTIFY, ProductTable
+            .COLUMN_PRODUCT_CATEGORY, ProductTable.COLUMN_PRODUCT_EXPIRY, ProductTable
+            .COLUMN_SHOPPING_CHECK, ProductTable
             .COLUMN_STOCKED, ProductTable.COLUMN_CONSUMED, ProductTable.COLUMN_EXPIRED};
 
     private SQLiteDatabase db;
@@ -31,10 +32,11 @@ public class ProductDAO {
         contentValues.put(ProductTable.COLUMN_PRODUCT_NAME, productItem.getProductName());
         contentValues.put(ProductTable.COLUMN_PRODUCT_CATEGORY, productItem.getCategory());
         contentValues.put(ProductTable.COLUMN_PRODUCT_EXPIRY, productItem.getExpiryDate());
-        contentValues.put(ProductTable.COLUMN_PRODUCT_NOTIFY, productItem.getNotifyMe());
+        contentValues.put(ProductTable.COLUMN_SHOPPING_CHECK, productItem.isShoppingCheck());
         contentValues.put(ProductTable.COLUMN_STOCKED, productItem.isStocked());
         contentValues.put(ProductTable.COLUMN_CONSUMED, productItem.isConsumed());
         contentValues.put(ProductTable.COLUMN_EXPIRED, productItem.isExpired());
+
         Log.d("DEMO=====>", "INSERT reached");
         return db.insert(ProductTable.TABLE_NAME, null, contentValues);
     }
@@ -44,7 +46,7 @@ public class ProductDAO {
         contentValues.put(ProductTable.COLUMN_PRODUCT_NAME, productItem.getProductName());
         contentValues.put(ProductTable.COLUMN_PRODUCT_CATEGORY, productItem.getCategory());
         contentValues.put(ProductTable.COLUMN_PRODUCT_EXPIRY, productItem.getExpiryDate());
-        contentValues.put(ProductTable.COLUMN_PRODUCT_NOTIFY, productItem.getNotifyMe());
+        contentValues.put(ProductTable.COLUMN_SHOPPING_CHECK, productItem.isShoppingCheck());
         contentValues.put(ProductTable.COLUMN_STOCKED, productItem.isStocked());
         contentValues.put(ProductTable.COLUMN_CONSUMED, productItem.isConsumed());
         contentValues.put(ProductTable.COLUMN_EXPIRED, productItem.isExpired());
@@ -79,7 +81,9 @@ public class ProductDAO {
     public List<Product> getAll() {
         List<Product> productList = new ArrayList<Product>();
 
-        Cursor c = db.query(ProductTable.TABLE_NAME, productEntryArray, null, null, null, null, null);
+        //Cursor c = db.query(ProductTable.TABLE_NAME, productEntryArray, null, null, null, null, null);
+        String dbQuery = "SELECT * FROM " + ProductTable.TABLE_NAME + " ORDER BY " + ProductTable.COLUMN_PRODUCT_EXPIRY + " ASC;";
+        Cursor c = db.rawQuery(dbQuery, null);
 
         if (c != null && c.moveToFirst()) {
             do {
@@ -101,7 +105,7 @@ public class ProductDAO {
             productItem.setProductName(c.getString(1));
             productItem.setCategory(c.getString(2));
             productItem.setExpiryDate(c.getString(3));
-            productItem.setNotifyMe(c.getInt(4));
+            productItem.setShoppingCheck(c.getInt(4) > 0);
             productItem.setStocked(c.getInt(5) > 0);
             productItem.setConsumed(c.getInt(6) > 0);
             productItem.setExpired(c.getInt(7) > 0);
