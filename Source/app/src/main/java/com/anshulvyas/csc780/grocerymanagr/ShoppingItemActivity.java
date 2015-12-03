@@ -45,7 +45,12 @@ public class ShoppingItemActivity extends AppCompatActivity {
 
                 String shoppingItemName = et_shoppingItemName.getText().toString();
 
+
                 Product newProduct = new Product(shoppingItemName, "", "", true, false, false, true);
+
+                //Flag Logic
+//                newProduct.setExpired(true);
+//                db.updateProduct(newProduct);
 
                 db.saveProduct(newProduct);
 

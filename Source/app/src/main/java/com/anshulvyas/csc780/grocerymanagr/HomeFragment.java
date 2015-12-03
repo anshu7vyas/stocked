@@ -67,6 +67,12 @@ public class HomeFragment extends Fragment {
                 }
             }
 
+
+            //TODO
+            // FLAG LOGIC!!!
+            //call joda daysbetween here. if 0, flag == true;
+
+
             productListView = (ListView) view.findViewById(R.id.listView_home_product);
             final ProductAdapter productAdapter = new ProductAdapter(getActivity().getBaseContext(), R.layout.list_view_home,
                     filterProductList);

@@ -84,11 +84,7 @@ public class AddItemActivity extends AppCompatActivity {
 
                 String category = spinnerCategory.getSelectedItem().toString();
                 String productName = et_itemName.getText().toString();
-                String productExpiry = "";
-
-                if(expiryDate != null) {
-                    //productExpiry = Util.getDays(expiryDate);
-                }
+                String productExpiry = tV_productExpiry.getText().toString();
 
                 Product newProduct = new Product(productName, category, productExpiry, true, false, false, SHOPPING_CHECK);
 
