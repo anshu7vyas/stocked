@@ -10,7 +10,9 @@ import android.widget.TextView;
 
 import com.anshulvyas.csc780.grocerymanagr.Product;
 import com.anshulvyas.csc780.grocerymanagr.R;
+import com.anshulvyas.csc780.grocerymanagr.Util;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -41,7 +43,6 @@ public class ProductAdapter extends ArrayAdapter<Product> {
             convertView = inflater.inflate(mResource, parent, false);
         }
 
-
         Log.i("~!@#PRODUCTADAPTER", "convert view is not null");
         Product productObj = productList.get(position);
 
@@ -54,8 +55,19 @@ public class ProductAdapter extends ArrayAdapter<Product> {
 
             productName.setText(productObj.getProductName());
             productCategory.setText(" (" + productObj.getCategory() + ") ");
-            productExpiry.setText("expire in " + productObj.getExpiryDate() + " days");
+
+            Calendar now = Calendar.getInstance();
+            int expiry = productObj.getExpiryDate() - Util.getDays(now);
+            Log.i("~!@#DAYS", productObj.getExpiryDate() + ":" + Util.getDays(now));
+            productExpiry.setText("expire in " + expiry + " days");
         }
         return convertView;
     }
+
+//    private int getLeftDays(Calendar then, Calendar now) {
+//        long diff = then.getTimeInMillis() - now.getTimeInMillis();
+//        int days = (int) diff / (24 * 60 * 60 * 1000);
+//        return days;
+//    }
+
 }

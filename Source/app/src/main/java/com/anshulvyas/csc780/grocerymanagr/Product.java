@@ -13,8 +13,8 @@ public class Product implements Parcelable {
 
 
     String productName;
-    int notifyMe, productId;
-    String expiryDate, category;
+    int productId;
+    String category, expiryDate;
     boolean stocked, consumed, expired, shoppingCheck;
 
     public Product() {
@@ -22,7 +22,6 @@ public class Product implements Parcelable {
 
     protected Product(Parcel in) {
         productName = in.readString();
-        notifyMe = in.readInt();
         productId = in.readInt();
         expiryDate = in.readString();
         category = in.readString();
@@ -49,7 +48,6 @@ public class Product implements Parcelable {
     public String toString() {
         return "Product{" +
                 "productName='" + productName + '\'' +
-                ", notifyMe=" + notifyMe +
                 ", productId=" + productId +
                 ", expiryDate='" + expiryDate + '\'' +
                 ", category='" + category + '\'' +
@@ -62,10 +60,9 @@ public class Product implements Parcelable {
 
 
 
-    public Product(String productName, int notifyMe, int productId, String expiryDate, String category, boolean stocked,
+    public Product(String productName, int productId, String expiryDate, String category, boolean stocked,
                    boolean consumed, boolean expired, boolean shoppingCheck) {
         this.productName = productName;
-        this.notifyMe = notifyMe;
         this.productId = productId;
         this.expiryDate = expiryDate;
         this.category = category;
@@ -76,10 +73,9 @@ public class Product implements Parcelable {
 
     }
 
-    public Product(String productName, int notifyMe, String category, String expiryDate, boolean stocked, boolean consumed,
+    public Product(String productName, String category, String expiryDate, boolean stocked, boolean consumed,
                    boolean expired, boolean shoppingCheck) {
         this.productName = productName;
-        this.notifyMe = notifyMe;
         this.category = category;
         this.expiryDate = expiryDate;
         this.stocked = stocked;
@@ -105,13 +101,6 @@ public class Product implements Parcelable {
         this.productName = productName;
     }
 
-    public int getNotifyMe() {
-        return notifyMe;
-    }
-
-    public void setNotifyMe(int notifyMe) {
-        this.notifyMe = notifyMe;
-    }
 
     public int getProductId() {
         return productId;
@@ -170,7 +159,6 @@ public class Product implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(productName);
         dest.writeInt(productId);
-        dest.writeInt(notifyMe);
         dest.writeString(expiryDate);
         dest.writeString(category);
         dest.writeByte((byte) (stocked ? 1 : 0));

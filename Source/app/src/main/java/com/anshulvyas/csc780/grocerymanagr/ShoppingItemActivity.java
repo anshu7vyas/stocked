@@ -45,14 +45,9 @@ public class ShoppingItemActivity extends AppCompatActivity {
 
                 String shoppingItemName = et_shoppingItemName.getText().toString();
 
-                Product newProduct = new Product(shoppingItemName, 0, "", "", true, false, false,
-                        true);
+                Product newProduct = new Product(shoppingItemName, "", "", true, false, false, true);
 
                 db.saveProduct(newProduct);
-//                List<Product> productList = db.getAllProducts();
-//                for(int i = 0; i < productList.size(); i++) {
-//                    Log.i("~!@#$", productList.get(i).toString());
-//                }
 
                 Intent intentHome = new Intent(ShoppingItemActivity.this, HomeActivity.class);
                 intentHome.putExtra(Product.PRODUCT_KEY, 1);

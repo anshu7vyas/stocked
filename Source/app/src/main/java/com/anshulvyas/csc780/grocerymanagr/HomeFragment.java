@@ -1,5 +1,7 @@
 package com.anshulvyas.csc780.grocerymanagr;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -77,18 +79,35 @@ public class HomeFragment extends Fragment {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-                    dbManager.deleteProduct(productAdapter.getItem(position));
-                    Log.d("DEMO======>", "PRODUCT DELETED");
-                    Toast.makeText(getActivity(), "ProductsItem deleted", Toast.LENGTH_LONG).show();
+                    final AlertDialog.Builder deleteDialog = new AlertDialog.Builder(getActivity());
+                    deleteDialog.setTitle("Delete?");
+                    deleteDialog.setMessage("Are you sure you want to delete?");
+                    final int viewPosition = position;
 
-                    List<Product> productListDB = dbManager.getAllProducts();
-                    Log.d("DEMO=====>", productListDB.toString());
+                    deleteDialog.setPositiveButton("OK", new AlertDialog.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dbManager.deleteProduct(productAdapter.getItem(viewPosition));
+                            Log.d("DEMO======>", "PRODUCT DELETED");
+                            Toast.makeText(getActivity(), productAdapter.getItem(viewPosition).getProductName() + " deleted", Toast
+                                    .LENGTH_LONG).show();
 
-                    final ProductAdapter productAdapter = new ProductAdapter(getActivity().getBaseContext(), R.layout.list_view_home,
-                            productListDB);
-                    productListView.setAdapter(productAdapter);
+                            productAdapter.remove(productAdapter.getItem(viewPosition));
 
-                    productAdapter.setNotifyOnChange(true);
+
+                            productAdapter.setNotifyOnChange(true);
+                            productAdapter.notifyDataSetChanged();
+                        }
+                    });
+
+                    deleteDialog.setNegativeButton("Cancel", new AlertDialog.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    deleteDialog.show();
                     return false;
                 }
             });

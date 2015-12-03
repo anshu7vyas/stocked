@@ -17,7 +17,7 @@ import java.util.List;
 
 public class ProductDAO {
     String[] productEntryArray = new String[]{ProductTable.COLUMN_PRODUCT_ID, ProductTable.COLUMN_PRODUCT_NAME, ProductTable
-            .COLUMN_PRODUCT_CATEGORY, ProductTable.COLUMN_PRODUCT_EXPIRY, ProductTable.COLUMN_PRODUCT_NOTIFY, ProductTable
+            .COLUMN_PRODUCT_CATEGORY, ProductTable.COLUMN_PRODUCT_EXPIRY, ProductTable
             .COLUMN_SHOPPING_CHECK, ProductTable
             .COLUMN_STOCKED, ProductTable.COLUMN_CONSUMED, ProductTable.COLUMN_EXPIRED};
 
@@ -32,7 +32,6 @@ public class ProductDAO {
         contentValues.put(ProductTable.COLUMN_PRODUCT_NAME, productItem.getProductName());
         contentValues.put(ProductTable.COLUMN_PRODUCT_CATEGORY, productItem.getCategory());
         contentValues.put(ProductTable.COLUMN_PRODUCT_EXPIRY, productItem.getExpiryDate());
-        contentValues.put(ProductTable.COLUMN_PRODUCT_NOTIFY, productItem.getNotifyMe());
         contentValues.put(ProductTable.COLUMN_SHOPPING_CHECK, productItem.isShoppingCheck());
         contentValues.put(ProductTable.COLUMN_STOCKED, productItem.isStocked());
         contentValues.put(ProductTable.COLUMN_CONSUMED, productItem.isConsumed());
@@ -47,7 +46,6 @@ public class ProductDAO {
         contentValues.put(ProductTable.COLUMN_PRODUCT_NAME, productItem.getProductName());
         contentValues.put(ProductTable.COLUMN_PRODUCT_CATEGORY, productItem.getCategory());
         contentValues.put(ProductTable.COLUMN_PRODUCT_EXPIRY, productItem.getExpiryDate());
-        contentValues.put(ProductTable.COLUMN_PRODUCT_NOTIFY, productItem.getNotifyMe());
         contentValues.put(ProductTable.COLUMN_SHOPPING_CHECK, productItem.isShoppingCheck());
         contentValues.put(ProductTable.COLUMN_STOCKED, productItem.isStocked());
         contentValues.put(ProductTable.COLUMN_CONSUMED, productItem.isConsumed());
@@ -107,11 +105,10 @@ public class ProductDAO {
             productItem.setProductName(c.getString(1));
             productItem.setCategory(c.getString(2));
             productItem.setExpiryDate(c.getString(3));
-            productItem.setNotifyMe(c.getInt(4));
-            productItem.setShoppingCheck(c.getInt(5) > 0);
-            productItem.setStocked(c.getInt(6) > 0);
-            productItem.setConsumed(c.getInt(7) > 0);
-            productItem.setExpired(c.getInt(8) > 0);
+            productItem.setShoppingCheck(c.getInt(4) > 0);
+            productItem.setStocked(c.getInt(5) > 0);
+            productItem.setConsumed(c.getInt(6) > 0);
+            productItem.setExpired(c.getInt(7) > 0);
         }
         return productItem;
     }

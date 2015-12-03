@@ -21,9 +21,10 @@
             android:orientation="vertical"
             android:paddingTop="?attr/actionBarSize">
 
+
             <Spinner
                 android:id="@+id/spinner"
-                android:layout_height="wrap_content"
+                android:layout_height="84dp"
                 android:prompt="@string/default_cat"
                 android:layout_width="fill_parent"
                 android:entries="@array/items_list"
@@ -32,8 +33,9 @@
                 android:layout_marginRight="15dp">
             </Spinner>
 
+
             <TextView
-                android:id="@+id/item_name"
+                android:id="@+id/textView_item_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/item_name"
@@ -53,7 +55,7 @@
             </EditText>
 
             <TextView
-                android:id="@+id/item_days"
+                android:id="@+id/textView_expiryTag"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/item_days"
@@ -63,9 +65,21 @@
                 android:layout_marginRight="15dp">
             </TextView>
 
+            <TextView
+                android:id="@+id/textView_datePicker_expiry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="10pt"
+                android:text="SetDate"
+                android:padding="@dimen/activity_vertical_margin"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp">
+            </TextView>
+
+            <!--
             <EditText
                 android:id="@+id/editText_expiry"
-                android:layout_width="wrap_content"
+                android:layout_width="355dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
@@ -73,18 +87,19 @@
                 android:minWidth="300dp" >
 
             </EditText>
-
-            <TextView
-                android:id="@+id/textView_notify"
-                android:layout_width="match_parent"
+            -->
+            <!--
+            <DatePicker
+                android:id="@+id/datepicker_expiry"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/item_notify"
-                android:textSize="10pt"
-                android:padding="@dimen/activity_vertical_margin"
                 android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp">
-            </TextView>
+                android:layout_marginRight="15dp"
+                android:spinnersShown="true" />
+            -->
 
+
+            <!--
             <EditText
                 android:id="@+id/editText_notify"
                 android:layout_width="wrap_content"
@@ -95,7 +110,7 @@
                 android:padding="@dimen/activity_vertical_margin"
                 android:minWidth="300dp" >
             </EditText>
-
+            -->
 
         </LinearLayout>
 
@@ -110,12 +125,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:layout_gravity="bottom|center"
+        android:layout_gravity="bottom|end"
 
         app:fabSize="normal"
         app:rippleColor="@color/primary_dark"
 
-        app:layout_anchorGravity="bottom|center"
+        app:layout_anchorGravity="bottom|end"
         app:elevation="6dp"
         app:pressedTranslationZ="12dp"/>
 
