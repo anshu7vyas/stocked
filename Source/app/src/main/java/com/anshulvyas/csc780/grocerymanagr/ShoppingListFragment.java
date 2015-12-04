@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -66,7 +67,7 @@ public class ShoppingListFragment extends Fragment {
 
             shoppingListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
-                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                public boolean onItemLongClick(AdapterView<?> parent, final View view, int position, long id) {
 
                     final AlertDialog.Builder deleteDialog = new AlertDialog.Builder(getActivity());
                     deleteDialog.setTitle("Delete?");
@@ -78,9 +79,11 @@ public class ShoppingListFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int which) {
                             dbManager.deleteProduct(shoppingAdapter.getItem(viewPosition));
                             Log.d("DEMO======>", "PRODUCT DELETED");
-                            Toast.makeText(getActivity(), shoppingAdapter.getItem(viewPosition).getProductName() + " deleted",
-                                    Toast.LENGTH_LONG)
-                                    .show();
+//                            Toast.makeText(getActivity(), shoppingAdapter.getItem(viewPosition).getProductName() + " deleted",
+//                                    Toast.LENGTH_LONG)
+//                                    .show();
+                            Snackbar.make(view, shoppingAdapter.getItem(viewPosition).getProductName() + " deleted", Snackbar
+                                    .LENGTH_LONG).show();
 
                             shoppingAdapter.remove(shoppingAdapter.getItem(viewPosition));
 

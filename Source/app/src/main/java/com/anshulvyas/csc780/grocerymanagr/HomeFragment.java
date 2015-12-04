@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,18 +37,6 @@ public class HomeFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         dbManager = new DBManager(getActivity());
-//        if(getArguments() != null ) {
-//            Product productObj = getArguments().getParcelable(Product.PRODUCT_KEY);
-//
-//            try {
-//                Log.i("~!@#FRAGMENT", productObj.toString());
-//            } catch (Exception e) {
-//                Log.i("~!@#FRAGMENT", e.getMessage());
-//            }
-//        } else {
-//            Log.i("~!@#FRAGMENT","ARGS are null");
-//        }
-
     }
 
     @Override
@@ -83,7 +72,7 @@ public class HomeFragment extends Fragment {
 
             productListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
-                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                public boolean onItemLongClick(AdapterView<?> parent, final View view, int position, long id) {
 
                     final AlertDialog.Builder deleteDialog = new AlertDialog.Builder(getActivity());
                     deleteDialog.setTitle("Delete?");
@@ -95,7 +84,9 @@ public class HomeFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int which) {
                             dbManager.deleteProduct(productAdapter.getItem(viewPosition));
                             Log.d("DEMO======>", "PRODUCT DELETED");
-                            Toast.makeText(getActivity(), productAdapter.getItem(viewPosition).getProductName() + " deleted", Toast
+//                            Toast.makeText(getActivity(), productAdapter.getItem(viewPosition).getProductName() + " deleted", Toast
+//                                    .LENGTH_LONG).show();
+                            Snackbar.make(view, productAdapter.getItem(viewPosition).getProductName() + " deleted", Snackbar
                                     .LENGTH_LONG).show();
 
                             productAdapter.remove(productAdapter.getItem(viewPosition));
@@ -121,9 +112,9 @@ public class HomeFragment extends Fragment {
                 Log.i("~!@#HOMEFRAGMENT", "list view not displayed");
             }
 
-        /*
-        Instantiate Floating Action button
-         */
+            /*
+            Instantiate Floating Action button
+             */
             mFAB = (FloatingActionButton) view.findViewById(R.id.addFAB);
             mFAB.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {

@@ -71,6 +71,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="10pt"
                 android:text="SetDate"
+                style="@android:style/Widget.Button"
                 android:padding="@dimen/activity_vertical_margin"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp">
