@@ -13,4 +13,16 @@
         android:textSize="16sp"
         android:textColor="@color/textView"/>
 
+    <TextView
+        android:id="@+id/textView_timeline_item_flag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        android:layout_below="@+id/textView_timeline_item_name"
+        android:layout_alignParentLeft="true"
+        android:textSize="10sp"
+        android:textColor="@color/textWhite"/>
+
+
+
 </RelativeLayout>

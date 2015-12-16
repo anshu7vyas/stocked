@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.anshulvyas.csc780.grocerymanagr.HomeFragment;
+import com.anshulvyas.csc780.grocerymanagr.Model.DBManager;
 import com.anshulvyas.csc780.grocerymanagr.Product;
 import com.anshulvyas.csc780.grocerymanagr.R;
 import com.anshulvyas.csc780.grocerymanagr.Util;
@@ -22,6 +24,11 @@ import java.util.List;
 
 /**
  * Created by av7 on 11/12/15.
+ */
+
+/**
+ * Adapter for the listView of HomeFragment and Timeline Fragment.
+ * Reused the code for timeline fragment.
  */
 public class ProductAdapter extends ArrayAdapter<Product> {
     private List<Product> productList;
@@ -51,8 +58,6 @@ public class ProductAdapter extends ArrayAdapter<Product> {
         Log.i("~!@#PRODUCTADAPTER", "convert view is not null");
         Product productObj = productList.get(position);
 
-
-
         if(productObj != null) {
             Log.i("~!@#PRODUCTADAPTER", productObj.toString());
             TextView productName = (TextView) convertView.findViewById(R.id.textView_product_name);
@@ -62,35 +67,14 @@ public class ProductAdapter extends ArrayAdapter<Product> {
             productName.setText(productObj.getProductName());
             productCategory.setText(" (" + productObj.getCategory() + ") ");
 
-            Calendar now = Calendar.getInstance();
-            //int expiry = productObj.getExpiryDate() - Util.getDays(now);
-
-            SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-            Calendar expiry = Calendar.getInstance();
-            try {
-                expiry.setTime(format.parse(productObj.getExpiryDate()));
-            } catch (ParseException e) {
-                e.printStackTrace();
+            if(productObj.isExpired()) {
+                productExpiry.setText("Expired");
+            } else {
+                HomeFragment homeFragment = new HomeFragment();
+                productExpiry.setText("expire in " + homeFragment.getLeftDays(productObj) + " days");
             }
-
-            DateTime dateTimeNow = new DateTime(now.getTime());
-            DateTime dateTimeExp = new DateTime(expiry.getTime());
-
-            Days days = Days.daysBetween(dateTimeNow, dateTimeExp);
-
-
-
-
-            Log.i("~!@#DAYS", days.getDays() + "");
-            productExpiry.setText("expire in " + days.getDays() + " days");
         }
         return convertView;
     }
-
-//    private int getLeftDays(Calendar then, Calendar now) {
-//        long diff = then.getTimeInMillis() - now.getTimeInMillis();
-//        int days = (int) diff / (24 * 60 * 60 * 1000);
-//        return days;
-//    }
 
 }
