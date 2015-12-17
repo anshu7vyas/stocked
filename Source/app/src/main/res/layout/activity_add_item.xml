@@ -7,11 +7,11 @@
     android:layout_height="match_parent"
     android:id="@+id/coordinatorLayout">
 
-    <!-- Displaying custom toolbar -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- Displaying custom toolbar -->
         <include
             android:id="@+id/toolbar"
             layout="@layout/toolbar" />
@@ -22,7 +22,7 @@
             android:orientation="vertical"
             android:paddingTop="?attr/actionBarSize">
 
-
+            <!-- PRODUCT CATEGORY -->
             <Spinner
                 android:id="@+id/spinner"
                 android:layout_height="84dp"
@@ -46,6 +46,7 @@
                 android:layout_marginRight="15dp">
             </TextView>
 
+            <!-- PRODUCT NAME -->
             <EditText
                 android:id="@+id/editText_itemName"
                 android:layout_height="wrap_content"
@@ -66,6 +67,7 @@
                 android:layout_marginRight="15dp">
             </TextView>
 
+            <!-- PRODUCT EXPIRY -->
             <TextView
                 android:id="@+id/textView_datePicker_expiry"
                 android:layout_width="match_parent"
@@ -78,45 +80,7 @@
                 android:layout_marginRight="15dp">
             </TextView>
 
-            <!--
-            <EditText
-                android:id="@+id/editText_expiry"
-                android:layout_width="355dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:max="50"
-                android:minWidth="300dp" >
-
-            </EditText>
-            -->
-            <!--
-            <DatePicker
-                android:id="@+id/datepicker_expiry"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:spinnersShown="true" />
-            -->
-
-
-            <!--
-            <EditText
-                android:id="@+id/editText_notify"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:max="50"
-                android:padding="@dimen/activity_vertical_margin"
-                android:minWidth="300dp" >
-            </EditText>
-            -->
-
         </LinearLayout>
-
-
 
     </RelativeLayout>
 
@@ -137,6 +101,3 @@
         app:pressedTranslationZ="12dp"/>
 
 </android.support.design.widget.CoordinatorLayout>
-
-    <!-- android:background="?attr/colorPrimary"
-    app:layout_anchor="@id/toolbar"-->

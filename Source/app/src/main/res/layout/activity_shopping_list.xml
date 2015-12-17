@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- Displaying custom toolbar -->
         <include
             android:id="@+id/toolbar"
             layout="@layout/toolbar" />
@@ -34,6 +35,7 @@
                 android:layout_marginRight="15dp">
             </TextView>
 
+            <!-- PRODUCT NAME -->
             <EditText
                 android:id="@+id/editText_shopping_item_name"
                 android:layout_height="wrap_content"
@@ -60,7 +62,7 @@
         app:fabSize="normal"
         app:rippleColor="@color/primary_dark"
 
-        app:layout_anchorGravity="bottom|center"
+        app:layout_anchorGravity="bottom|end"
         app:elevation="6dp"
         app:pressedTranslationZ="12dp"/>
 

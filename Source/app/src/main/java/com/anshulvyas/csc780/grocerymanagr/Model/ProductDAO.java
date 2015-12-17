@@ -122,9 +122,9 @@ public class ProductDAO {
     }
 
     /**
-     *
+     * To build product object from Cursor
      * @param c
-     * @return
+     * @return productItem
      */
     private Product buildFromCursor(Cursor c) {
         Product productItem = null;

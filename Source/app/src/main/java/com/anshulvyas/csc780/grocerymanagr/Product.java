@@ -17,13 +17,13 @@ public class Product implements Parcelable {
     boolean stocked, consumed, expired, shoppingCheck;
 
     /**
-     *
+     * Default constructor - Product
      */
     public Product() {
     }
 
     /**
-     *
+     * Constructor - called in HomeFragment
      * @param in
      */
     protected Product(Parcel in) {
@@ -34,7 +34,8 @@ public class Product implements Parcelable {
     }
 
     /**
-     *
+     * Interface that must be implemented and provided as a public CREATOR field that
+     * generates instances of Parcelable class from a Parcel.
      */
     public static final Creator<Product> CREATOR = new Creator<Product>() {
         @Override
@@ -49,7 +50,7 @@ public class Product implements Parcelable {
     };
 
     /**
-     *
+     * Constructor - called in ShoppingFragment
      * @param productName
      * @param isShoppingCheck
      */
@@ -59,7 +60,7 @@ public class Product implements Parcelable {
     }
 
     /**
-     *
+     * Overrides the toString() method of java.Object
      * @return
      */
     @Override
@@ -77,7 +78,7 @@ public class Product implements Parcelable {
     }
 
     /**
-     *
+     * Constructor - product
      * @param productName
      * @param productId
      * @param expiryDate
@@ -100,7 +101,7 @@ public class Product implements Parcelable {
     }
 
     /**
-     *
+     * Constructor - Product
      * @param productName
      * @param category
      * @param expiryDate
@@ -122,15 +123,15 @@ public class Product implements Parcelable {
     }
 
     /**
-     *
-     * @return
+     * For checking items that are in the shopping cart but not in the homeFragment
+     * @return true
      */
     public boolean isShoppingCheck() {
         return shoppingCheck;
     }
 
     /**
-     *
+     * Set the value of shoppingCheck in DB
      * @param shoppingCheck
      */
     public void setShoppingCheck(boolean shoppingCheck) {
@@ -138,15 +139,15 @@ public class Product implements Parcelable {
     }
 
     /**
-     *
-     * @return
+     * Get product name from DB
+     * @return productName
      */
     public String getProductName() {
         return productName;
     }
 
     /**
-     *
+     * Set product name of a product in DB
      * @param productName
      */
     public void setProductName(String productName) {
@@ -154,15 +155,15 @@ public class Product implements Parcelable {
     }
 
     /**
-     *
-     * @return
+     * Get product ID from DB
+     * @return productId
      */
     public int getProductId() {
         return productId;
     }
 
     /**
-     *
+     * Set product ID in DB
      * @param productId
      */
     public void setProductId(int productId) {
@@ -170,15 +171,15 @@ public class Product implements Parcelable {
     }
 
     /**
-     *
-     * @return
+     * Get the product expiry date from DB
+     * @return expiryDate
      */
     public String getExpiryDate() {
         return expiryDate;
     }
 
     /**
-     *
+     * Set the expiry date of a product in DB
      * @param expiryDate
      */
     public void setExpiryDate(String expiryDate) {
@@ -186,15 +187,15 @@ public class Product implements Parcelable {
     }
 
     /**
-     *
-     * @return
+     * Get product category from the DB
+     * @return productCategory
      */
     public String getCategory() {
         return category;
     }
 
     /**
-     *
+     * Set product category in DB
      * @param category
      */
     public void setCategory(String category) {
@@ -202,15 +203,15 @@ public class Product implements Parcelable {
     }
 
     /**
-     *
-     * @return
+     * Check whether a specific product is stocked or not (Defaults: true)
+     * @return true/false
      */
     public boolean isStocked() {
         return stocked;
     }
 
     /**
-     *
+     * To set a specific product item as stocked
      * @param stocked
      */
     public void setStocked(boolean stocked) {
@@ -218,15 +219,15 @@ public class Product implements Parcelable {
     }
 
     /**
-     *
-     * @return
+     * Check whether a specific product is consumed or not (Defaults: false)
+     * @return true/false
      */
     public boolean isConsumed() {
         return consumed;
     }
 
     /**
-     *
+     * To set a specific product item as consumed
      * @param consumed
      */
     public void setConsumed(boolean consumed) {
@@ -234,15 +235,15 @@ public class Product implements Parcelable {
     }
 
     /**
-     *
-     * @return
+     * Check whether a specific product item is expired or not (Defaults: false)
+     * @return true/false
      */
     public boolean isExpired() {
         return expired;
     }
 
     /**
-     *
+     * To set a specific product item as expired
      * @param expired
      */
     public void setExpired(boolean expired) {
@@ -250,8 +251,7 @@ public class Product implements Parcelable {
     }
 
     /**
-     *
-     * @return
+     * Describe the kinds of special objects contained in this Parcelable's marshalled representation.
      */
     @Override
     public int describeContents() {
@@ -259,9 +259,7 @@ public class Product implements Parcelable {
     }
 
     /**
-     *
-     * @param dest
-     * @param flags
+     * Flatten this object in to a Parcel.
      */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
