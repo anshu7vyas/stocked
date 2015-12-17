@@ -1,6 +1,6 @@
 package com.anshulvyas.csc780.grocerymanagr;
 
-import android.app.Activity;
+
 import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -17,9 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.anshulvyas.csc780.grocerymanagr.Adapters.ProductAdapter;
 import com.anshulvyas.csc780.grocerymanagr.Model.DBManager;
@@ -34,7 +32,7 @@ import java.util.Calendar;
 import java.util.List;
 
 /**
- * Created by av7 on 10/15/15.
+ * Hosts the listView of items that user wants to keep track of - with number of days before item expires
  */
 public class HomeFragment extends Fragment {
 
@@ -44,12 +42,20 @@ public class HomeFragment extends Fragment {
     private ListView productListView;
     private Context myContext;
 
+    /**
+     * Called when a fragment is first attached to its context.
+     * @param context - to be attached to
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         myContext = context;
     }
 
+    /**
+     * Called to do initial creation of a fragment. (overridden)
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +63,13 @@ public class HomeFragment extends Fragment {
         dbManager = new DBManager(getActivity());
     }
 
+    /**
+     * Called to have the fragment instantiate its user interface view.
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -86,15 +99,19 @@ public class HomeFragment extends Fragment {
                 }
             }
 
-
             productListView = (ListView) view.findViewById(R.id.listView_home_product);
             final ProductAdapter productAdapter = new ProductAdapter(getActivity().getBaseContext(), R.layout.list_view_home,
                     filterProductList);
             productListView.setAdapter(productAdapter);
+            productListView.setDivider(this.getResources().getDrawable(R.drawable.transparent));
+            productListView.setDividerHeight(20);
 
             productAdapter.setNotifyOnChange(true);
             productAdapter.notifyDataSetChanged();
 
+            /**
+             * Calling a delete dialog box to confirm user's action before deleting the item from the Adapter.
+             */
             productListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> parent, final View view, int position, long id) {
@@ -131,36 +148,38 @@ public class HomeFragment extends Fragment {
                     return false;
                 }
             });
-            } else{
-                Log.i("~!@#HOMEFRAGMENT", "list view not displayed");
-            }
+        } else{
+            Log.i("~!@#HOMEFRAGMENT", "list view not displayed");
+        }
 
-            /*
-            Instantiate Floating Action button
-             */
-            mFAB = (FloatingActionButton) view.findViewById(R.id.addFAB);
-            mFAB.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
+        /**
+         * Instantiate Floating Action button
+         */
+        mFAB = (FloatingActionButton) view.findViewById(R.id.addFAB);
+        mFAB.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
                     nextActivity();
                 }
             });
 
-            return view;
-        }
+        return view;
+    }
 
+    /**
+     * Workaround for calling an intent from the fragment to an activity.
+     */
     private void nextActivity() {
         Intent intent = new Intent(getActivity(), AddItemActivity.class);
         startActivity(intent);
     }
 
     /**
-     * Get number of days till expiry. calculates the days between the currentDate an the seleted expiry date.
+     * Get number of days till expiry. calculates the days between the currentDate an the selected expiry date.
      * @param productObj Product object
      * @return number of days
      */
     public int getLeftDays(Product productObj) {
         Calendar now = Calendar.getInstance();
-        //int expiry = productObj.getExpiryDate() - Util.getDays(now);
 
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
         Calendar expiry = Calendar.getInstance();

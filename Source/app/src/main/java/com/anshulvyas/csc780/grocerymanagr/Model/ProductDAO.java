@@ -1,9 +1,5 @@
 package com.anshulvyas.csc780.grocerymanagr.Model;
 
-/**
- * Created by av7 on 10/20/15.
- */
-
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -15,6 +11,9 @@ import com.anshulvyas.csc780.grocerymanagr.Product;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Defines the Database Access Object (DAO) for our Product DB
+ */
 public class ProductDAO {
     String[] productEntryArray = new String[]{ProductTable.COLUMN_PRODUCT_ID, ProductTable.COLUMN_PRODUCT_NAME, ProductTable
             .COLUMN_PRODUCT_CATEGORY, ProductTable.COLUMN_PRODUCT_EXPIRY, ProductTable
@@ -23,10 +22,19 @@ public class ProductDAO {
 
     private SQLiteDatabase db;
 
+    /**
+     * Constructor - ProductDAO
+     * @param db - SQLite database
+     */
     public ProductDAO(SQLiteDatabase db) {
         this.db = db;
     }
 
+    /**
+     * This will save the mentioned product item
+     * @param productItem - specific product item
+     * @return inserts in DB
+     */
     public Long save(Product productItem) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(ProductTable.COLUMN_PRODUCT_NAME, productItem.getProductName());
@@ -41,6 +49,11 @@ public class ProductDAO {
         return db.insert(ProductTable.TABLE_NAME, null, contentValues);
     }
 
+    /**
+     * This will update the mentioned product item
+     * @param productItem - specific product item
+     * @return updates the DB
+     */
     public boolean update(Product productItem) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(ProductTable.COLUMN_PRODUCT_NAME, productItem.getProductName());
@@ -57,13 +70,21 @@ public class ProductDAO {
                 String[]{productItem.getProductId() + ""}) > 0;
     }
 
-    // delete will delete the ProductItem based on Title.
+    /**
+     * This will delete the ProductItem based on Title.
+     * @param productItem - specific item
+     * @return deletes item from DB
+     */
     public boolean delete(Product productItem) {
         return db.delete(ProductTable.TABLE_NAME, ProductTable.COLUMN_PRODUCT_ID + "=?", new String[]{productItem.getProductId() +
                 ""}) > 0;
     }
 
-    // get Product item by id
+    /**
+     * This will get product item by ID
+     * @param id - product ID
+     * @return productItem
+     */
     public Product get(long id) {
         Product productItem = null;
         Cursor c = db.query(true, ProductTable.TABLE_NAME, productEntryArray, ProductTable.COLUMN_PRODUCT_ID + "=?", new String[]{id +
@@ -78,6 +99,10 @@ public class ProductDAO {
         return productItem;
     }
 
+    /**
+     * Get all product items as a list from DB
+     * @return List
+     */
     public List<Product> getAll() {
         List<Product> productList = new ArrayList<Product>();
 
@@ -96,7 +121,11 @@ public class ProductDAO {
         return productList;
     }
 
-
+    /**
+     *
+     * @param c
+     * @return
+     */
     private Product buildFromCursor(Cursor c) {
         Product productItem = null;
         if (c != null) {

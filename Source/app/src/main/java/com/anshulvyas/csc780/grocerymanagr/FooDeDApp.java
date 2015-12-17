@@ -1,14 +1,18 @@
 package com.anshulvyas.csc780.grocerymanagr;
 
+
 import android.app.Application;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
 /**
- * Created by av7 on 12/2/15.
+ * Class represents the whole application. Primarily used for instantiating 3rd party library - JodaTimeAndroid
  */
 public class FooDeDApp extends Application {
 
+    /**
+     * Called when the activity is starting
+     */
     @Override
     public void onCreate() {
         super.onCreate();

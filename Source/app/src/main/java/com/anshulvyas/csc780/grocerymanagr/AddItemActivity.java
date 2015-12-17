@@ -1,6 +1,6 @@
 package com.anshulvyas.csc780.grocerymanagr;
 
-import android.app.Activity;
+
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,7 +21,8 @@ import com.anshulvyas.csc780.grocerymanagr.Model.DBManager;
 import java.util.Calendar;
 
 /**
- * Created by av7 on 9/24/15.
+ * AddItemActivity is used to add the items that user wants to keep track of.
+ * User is prompted to add the category, name and expiry date of the item.
  */
 public class AddItemActivity extends AppCompatActivity {
     private FloatingActionButton mFAB2;
@@ -33,7 +34,10 @@ public class AddItemActivity extends AppCompatActivity {
     Calendar expiryDate, currentDate;
     CoordinatorLayout coordinatorLayout;
 
-
+    /**
+     * Called when the activity is created for the first time
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,13 +45,12 @@ public class AddItemActivity extends AppCompatActivity {
 
        coordinatorLayout = (CoordinatorLayout)findViewById(R.id.coordinatorLayout);
 
-        /*
-        Instantiate ToolBar
+        /**
+         * Instantiate ToolBar
          */
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle("Add Item");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         spinnerCategory = (Spinner) findViewById(R.id.spinner);
         et_itemName = (EditText) findViewById(R.id.editText_itemName);
@@ -55,14 +58,17 @@ public class AddItemActivity extends AppCompatActivity {
 
 
         currentDate = Calendar.getInstance();
-        
+
+        /**
+         * to add a datePicker dialog on clicking the textView for ProductExpiry.
+         */
         tV_productExpiry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Calendar mcurrentDate = Calendar.getInstance();
-                int mYear = mcurrentDate.get(Calendar.YEAR);
-                int mMonth = mcurrentDate.get(Calendar.MONTH);
-                int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
+                Calendar mCurrentDate = Calendar.getInstance();
+                int mYear = mCurrentDate.get(Calendar.YEAR);
+                int mMonth = mCurrentDate.get(Calendar.MONTH);
+                int mDay = mCurrentDate.get(Calendar.DAY_OF_MONTH);
 
                 DatePickerDialog mDatePicker = new DatePickerDialog(AddItemActivity.this, new DatePickerDialog.OnDateSetListener() {
                     public void onDateSet(DatePicker datepicker, int selectedYear, int selectedMonth, int selectedDay) {
@@ -77,16 +83,16 @@ public class AddItemActivity extends AppCompatActivity {
                 mDatePicker.setTitle("Select date");
                 mDatePicker.show();
 
-                /*
-                setting the minimum date to tomorrow, as no one would like to enter items that expire today only!
+                /**
+                 * setting the minimum date to tomorrow, as no one would like to enter items that expire today only!
                  */
                 DatePicker dp = mDatePicker.getDatePicker();
-                dp.setMinDate((mcurrentDate.getTimeInMillis() - 1000) + 24 * 60 * 60 * 1000);
+                dp.setMinDate((mCurrentDate.getTimeInMillis() - 1000) + 24 * 60 * 60 * 1000);
             }
         });
 
-        /*
-        Instantiate Floating Action button
+        /**
+         * Instantiate Floating Action button
          */
         mFAB2 = (FloatingActionButton) findViewById(R.id.FAB_check);
         mFAB2.setOnClickListener(new View.OnClickListener() {
@@ -96,20 +102,17 @@ public class AddItemActivity extends AppCompatActivity {
 
                 String category = spinnerCategory.getSelectedItem().toString();
                 String productName = et_itemName.getText().toString();
-                if(productName.matches("")) {
+                if (productName.matches("")) {
                     Snackbar.make(coordinatorLayout, "Please enter name of an item.", Snackbar.LENGTH_SHORT).show();
                     return;
                 }
                 String productExpiry = tV_productExpiry.getText().toString();
-//                if(productExpiry.matches("")) {
-//                    Snackbar.make(coordinatorLayout, "Please enter the expiration date.", Snackbar.LENGTH_SHORT).show();
-//                    return;
-//                }
 
                 Product newProduct = new Product(productName, category, productExpiry, true, false, false, SHOPPING_CHECK);
 
-
-
+                /**
+                 * Inserting the entered product item into database
+                 */
                 db.saveProduct(newProduct);
 
                 Intent intentHome = new Intent(AddItemActivity.this, HomeActivity.class);
