@@ -154,8 +154,8 @@ public class HomeFragment extends Fragment {
     }
 
     /**
-     * Get number of days till expiry
-     * @param productObj
+     * Get number of days till expiry. calculates the days between the currentDate an the seleted expiry date.
+     * @param productObj Product object
      * @return number of days
      */
     public int getLeftDays(Product productObj) {
@@ -174,7 +174,9 @@ public class HomeFragment extends Fragment {
         DateTime dateTimeExp = new DateTime(expiry.getTime());
 
         Days days = Days.daysBetween(dateTimeNow, dateTimeExp);
-        return days.getDays();
+
+        return days.getDays() + 1;
+
     }
 
     /**
@@ -188,7 +190,7 @@ public class HomeFragment extends Fragment {
 
         Notification notification = new Notification.Builder(myContext)
                 .setContentTitle("Item(s) about to expire")
-                .setContentText("FooDeD!").setSmallIcon(R.drawable.fooded_icon)
+                .setContentText("").setSmallIcon(R.drawable.fooded_icon)
                 .setContentIntent(pIntent)
                 .addAction(R.drawable.fooded_icon, "Call", pIntent)
                 .addAction(R.drawable.ic_home, "Expired", pIntent)

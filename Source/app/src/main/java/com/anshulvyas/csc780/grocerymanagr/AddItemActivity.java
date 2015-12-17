@@ -76,6 +76,12 @@ public class AddItemActivity extends AppCompatActivity {
                 }, mYear, mMonth, mDay);
                 mDatePicker.setTitle("Select date");
                 mDatePicker.show();
+
+                /*
+                setting the minimum date to tomorrow, as no one would like to enter items that expire today only!
+                 */
+                DatePicker dp = mDatePicker.getDatePicker();
+                dp.setMinDate((mcurrentDate.getTimeInMillis() - 1000) + 24 * 60 * 60 * 1000);
             }
         });
 
@@ -95,10 +101,10 @@ public class AddItemActivity extends AppCompatActivity {
                     return;
                 }
                 String productExpiry = tV_productExpiry.getText().toString();
-                if(productExpiry.matches("")) {
-                    Snackbar.make(coordinatorLayout, "Please enter the expiration date.", Snackbar.LENGTH_SHORT).show();
-                    return;
-                }
+//                if(productExpiry.matches("")) {
+//                    Snackbar.make(coordinatorLayout, "Please enter the expiration date.", Snackbar.LENGTH_SHORT).show();
+//                    return;
+//                }
 
                 Product newProduct = new Product(productName, category, productExpiry, true, false, false, SHOPPING_CHECK);
 
