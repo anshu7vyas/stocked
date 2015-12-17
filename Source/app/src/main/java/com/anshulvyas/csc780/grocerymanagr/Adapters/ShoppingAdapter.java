@@ -1,5 +1,6 @@
 package com.anshulvyas.csc780.grocerymanagr.Adapters;
 
+
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,9 +14,6 @@ import com.anshulvyas.csc780.grocerymanagr.R;
 
 import java.util.List;
 
-/**
- * Created by av7 on 11/18/15.
- */
 
 /**
  * ShoppingAdapter for the listView in Shopping Fragment
@@ -25,6 +23,12 @@ public class ShoppingAdapter extends ArrayAdapter<Product> {
     Context myContext;
     int mResource;
 
+    /**
+     * Constructor - shopping adapter
+     * @param context
+     * @param resource
+     * @param objects
+     */
     public ShoppingAdapter(Context context, int resource, List<Product> objects) {
         super(context, resource, objects);
         Log.i("~!@#SHOPPINGADAPTER", "Constructor reached!");
@@ -33,6 +37,13 @@ public class ShoppingAdapter extends ArrayAdapter<Product> {
         this.mResource = resource;
     }
 
+    /**
+     * Get a View that displays the data at the specified position in the data set.
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return view
+     */
     @Override
     public View getView (int position, View convertView, ViewGroup parent) {
 
@@ -51,13 +62,9 @@ public class ShoppingAdapter extends ArrayAdapter<Product> {
         if(shopObj != null) {
             Log.i("~!@#SHOPPINGADAPTER", shopObj.toString());
             TextView productName = (TextView) convertView.findViewById(R.id.textView_shopping_item_name);
-            //TextView productExpiry = (TextView) convertView.findViewById(R.id.textView_product_expiry);
-            //TextView productCategory = (TextView) convertView.findViewById(R.id.textView_product_category);
 
+            //only product name is required for the ShoppingItem fragment.
             productName.setText(shopObj.getProductName());
-            //productExpiry.setText("expire in " + shopObj.getExpiryDate() + " days");
-            //productCategory.setText(" (" + productObj.getCategory() + ") ");
-
         }
         return convertView;
     }

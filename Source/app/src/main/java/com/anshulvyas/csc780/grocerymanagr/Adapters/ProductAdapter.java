@@ -1,5 +1,6 @@
 package com.anshulvyas.csc780.grocerymanagr.Adapters;
 
+
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,26 +10,14 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.anshulvyas.csc780.grocerymanagr.HomeFragment;
-import com.anshulvyas.csc780.grocerymanagr.Model.DBManager;
 import com.anshulvyas.csc780.grocerymanagr.Product;
 import com.anshulvyas.csc780.grocerymanagr.R;
-import com.anshulvyas.csc780.grocerymanagr.Util;
 
-import org.joda.time.DateTime;
-import org.joda.time.Days;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
 
-/**
- * Created by av7 on 11/12/15.
- */
 
 /**
- * Adapter for the listView of HomeFragment and Timeline Fragment.
- * Reused the code for timeline fragment.
+ * Adapter for the listView of HomeFragment. Takes input from user and sets the view.
  */
 public class ProductAdapter extends ArrayAdapter<Product> {
     private List<Product> productList;
@@ -36,6 +25,12 @@ public class ProductAdapter extends ArrayAdapter<Product> {
     int mResource;
 
 
+    /**
+     * Constructor - ProductAdapter
+     * @param context
+     * @param resource
+     * @param objects
+     */
     public ProductAdapter(Context context, int resource, List<Product> objects) {
         super(context, resource, objects);
         Log.i("~!@#PRODUCTADAPTER", "Constructor reached!");
@@ -44,6 +39,13 @@ public class ProductAdapter extends ArrayAdapter<Product> {
         this.mResource = resource;
     }
 
+    /**
+     * Get a View that displays the data at the specified position in the data set
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return view
+     */
     @Override
     public View getView (int position, View convertView, ViewGroup parent) {
 

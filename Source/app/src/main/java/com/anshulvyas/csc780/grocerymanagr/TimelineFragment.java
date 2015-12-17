@@ -8,37 +8,39 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.anshulvyas.csc780.grocerymanagr.Adapters.ProductAdapter;
 import com.anshulvyas.csc780.grocerymanagr.Adapters.TimelineAdapter;
 import com.anshulvyas.csc780.grocerymanagr.Model.DBManager;
 
-import org.joda.time.DateTime;
-import org.joda.time.Days;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 /**
- * Created by av7 on 10/15/15.
+ * Hosts the listView of all the items that user has kept the track of
+ * - with appropriate flags, i.e., stocked, expired or consumed.
  */
-
-
 public class TimelineFragment extends Fragment {
-
 
     private List<Product> timelineList, filterTimelineList;
     private DBManager dbManager;
     private ListView timelineListView;
 
+    /**
+     * Called to do initial creation of a fragment. (overridden)
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dbManager = new DBManager(getActivity());
     }
 
+    /**
+     * Called to have the fragment instantiate its user interface view.
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return view
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -50,12 +52,14 @@ public class TimelineFragment extends Fragment {
         if (timelineList.size() > 0) {
             Log.i("~!@#TIMELINEFRAGMENT", timelineList.get(0).toString());
 
+            /**
+             * Checking for the items that are in the shopping list items and not in the product items.
+             */
             for (int i = 0; i < timelineList.size(); i++) {
                 if (!timelineList.get(i).isShoppingCheck()) {
                     filterTimelineList.add(timelineList.get(i));
                 }
             }
-
 
             timelineListView = (ListView) view.findViewById(R.id.listView_timeline_product);
             final TimelineAdapter timelineAdapter = new TimelineAdapter(getActivity().getBaseContext(), R.layout.list_view_timeline,

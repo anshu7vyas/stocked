@@ -30,8 +30,8 @@ proguard/
 /Source/.gradle
 /Source/local.properties
 /Source/.idea/workspace.xml
-/Source/.idea/libraries
 /Source/.DS_Store
 /Source/build
 /Source/captures
+/Source/.idea/dictionaries/av7.xml
 

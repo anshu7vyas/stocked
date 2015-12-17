@@ -9,13 +9,10 @@ import com.anshulvyas.csc780.grocerymanagr.HomeFragment;
 import com.anshulvyas.csc780.grocerymanagr.ShoppingListFragment;
 import com.anshulvyas.csc780.grocerymanagr.TimelineFragment;
 
-/**
- * Created by av7 on 10/15/15.
- */
 
 /**
- * class PagerAdapter provides the means to switch between different
- * tabs in the HomeActivity.
+ * PagerAdapter provides the means to switch between different
+ * fragments in the HomeActivity.
  */
 public class PagerAdapter extends FragmentStatePagerAdapter {
 
@@ -26,6 +23,12 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
         this.mNumOfTabs = NumofTabs;
     }
 
+
+    /**
+     * Switches fragments according to the tab number.
+     * @param position
+     * @return required fragment
+     */
     @Override
     public Fragment getItem(int position) {
         switch (position) {
@@ -43,6 +46,10 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
         }
     }
 
+    /**
+     * Get int count of the number of tabs/fragments.
+     * @return number of tabs
+     */
     @Override
     public int getCount() {
         return mNumOfTabs;

@@ -1,5 +1,6 @@
 package com.anshulvyas.csc780.grocerymanagr;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -13,14 +14,19 @@ import android.widget.EditText;
 import com.anshulvyas.csc780.grocerymanagr.Model.DBManager;
 
 /**
- * Created by av7 on 10/15/15.
+ * ShoppingItemActivity is used to add the items that user wants to buy next time he/she is at a grocery store.
+ * User is prompted to add the item name.
  */
 public class ShoppingItemActivity extends AppCompatActivity {
 
     private FloatingActionButton mFAB3;
-    EditText et_shoppingItemName, et_shoppingCategory, et_shoppingExpiry, et_shoppingNotify;
+    EditText et_shoppingItemName;
     CoordinatorLayout coordinatorLayout;
 
+    /**
+     * Called when the activity is created for the first time
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,20 +34,20 @@ public class ShoppingItemActivity extends AppCompatActivity {
 
         coordinatorLayout = (CoordinatorLayout)findViewById(R.id.shoopingCoordinatorLayout);
 
-        /*
-        Instantiate ToolBar
+        /**
+         * Instantiate ToolBar
          */
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle("Add new item");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         et_shoppingItemName = (EditText) findViewById(R.id.editText_shopping_item_name);
 
-         /*
-        Instantiate Floating Action button
-         */
+         /**
+          * Instantiate Floating Action button
+          */
         mFAB3 = (FloatingActionButton) findViewById(R.id.FAB_check_shop);
         mFAB3.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -53,7 +59,6 @@ public class ShoppingItemActivity extends AppCompatActivity {
                     Snackbar.make(coordinatorLayout, "Please enter name of an item.", Snackbar.LENGTH_SHORT).show();
                     return;
                 }
-
 
                 Product newProduct = new Product(shoppingItemName, "", "", true, false, false, true);
 
@@ -69,7 +74,6 @@ public class ShoppingItemActivity extends AppCompatActivity {
                 finish();
             }
         });
-
 
     }
 }
