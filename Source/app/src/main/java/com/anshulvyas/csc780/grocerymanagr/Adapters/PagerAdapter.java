@@ -12,6 +12,11 @@ import com.anshulvyas.csc780.grocerymanagr.TimelineFragment;
 /**
  * Created by av7 on 10/15/15.
  */
+
+/**
+ * class PagerAdapter provides the means to switch between different
+ * tabs in the HomeActivity.
+ */
 public class PagerAdapter extends FragmentStatePagerAdapter {
 
     int mNumOfTabs;

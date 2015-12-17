@@ -11,6 +11,10 @@ import java.util.List;
 /**
  * Created by av7 on 10/20/15.
  */
+
+/**
+ * Manages the database by defining different methods for the CRUD operations
+ */
 public class DBManager {
     private Context context;
     private DBOpenHelper dbOpenHelper;

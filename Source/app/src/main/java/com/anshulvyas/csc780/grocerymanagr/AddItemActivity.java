@@ -1,9 +1,12 @@
 package com.anshulvyas.csc780.grocerymanagr;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -28,12 +31,15 @@ public class AddItemActivity extends AppCompatActivity {
     final static boolean SHOPPING_CHECK = false;
     TextView tV_productExpiry;
     Calendar expiryDate, currentDate;
+    CoordinatorLayout coordinatorLayout;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item);
+
+       coordinatorLayout = (CoordinatorLayout)findViewById(R.id.coordinatorLayout);
 
         /*
         Instantiate ToolBar
@@ -70,6 +76,12 @@ public class AddItemActivity extends AppCompatActivity {
                 }, mYear, mMonth, mDay);
                 mDatePicker.setTitle("Select date");
                 mDatePicker.show();
+
+                /*
+                setting the minimum date to tomorrow, as no one would like to enter items that expire today only!
+                 */
+                DatePicker dp = mDatePicker.getDatePicker();
+                dp.setMinDate((mcurrentDate.getTimeInMillis() - 1000) + 24 * 60 * 60 * 1000);
             }
         });
 
@@ -84,7 +96,15 @@ public class AddItemActivity extends AppCompatActivity {
 
                 String category = spinnerCategory.getSelectedItem().toString();
                 String productName = et_itemName.getText().toString();
+                if(productName.matches("")) {
+                    Snackbar.make(coordinatorLayout, "Please enter name of an item.", Snackbar.LENGTH_SHORT).show();
+                    return;
+                }
                 String productExpiry = tV_productExpiry.getText().toString();
+//                if(productExpiry.matches("")) {
+//                    Snackbar.make(coordinatorLayout, "Please enter the expiration date.", Snackbar.LENGTH_SHORT).show();
+//                    return;
+//                }
 
                 Product newProduct = new Product(productName, category, productExpiry, true, false, false, SHOPPING_CHECK);
 

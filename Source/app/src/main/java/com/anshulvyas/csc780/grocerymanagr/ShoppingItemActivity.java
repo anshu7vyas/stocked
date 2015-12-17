@@ -2,7 +2,9 @@ package com.anshulvyas.csc780.grocerymanagr;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -17,11 +19,14 @@ public class ShoppingItemActivity extends AppCompatActivity {
 
     private FloatingActionButton mFAB3;
     EditText et_shoppingItemName, et_shoppingCategory, et_shoppingExpiry, et_shoppingNotify;
+    CoordinatorLayout coordinatorLayout;
 
     @Override
     public void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_list);
+
+        coordinatorLayout = (CoordinatorLayout)findViewById(R.id.shoopingCoordinatorLayout);
 
         /*
         Instantiate ToolBar
@@ -44,6 +49,10 @@ public class ShoppingItemActivity extends AppCompatActivity {
                 DBManager db = new DBManager(ShoppingItemActivity.this);
 
                 String shoppingItemName = et_shoppingItemName.getText().toString();
+                if(shoppingItemName.matches("")) {
+                    Snackbar.make(coordinatorLayout, "Please enter name of an item.", Snackbar.LENGTH_SHORT).show();
+                    return;
+                }
 
 
                 Product newProduct = new Product(shoppingItemName, "", "", true, false, false, true);

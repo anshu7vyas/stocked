@@ -7,6 +7,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * Created by av7 on 10/14/15.
  */
+
+/**
+ * For creating and upgrading the database.
+ * extends from: SQLiteOpenHelper
+ */
 public class DBOpenHelper extends SQLiteOpenHelper {
 
     //Constants for db name and version

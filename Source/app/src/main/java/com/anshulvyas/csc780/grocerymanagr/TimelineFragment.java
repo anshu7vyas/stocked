@@ -2,18 +2,73 @@ package com.anshulvyas.csc780.grocerymanagr;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+
+import com.anshulvyas.csc780.grocerymanagr.Adapters.ProductAdapter;
+import com.anshulvyas.csc780.grocerymanagr.Adapters.TimelineAdapter;
+import com.anshulvyas.csc780.grocerymanagr.Model.DBManager;
+
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by av7 on 10/15/15.
  */
+
+
 public class TimelineFragment extends Fragment {
 
+
+    private List<Product> timelineList, filterTimelineList;
+    private DBManager dbManager;
+    private ListView timelineListView;
+
     @Override
-    public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_timeline, container, false);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        dbManager = new DBManager(getActivity());
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_timeline, container, false);
+
+        filterTimelineList = new ArrayList<>();
+
+        timelineList = dbManager.getAllProducts();
+        if (timelineList.size() > 0) {
+            Log.i("~!@#TIMELINEFRAGMENT", timelineList.get(0).toString());
+
+            for (int i = 0; i < timelineList.size(); i++) {
+                if (!timelineList.get(i).isShoppingCheck()) {
+                    filterTimelineList.add(timelineList.get(i));
+                }
+            }
+
+
+            timelineListView = (ListView) view.findViewById(R.id.listView_timeline_product);
+            final TimelineAdapter timelineAdapter = new TimelineAdapter(getActivity().getBaseContext(), R.layout.list_view_timeline,
+                    filterTimelineList);
+            timelineListView.setAdapter(timelineAdapter);
+
+            timelineAdapter.setNotifyOnChange(true);
+            timelineAdapter.notifyDataSetChanged();
+
+        } else {
+            Log.i("~!@#TIMELINEFRAGMENT", "list view not displayed");
+        }
+        return view;
+
+    }
 }

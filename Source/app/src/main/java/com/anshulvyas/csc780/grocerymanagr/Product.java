@@ -9,7 +9,6 @@ import android.os.Parcelable;
 public class Product implements Parcelable {
 
     public final static String PRODUCT_KEY = "product_key";
-    public final static String SHOPPING_KEY = "shopping_key";
 
 
     String productName;

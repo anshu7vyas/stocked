@@ -16,6 +16,10 @@ import java.util.List;
 /**
  * Created by av7 on 11/18/15.
  */
+
+/**
+ * ShoppingAdapter for the listView in Shopping Fragment
+ */
 public class ShoppingAdapter extends ArrayAdapter<Product> {
     private List<Product> shoppingList;
     Context myContext;
