@@ -1,25 +1,31 @@
 package com.anshulvyas.csc780.grocerymanagr;
 
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
 
 import com.anshulvyas.csc780.grocerymanagr.Adapters.PagerAdapter;
+import com.anshulvyas.csc780.grocerymanagr.Model.DBManager;
 
 /**
  * The main activity which constitutes of all 3 fragments - HomeFragment, ShoppingListFragment, TimelineFragment
  */
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements DialogInterface.OnDismissListener{
 
     private Toolbar mToolBar;
     private TabLayout mTabLayout;
-    private Product mProductObj;
+    private DBManager dbManager;
+
+    Bundle savedState;
+
 
     /**
      * Called when the activity is being created for the first time.
@@ -28,6 +34,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        savedState = savedInstanceState;
         setContentView(R.layout.activity_home);
 
         /**
@@ -58,6 +65,7 @@ public class HomeActivity extends AppCompatActivity {
 
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+
                 mViewPager.setCurrentItem(tab.getPosition());
             }
 
@@ -77,39 +85,12 @@ public class HomeActivity extends AppCompatActivity {
             mViewPager.setCurrentItem(pagerNumber);
         }
 
+
+
     }
 
-    /**
-     * Initialize the contents of the Activity's standard options menu
-     * @param menu
-     * @return boolean
-     */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_home, menu);
-        return true;
-    }
 
-    /**
-     * Called whenever an item in options menu is selected
-     * @param item
-     * @return selected item/true
-     */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+    boolean alredyHandled = false;
 
     /**
      * Called when activity start-up is complete
@@ -119,5 +100,71 @@ public class HomeActivity extends AppCompatActivity {
     public void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
+        if(!alredyHandled) {
+            notificationHandler();
+            alredyHandled=true;
+        }
+    }
+
+    public void createNotificationDialog(final Integer productObj) {
+        final Product p = dbManager.get(productObj);
+        AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
+        builder.setTitle("What to do with " + p.getProductName() + "?");
+        builder.setMessage("Please select action.");
+        builder.setPositiveButton("Consumed", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                //Do nothing but close the dialog
+//                dialog.dismiss();
+                p.setConsumed(true);
+                p.setExpired(false);
+                p.setStocked(false);
+                dbManager.updateProduct(p);
+            }
+        });
+        builder.setNegativeButton("Expired", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //Do nothing
+//                dialog.dismiss();
+                p.setExpired(true);
+                p.setConsumed(false);
+                p.setStocked(false);
+                dbManager.updateProduct(p);
+            }
+        });
+        builder.setNeutralButton("Later", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //Do nothing
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.setOnDismissListener(this);
+        alert.show();
+
+    }
+
+    public void notificationHandler() {
+        Log.d("~!@#NOTIFICATIONREC", "inside onCreate()");
+
+        dbManager = new DBManager(this);
+
+        Intent intent = getIntent();
+
+        if( intent.getExtras() != null ) {
+            if(intent.hasExtra("List")){
+                Integer[] arr = (Integer[]) intent.getExtras().get("List");
+                for (Integer item : arr) {
+                    Log.d("~!@#Array", String.valueOf(item));
+                    createNotificationDialog(item);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        //recreate();
     }
 }

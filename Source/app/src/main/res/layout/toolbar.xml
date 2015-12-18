@@ -18,6 +18,3 @@
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
 </android.support.v7.widget.Toolbar>
-
-<!--app:navigationIcon="@drawable/ic_menu"
-app:layout_collapseMode="pin"-->

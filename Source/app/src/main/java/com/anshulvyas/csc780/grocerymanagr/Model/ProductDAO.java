@@ -121,10 +121,32 @@ public class ProductDAO {
         return productList;
     }
 
+    public List<Product> getAllStocked() {
+        List<Product> productList = new ArrayList<Product>();
+
+        //Cursor c = db.query(ProductTable.TABLE_NAME, productEntryArray, null, null, null, null, null);
+        String dbQuery = "SELECT * FROM " + ProductTable.TABLE_NAME + " WHERE " + ProductTable.COLUMN_STOCKED + " = 1 " + " " +
+                "ORDER BY " +
+                ProductTable
+                .COLUMN_PRODUCT_EXPIRY + " " +
+                "ASC;";
+        Cursor c = db.rawQuery(dbQuery, null);
+
+        if (c != null && c.moveToFirst()) {
+            do {
+                Product productItem = buildFromCursor(c);
+                if (productItem != null) {
+                    productList.add(productItem);
+                }
+            } while (c.moveToNext());
+        }
+        return productList;
+    }
+
     /**
-     *
+     * To build product object from Cursor
      * @param c
-     * @return
+     * @return productItem
      */
     private Product buildFromCursor(Cursor c) {
         Product productItem = null;
