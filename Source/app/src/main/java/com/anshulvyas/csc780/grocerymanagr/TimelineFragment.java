@@ -1,6 +1,6 @@
 package com.anshulvyas.csc780.grocerymanagr;
 
-import android.app.DialogFragment;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -66,6 +66,7 @@ public class TimelineFragment extends Fragment {
             final TimelineAdapter timelineAdapter = new TimelineAdapter(getActivity().getBaseContext(), R.layout.list_view_timeline,
                     filterTimelineList);
             timelineListView.setAdapter(timelineAdapter);
+            timelineListView.setDivider(this.getResources().getDrawable(R.drawable.transparent));
 
             timelineAdapter.setNotifyOnChange(true);
             timelineAdapter.notifyDataSetChanged();

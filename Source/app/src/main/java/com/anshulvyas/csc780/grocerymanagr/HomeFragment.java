@@ -2,8 +2,6 @@ package com.anshulvyas.csc780.grocerymanagr;
 
 
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -14,7 +12,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,7 +35,7 @@ import java.util.List;
 /**
  * Hosts the listView of items that user wants to keep track of - with number of days before item expires
  */
-public class HomeFragment extends Fragment implements DialogInterface.OnDismissListener{
+public class HomeFragment extends Fragment {
 
     private FloatingActionButton mFAB;
     private List<Product> productList, filterProductList;
@@ -55,6 +53,7 @@ public class HomeFragment extends Fragment implements DialogInterface.OnDismissL
         super.onAttach(context);
         myContext = context;
     }
+
 
     /**
      * Called to do initial creation of a fragment. (overridden)
@@ -115,7 +114,6 @@ public class HomeFragment extends Fragment implements DialogInterface.OnDismissL
                     filterProductList);
             productListView.setAdapter(productAdapter);
             productListView.setDivider(this.getResources().getDrawable(R.drawable.transparent));
-            productListView.setDividerHeight(20);
 
             productAdapter.setNotifyOnChange(true);
             productAdapter.notifyDataSetChanged();
@@ -225,14 +223,11 @@ public class HomeFragment extends Fragment implements DialogInterface.OnDismissL
 
 
         Notification notification = new Notification.Builder(myContext)
-                .setContentTitle("FooDeD")
+                .setContentTitle("Stocked!")
                 .setContentText(String.valueOf(notificationList.size()) + " Item(s) about to expire")
-                .setSmallIcon(R.drawable.fooded_icon)
+                .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentIntent(pIntent)
                 .build();
-//                .addAction(R.drawable.fooded_icon, "Call", pIntent)
-//                .addAction(R.drawable.ic_home, "Expired", pIntent)
-//                .addAction(R.drawable.ic_check_white_12dp, "Consumed", pIntent).build();
         NotificationManager notificationManager = (NotificationManager) myContext.getSystemService(Context.NOTIFICATION_SERVICE);
 
         // hide the notification after its selected
@@ -241,16 +236,17 @@ public class HomeFragment extends Fragment implements DialogInterface.OnDismissL
         notificationManager.notify(0, notification);
     }
 
-    @Override
-    public void onDismiss(DialogInterface dialog) {
-        final ProductAdapter productAdapter = new ProductAdapter(getActivity().getBaseContext(), R.layout.list_view_home,
-                filterProductList);
-        productListView.setAdapter(productAdapter);
-        productListView.setDivider(this.getResources().getDrawable(R.drawable.transparent));
-        productListView.setDividerHeight(20);
-
-        productAdapter.setNotifyOnChange(true);
-        productAdapter.notifyDataSetChanged();
-    }
+//
+//    @Override
+//    public void onDismiss(DialogInterface dialog) {
+//        final ProductAdapter productAdapter = new ProductAdapter(getActivity().getBaseContext(), R.layout.list_view_home,
+//                filterProductList);
+//        productListView.setAdapter(productAdapter);
+//        productListView.setDivider(this.getResources().getDrawable(R.drawable.transparent));
+//        productListView.setDividerHeight(20);
+//
+//        productAdapter.setNotifyOnChange(true);
+//        productAdapter.notifyDataSetChanged();
+//    }
 
 }
