@@ -12,7 +12,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DBOpenHelper extends SQLiteOpenHelper {
     //Constants for db name and version
     private static final String DATABASE_NAME = "Fooded.db";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
 
     /**
      * Constructor - DBOpenHelper, calls super class constructor

@@ -2,6 +2,8 @@ package com.anshulvyas.csc780.grocerymanagr;
 
 
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -12,6 +14,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,13 +37,14 @@ import java.util.List;
 /**
  * Hosts the listView of items that user wants to keep track of - with number of days before item expires
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements DialogInterface.OnDismissListener{
 
     private FloatingActionButton mFAB;
     private List<Product> productList, filterProductList;
     private DBManager dbManager;
     private ListView productListView;
     private Context myContext;
+    public List<Integer> notificationList;
 
     /**
      * Called when a fragment is first attached to its context.
@@ -77,7 +81,7 @@ public class HomeFragment extends Fragment {
 
         filterProductList = new ArrayList<>();
 
-        productList = dbManager.getAllProducts();
+        productList = dbManager.getAllStockedProducts();
         if (productList.size() > 0) {
             Log.i("~!@#HOMEFRAGMENT", productList.get(0).toString());
 
@@ -87,6 +91,9 @@ public class HomeFragment extends Fragment {
                 }
             }
 
+            notificationList = new ArrayList<>();
+            notificationList.clear();
+
             for (int i = 0; i < filterProductList.size(); i++) {
                 Product productObj = filterProductList.get(i);
                 if(getLeftDays(productObj) <= 0) {
@@ -95,9 +102,13 @@ public class HomeFragment extends Fragment {
                     productObj.setConsumed(false);
                     dbManager.updateProduct(productObj);
                 } else if(getLeftDays(productObj) == 1) {
-                    createNotification();
+                    if(productObj != null) {
+                        notificationList.add(productObj.getProductId());
+                    }
                 }
             }
+
+            createNotification();
 
             productListView = (ListView) view.findViewById(R.id.listView_home_product);
             final ProductAdapter productAdapter = new ProductAdapter(getActivity().getBaseContext(), R.layout.list_view_home,
@@ -195,7 +206,6 @@ public class HomeFragment extends Fragment {
         Days days = Days.daysBetween(dateTimeNow, dateTimeExp);
 
         return days.getDays() + 1;
-
     }
 
     /**
@@ -204,22 +214,43 @@ public class HomeFragment extends Fragment {
     public void createNotification() {
         // Prepare intent which is triggered if the
         // notification is selected
-        Intent intent = new Intent(myContext, NotificationReceiver.class);
+        Intent intent = new Intent(myContext, HomeActivity.class);
+        Integer[] simpleArray = new Integer[notificationList.size()];
+        notificationList.toArray(simpleArray);
+
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra( "List", simpleArray);
         PendingIntent pIntent = PendingIntent.getActivity(myContext, (int) System.currentTimeMillis(), intent, 0);
 
+
         Notification notification = new Notification.Builder(myContext)
-                .setContentTitle("Item(s) about to expire")
-                .setContentText("").setSmallIcon(R.drawable.fooded_icon)
+                .setContentTitle("FooDeD")
+                .setContentText(String.valueOf(notificationList.size()) + " Item(s) about to expire")
+                .setSmallIcon(R.drawable.fooded_icon)
                 .setContentIntent(pIntent)
-                .addAction(R.drawable.fooded_icon, "Call", pIntent)
-                .addAction(R.drawable.ic_home, "Expired", pIntent)
-                .addAction(R.drawable.ic_check_white_12dp, "Consumed", pIntent).build();
+                .build();
+//                .addAction(R.drawable.fooded_icon, "Call", pIntent)
+//                .addAction(R.drawable.ic_home, "Expired", pIntent)
+//                .addAction(R.drawable.ic_check_white_12dp, "Consumed", pIntent).build();
         NotificationManager notificationManager = (NotificationManager) myContext.getSystemService(Context.NOTIFICATION_SERVICE);
 
         // hide the notification after its selected
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
 
         notificationManager.notify(0, notification);
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        final ProductAdapter productAdapter = new ProductAdapter(getActivity().getBaseContext(), R.layout.list_view_home,
+                filterProductList);
+        productListView.setAdapter(productAdapter);
+        productListView.setDivider(this.getResources().getDrawable(R.drawable.transparent));
+        productListView.setDividerHeight(20);
+
+        productAdapter.setNotifyOnChange(true);
+        productAdapter.notifyDataSetChanged();
     }
 
 }

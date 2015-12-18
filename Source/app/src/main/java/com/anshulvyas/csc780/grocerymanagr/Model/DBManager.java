@@ -71,5 +71,9 @@ public class DBManager {
         return this.productDAO.getAll();
     }
 
+    public List<Product> getAllStockedProducts() {
+        return this.productDAO.getAllStocked();
+    }
+
 
 }
