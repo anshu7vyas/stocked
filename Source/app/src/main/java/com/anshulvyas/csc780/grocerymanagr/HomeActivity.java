@@ -18,14 +18,22 @@ import com.anshulvyas.csc780.grocerymanagr.Model.DBManager;
 /**
  * The main activity which constitutes of all 3 fragments - HomeFragment, ShoppingListFragment, TimelineFragment
  */
-public class HomeActivity extends AppCompatActivity implements DialogInterface.OnDismissListener{
+public class HomeActivity extends AppCompatActivity {
 
     private Toolbar mToolBar;
     private TabLayout mTabLayout;
     private DBManager dbManager;
+    private FragmentRefreshListener fragmentRefreshListener;
 
     Bundle savedState;
 
+    public FragmentRefreshListener getFragmentRefreshListener() {
+        return fragmentRefreshListener;
+    }
+
+    public void setFragmentRefreshListener(FragmentRefreshListener fragmentRefreshListener) {
+        this.fragmentRefreshListener = fragmentRefreshListener;
+    }
 
     /**
      * Called when the activity is being created for the first time.
@@ -65,15 +73,12 @@ public class HomeActivity extends AppCompatActivity implements DialogInterface.O
 
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-
                 mViewPager.setCurrentItem(tab.getPosition());
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
             }
-
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
@@ -84,13 +89,7 @@ public class HomeActivity extends AppCompatActivity implements DialogInterface.O
             int pagerNumber = getIntent().getExtras().getInt(Product.PRODUCT_KEY);
             mViewPager.setCurrentItem(pagerNumber);
         }
-
-
-
     }
-
-
-    boolean alredyHandled = false;
 
     /**
      * Called when activity start-up is complete
@@ -99,13 +98,13 @@ public class HomeActivity extends AppCompatActivity implements DialogInterface.O
     @Override
     public void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-
-        if(!alredyHandled) {
-            notificationHandler();
-            alredyHandled=true;
-        }
+        notificationHandler();
     }
 
+    /**
+     * Creates notification dialog box for each individual item that has expired.
+     * @param productObj
+     */
     public void createNotificationDialog(final Integer productObj) {
         final Product p = dbManager.get(productObj);
         AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
@@ -113,38 +112,37 @@ public class HomeActivity extends AppCompatActivity implements DialogInterface.O
         builder.setMessage("Please select action.");
         builder.setPositiveButton("Consumed", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                //Do nothing but close the dialog
-//                dialog.dismiss();
                 p.setConsumed(true);
                 p.setExpired(false);
                 p.setStocked(false);
                 dbManager.updateProduct(p);
+                Log.i("4444", p + "");
+                fragmentRefreshListener.onRefresh(p.getProductId());
             }
         });
         builder.setNegativeButton("Expired", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //Do nothing
-//                dialog.dismiss();
                 p.setExpired(true);
                 p.setConsumed(false);
                 p.setStocked(false);
                 dbManager.updateProduct(p);
+                fragmentRefreshListener.onRefresh(p.getProductId());
             }
         });
         builder.setNeutralButton("Later", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //Do nothing
                 dialog.dismiss();
             }
         });
         AlertDialog alert = builder.create();
-        alert.setOnDismissListener(this);
         alert.show();
-
     }
 
+    /**
+     * Calls and handles createNotificationDialog()
+     */
     public void notificationHandler() {
         Log.d("~!@#NOTIFICATIONREC", "inside onCreate()");
 
@@ -163,8 +161,8 @@ public class HomeActivity extends AppCompatActivity implements DialogInterface.O
         }
     }
 
-    @Override
-    public void onDismiss(DialogInterface dialog) {
-        //recreate();
+
+    public interface FragmentRefreshListener{
+        void onRefresh(int productId);
     }
 }

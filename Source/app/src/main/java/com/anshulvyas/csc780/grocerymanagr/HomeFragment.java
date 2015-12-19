@@ -2,8 +2,6 @@ package com.anshulvyas.csc780.grocerymanagr;
 
 
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -14,7 +12,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,7 +34,7 @@ import java.util.List;
 /**
  * Hosts the listView of items that user wants to keep track of - with number of days before item expires
  */
-public class HomeFragment extends Fragment implements DialogInterface.OnDismissListener{
+public class HomeFragment extends Fragment {
 
     private FloatingActionButton mFAB;
     private List<Product> productList, filterProductList;
@@ -85,6 +82,10 @@ public class HomeFragment extends Fragment implements DialogInterface.OnDismissL
         if (productList.size() > 0) {
             Log.i("~!@#HOMEFRAGMENT", productList.get(0).toString());
 
+
+            /**
+             * making list of items that are in HomeFragment and not in ShoppingFragment
+             */
             for (int i = 0; i < productList.size(); i++) {
                 if (!productList.get(i).isShoppingCheck()) {
                     filterProductList.add(productList.get(i));
@@ -94,6 +95,9 @@ public class HomeFragment extends Fragment implements DialogInterface.OnDismissL
             notificationList = new ArrayList<>();
             notificationList.clear();
 
+            /**
+             * Checking if products have expired
+             */
             for (int i = 0; i < filterProductList.size(); i++) {
                 Product productObj = filterProductList.get(i);
                 if(getLeftDays(productObj) <= 0) {
@@ -115,48 +119,103 @@ public class HomeFragment extends Fragment implements DialogInterface.OnDismissL
                     filterProductList);
             productListView.setAdapter(productAdapter);
             productListView.setDivider(this.getResources().getDrawable(R.drawable.transparent));
-            productListView.setDividerHeight(20);
 
             productAdapter.setNotifyOnChange(true);
             productAdapter.notifyDataSetChanged();
 
+
+            ((HomeActivity)getActivity()).setFragmentRefreshListener(new HomeActivity.FragmentRefreshListener() {
+                @Override
+                public void onRefresh(int id) {
+                    int i =0;
+                    for (Product product:
+                         filterProductList) {
+
+                        if(product.getProductId() == id) {
+                            break;
+                        }
+                        i++;
+                    }
+
+                    productAdapter.remove(productAdapter.getItem(i));
+                    productAdapter.setNotifyOnChange(true);
+                    productAdapter.notifyDataSetChanged();
+                }
+            });
             /**
-             * Calling a delete dialog box to confirm user's action before deleting the item from the Adapter.
+             * Calling a detail box, if user wants to modify the state
              */
             productListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> parent, final View view, int position, long id) {
 
-                    final AlertDialog.Builder deleteDialog = new AlertDialog.Builder(getActivity());
-                    deleteDialog.setTitle("Delete?");
-                    deleteDialog.setMessage("Are you sure you want to delete?");
                     final int viewPosition = position;
-
-                    deleteDialog.setPositiveButton("OK", new AlertDialog.OnClickListener() {
-                        @Override
+                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(getActivity());
+                    builder.setTitle("What to do with " + productAdapter.getItem(viewPosition).getProductName() + "?");
+                    builder.setMessage("Please select action.");
+                    builder.setPositiveButton("Consumed", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            dbManager.deleteProduct(productAdapter.getItem(viewPosition));
-                            Log.d("DEMO======>", "PRODUCT DELETED");
-                            Snackbar.make(view, productAdapter.getItem(viewPosition).getProductName() + " deleted", Snackbar
-                                    .LENGTH_LONG).show();
+                            productAdapter.getItem(viewPosition).setConsumed(true);
+                            productAdapter.getItem(viewPosition).setExpired(false);
+                            productAdapter.getItem(viewPosition).setStocked(false);
+                            dbManager.updateProduct(productAdapter.getItem(viewPosition));
 
                             productAdapter.remove(productAdapter.getItem(viewPosition));
-
 
                             productAdapter.setNotifyOnChange(true);
                             productAdapter.notifyDataSetChanged();
                         }
                     });
-
-                    deleteDialog.setNegativeButton("Cancel", new AlertDialog.OnClickListener() {
+                    builder.setNegativeButton("Expired", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
+                            productAdapter.getItem(viewPosition).setExpired(true);
+                            productAdapter.getItem(viewPosition).setConsumed(false);
+                            productAdapter.getItem(viewPosition).setStocked(false);
+                            dbManager.updateProduct(productAdapter.getItem(viewPosition));
+
+                            productAdapter.remove(productAdapter.getItem(viewPosition));
+
+                            productAdapter.setNotifyOnChange(true);
+                            productAdapter.notifyDataSetChanged();
                         }
                     });
+                    builder.setNeutralButton("Delete", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            final AlertDialog.Builder deleteDialog = new AlertDialog.Builder(getActivity());
+                            deleteDialog.setTitle("Delete?");
+                            deleteDialog.setMessage("Are you sure you want to delete?");
+                            deleteDialog.setPositiveButton("OK", new AlertDialog.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dbManager.deleteProduct(productAdapter.getItem(viewPosition));
+                                    Log.d("DEMO======>", "PRODUCT DELETED");
+                                    Snackbar.make(view, productAdapter.getItem(viewPosition).getProductName() + " deleted", Snackbar
+                                            .LENGTH_LONG).show();
 
-                    deleteDialog.show();
+                                    productAdapter.remove(productAdapter.getItem(viewPosition));
+
+
+                                    productAdapter.setNotifyOnChange(true);
+                                    productAdapter.notifyDataSetChanged();
+                                }
+                            });
+
+                            deleteDialog.setNegativeButton("Cancel", new AlertDialog.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+
+                            deleteDialog.show();
+                        }
+                    });
+                    android.support.v7.app.AlertDialog alert = builder.create();
+                    alert.show();
                     return false;
+
                 }
             });
         } else{
@@ -223,34 +282,20 @@ public class HomeFragment extends Fragment implements DialogInterface.OnDismissL
         intent.putExtra( "List", simpleArray);
         PendingIntent pIntent = PendingIntent.getActivity(myContext, (int) System.currentTimeMillis(), intent, 0);
 
+        if(notificationList.size() > 0) {
+            Notification notification = new Notification.Builder(myContext)
+                    .setContentTitle("Stocked!")
+                    .setContentText(String.valueOf(notificationList.size()) + " Item(s) about to expire")
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setContentIntent(pIntent)
+                    .build();
+            NotificationManager notificationManager = (NotificationManager) myContext.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        Notification notification = new Notification.Builder(myContext)
-                .setContentTitle("FooDeD")
-                .setContentText(String.valueOf(notificationList.size()) + " Item(s) about to expire")
-                .setSmallIcon(R.drawable.fooded_icon)
-                .setContentIntent(pIntent)
-                .build();
-//                .addAction(R.drawable.fooded_icon, "Call", pIntent)
-//                .addAction(R.drawable.ic_home, "Expired", pIntent)
-//                .addAction(R.drawable.ic_check_white_12dp, "Consumed", pIntent).build();
-        NotificationManager notificationManager = (NotificationManager) myContext.getSystemService(Context.NOTIFICATION_SERVICE);
+            // hide the notification after its selected
+            notification.flags |= Notification.FLAG_AUTO_CANCEL;
 
-        // hide the notification after its selected
-        notification.flags |= Notification.FLAG_AUTO_CANCEL;
-
-        notificationManager.notify(0, notification);
-    }
-
-    @Override
-    public void onDismiss(DialogInterface dialog) {
-        final ProductAdapter productAdapter = new ProductAdapter(getActivity().getBaseContext(), R.layout.list_view_home,
-                filterProductList);
-        productListView.setAdapter(productAdapter);
-        productListView.setDivider(this.getResources().getDrawable(R.drawable.transparent));
-        productListView.setDividerHeight(20);
-
-        productAdapter.setNotifyOnChange(true);
-        productAdapter.notifyDataSetChanged();
+            notificationManager.notify(0, notification);
+        }
     }
 
 }

@@ -28,7 +28,7 @@ public class AddItemActivity extends AppCompatActivity {
     private FloatingActionButton mFAB2;
 
     Spinner spinnerCategory;
-    EditText et_itemName, et_expiry, et_notify;
+    EditText et_itemName;
     final static boolean SHOPPING_CHECK = false;
     TextView tV_productExpiry;
     Calendar expiryDate, currentDate;
