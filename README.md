@@ -1,4 +1,4 @@
->San Francisco State University
+>>**San Francisco State University**
 <br/>
 >Department of Computer Science
 <br/>
@@ -8,11 +8,15 @@
 
 App name -
 <br/>
- **Stocked!**
+####Stocked!
  <br/>
 (To better manage groceries!)
 
-[For JOURNAL, please click here (or go to the wiki pages tab in the project repository.)](https://github.com/av-7/GroceryManagR/wiki/JOURNAL)
+For [JOURNAL](https://github.com/av-7/GroceryManagR/wiki/JOURNAL), click on the link or visit wiki pages in the project repository.
+
+For QA Test Plans:
+- [Home Tab] (https://github.com/av-7/GroceryManagR/wiki/QA-Test-Plan---main-functionality)
+- [Shopping List Tab] (https://github.com/av-7/GroceryManagR/wiki/QA-Test-Plan---Shopping-List-Tab)
 
 ##Introduction
 
