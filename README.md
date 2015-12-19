@@ -18,6 +18,8 @@ App name -
 >- [Home Tab] (https://github.com/av-7/GroceryManagR/wiki/QA-Test-Plan---main-functionality)
 >- [Shopping List Tab] (https://github.com/av-7/GroceryManagR/wiki/QA-Test-Plan---Shopping-List-Tab)
 
+>For App javadocs: [Stocked! JavaDocs](http://anshulvyas.com/GroceryManagR/)
+
 ##Introduction
 
 Stocked! is an app to keep track of your grocieries that might expire in some time. Users can input the items that they want to keep track of, for example, eggs, bread, potatos etc. The app shows the number of days before the item expires. App fires a notification a day before the item is about to expire. Users can also mark the item as consumed.
