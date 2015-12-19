@@ -33,3 +33,25 @@ The app has a timeline view that stores all the items that the user has kept tra
 
 On launching the app, the home screen will show up.
 
+![Splash](https://github.com/av-7/GroceryManagR/blob/master/Screens/Screen1.jpg)
+
+####Home Screen:
+
+![homeScreen] (https://github.com/av-7/GroceryManagR/blob/master/Screens/Screen2.jpg)
+
+####Shopping List Screen:
+
+![shoppingListScreen] (https://github.com/av-7/GroceryManagR/blob/master/Screens/Screen3.jpg)
+
+####Timeline Screen:
+
+![timelineScreen] (https://github.com/av-7/GroceryManagR/blob/master/Screens/Screen4.jpg)
+
+####Notification to user:
+
+![notification] (https://github.com/av-7/GroceryManagR/blob/master/Screens/Screen5.jpg)
+
+####Select Dialog box for updating item - expired or consumed
+
+![dialogBox] (https://github.com/av-7/GroceryManagR/blob/master/Screens/Screen6.jpg)
+
