@@ -12,11 +12,11 @@ App name -
  <br/>
 (To better manage groceries!)
 
-For [JOURNAL](https://github.com/av-7/GroceryManagR/wiki/JOURNAL), click on the link or visit wiki pages in the project repository.
+>For [JOURNAL](https://github.com/av-7/GroceryManagR/wiki/JOURNAL), click on the link or visit wiki pages in the project repository.
 
-For QA Test Plans:
-- [Home Tab] (https://github.com/av-7/GroceryManagR/wiki/QA-Test-Plan---main-functionality)
-- [Shopping List Tab] (https://github.com/av-7/GroceryManagR/wiki/QA-Test-Plan---Shopping-List-Tab)
+>For QA Test Plans:
+>- [Home Tab] (https://github.com/av-7/GroceryManagR/wiki/QA-Test-Plan---main-functionality)
+>- [Shopping List Tab] (https://github.com/av-7/GroceryManagR/wiki/QA-Test-Plan---Shopping-List-Tab)
 
 ##Introduction
 
