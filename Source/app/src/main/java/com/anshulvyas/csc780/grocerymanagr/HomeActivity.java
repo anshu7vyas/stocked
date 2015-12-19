@@ -18,13 +18,22 @@ import com.anshulvyas.csc780.grocerymanagr.Model.DBManager;
 /**
  * The main activity which constitutes of all 3 fragments - HomeFragment, ShoppingListFragment, TimelineFragment
  */
-public class HomeActivity extends AppCompatActivity implements DialogInterface.OnDismissListener {
+public class HomeActivity extends AppCompatActivity {
 
     private Toolbar mToolBar;
     private TabLayout mTabLayout;
     private DBManager dbManager;
+    private FragmentRefreshListener fragmentRefreshListener;
 
     Bundle savedState;
+
+    public FragmentRefreshListener getFragmentRefreshListener() {
+        return fragmentRefreshListener;
+    }
+
+    public void setFragmentRefreshListener(FragmentRefreshListener fragmentRefreshListener) {
+        this.fragmentRefreshListener = fragmentRefreshListener;
+    }
 
     /**
      * Called when the activity is being created for the first time.
@@ -82,9 +91,6 @@ public class HomeActivity extends AppCompatActivity implements DialogInterface.O
         }
     }
 
-    // TODO: 12/18/15
-    boolean alreadyHandled = false;
-
     /**
      * Called when activity start-up is complete
      * @param savedInstanceState
@@ -92,11 +98,7 @@ public class HomeActivity extends AppCompatActivity implements DialogInterface.O
     @Override
     public void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-
-        if(!alreadyHandled) {
-            notificationHandler();
-            alreadyHandled=true;
-        }
+        notificationHandler();
     }
 
     /**
@@ -114,6 +116,8 @@ public class HomeActivity extends AppCompatActivity implements DialogInterface.O
                 p.setExpired(false);
                 p.setStocked(false);
                 dbManager.updateProduct(p);
+                Log.i("4444", p + "");
+                fragmentRefreshListener.onRefresh(p.getProductId());
             }
         });
         builder.setNegativeButton("Expired", new DialogInterface.OnClickListener() {
@@ -123,6 +127,7 @@ public class HomeActivity extends AppCompatActivity implements DialogInterface.O
                 p.setConsumed(false);
                 p.setStocked(false);
                 dbManager.updateProduct(p);
+                fragmentRefreshListener.onRefresh(p.getProductId());
             }
         });
         builder.setNeutralButton("Later", new DialogInterface.OnClickListener() {
@@ -132,7 +137,6 @@ public class HomeActivity extends AppCompatActivity implements DialogInterface.O
             }
         });
         AlertDialog alert = builder.create();
-        alert.setOnDismissListener(this);
         alert.show();
     }
 
@@ -157,9 +161,8 @@ public class HomeActivity extends AppCompatActivity implements DialogInterface.O
         }
     }
 
-    // TODO: 12/18/15
-    @Override
-    public void onDismiss(DialogInterface dialog) {
-        //recreate();
+
+    public interface FragmentRefreshListener{
+        void onRefresh(int productId);
     }
 }

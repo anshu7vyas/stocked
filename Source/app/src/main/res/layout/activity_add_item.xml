@@ -22,6 +22,16 @@
             android:orientation="vertical"
             android:paddingTop="?attr/actionBarSize">
 
+            <TextView
+                android:id="@+id/textView_item_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/item_category"
+                android:textSize="10pt"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp">
+            </TextView>
+
             <!-- PRODUCT CATEGORY -->
             <Spinner
                 android:id="@+id/spinner"
@@ -31,7 +41,8 @@
                 android:entries="@array/items_list"
                 android:padding="@dimen/activity_vertical_margin"
                 android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp">
+                android:layout_marginRight="15dp"
+                style="@style/spinner_style">
             </Spinner>
 
 

@@ -71,6 +71,7 @@ public class ShoppingListFragment extends Fragment {
                     .list_view_shopping,
                     filterShoppingList);
             shoppingListView.setAdapter(shoppingAdapter);
+            shoppingListView.setDivider(this.getResources().getDrawable(R.drawable.transparent));
 
             shoppingAdapter.setNotifyOnChange(true);
             shoppingAdapter.notifyDataSetChanged();

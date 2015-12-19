@@ -1,14 +1,15 @@
 <resources>
     <string name="app_name">Stocked!</string>
     <string name="add_item">Add Item</string>
-    <string name="tagline">cuz even the groceries need managing!!</string>
+    <string name="tagline">To better manage groceries...</string>
     <string name="action_settings">Settings</string>
     <string name="cart_item">Next Product</string>
 
 
     <string name="item_name">Item name:</string>
-    <string name="cat1">Frozen</string>
-    <string name="cat2">Greens</string>
+    <string name="item_category">Item category:</string>
+    <string name="cat1">Frozen Items</string>
+    <string name="cat2">Green vegetables</string>
     <string name="cat3">Dairy products</string>
     <string name="cat4">Dishes</string>
     <string name="default_cat">Greens</string>

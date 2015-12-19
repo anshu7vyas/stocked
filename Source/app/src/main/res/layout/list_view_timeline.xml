@@ -15,7 +15,7 @@
         android:layout_margin="4dp"
         app:cardCornerRadius="4dp"
         android:elevation="20dp"
-        android:foreground="?android:attr/selectableItemBackground">
+        style="@style/cardView_style">
 
         <RelativeLayout
             xmlns:android="http://schemas.android.com/apk/res/android"

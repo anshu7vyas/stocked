@@ -9,6 +9,8 @@
     <color name="stocked">#55acee</color>
     <color name="expired">#d73d32</color>#d73d32
     <color name="consumed">#20c05c</color>
+    <color name="card_background">#C8E6C9</color>
     <drawable name="transparent">#00000000</drawable>
+
 
 </resources>
