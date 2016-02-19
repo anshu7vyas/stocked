@@ -22,7 +22,7 @@ App name -
 
 ##Introduction
 
-Stocked! is an app to keep track of your grocieries that might expire in some time. Users can input the items that they want to keep track of, for example, eggs, bread, potatos etc. The app shows the number of days before the item expires. App fires a notification a day before the item is about to expire. Users can also mark the item as consumed.
+Stocked! is an app to keep track of your groceries that might expire in some time. Users can input the items that they want to keep track of, for example, eggs, bread, potatoes etc. The app shows the number of days before the item expires. App fires a notification a day before the item is about to expire. Users can also mark the item as consumed.
 
 The app also allows a user to make a shopping list for the next time he/she visits the grocery store. 
 
