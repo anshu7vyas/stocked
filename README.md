@@ -12,13 +12,13 @@ App name -
  <br/>
 (To better manage groceries!)
 
->For [JOURNAL](https://github.com/av-7/GroceryManagR/wiki/JOURNAL), click on the link or visit wiki pages in the project repository.
+>For [JOURNAL](https://github.com/av-7/stocked/wiki/JOURNAL), click on the link or visit wiki pages in the project repository.
 
 >For QA Test Plans:
->- [Home Tab] (https://github.com/av-7/GroceryManagR/wiki/QA-Test-Plan---main-functionality)
->- [Shopping List Tab] (https://github.com/av-7/GroceryManagR/wiki/QA-Test-Plan---Shopping-List-Tab)
+>- [Home Tab] (https://github.com/av-7/stocked/wiki/QA-Test-Plan---main-functionality)
+>- [Shopping List Tab] (https://github.com/av-7/stocked/wiki/QA-Test-Plan---Shopping-List-Tab)
 
->For App javadocs: [Stocked! JavaDocs](http://anshulvyas.com/GroceryManagR/)
+>For App javadocs: [Stocked! JavaDocs](http://anshulvyas.com/stocked/)
 
 ##Introduction
 
@@ -31,33 +31,33 @@ The app has a timeline view that stores all the items that the user has kept tra
 ##Installation
 
 1. Install Android SDK
-2. Run ```git clone https://github.com/av-7/GroceryManagR.git``` in your working directory.
-3. Open Android Studio and select ```GroceryManagR/Source``` as the project directory.
+2. Run ```git clone https://github.com/av-7/stocked.git``` in your working directory.
+3. Open Android Studio and select ```stocked/Source``` as the project directory.
 4. Build and Run.
 
 ##Screens:
 
 On launching the app, the home screen will show up.
 
-![Splash](https://github.com/av-7/GroceryManagR/blob/master/Screens/Screen1.jpg)
+![Splash](https://github.com/av-7/stocked/blob/master/Screens/Screen1.jpg)
 
 ####Home Screen:
 
-![homeScreen] (https://github.com/av-7/GroceryManagR/blob/master/Screens/Screen2.jpg)
+![homeScreen] (https://github.com/av-7/stocked/blob/master/Screens/Screen2.jpg)
 
 ####Shopping List Screen:
 
-![shoppingListScreen] (https://github.com/av-7/GroceryManagR/blob/master/Screens/Screen3.jpg)
+![shoppingListScreen] (https://github.com/av-7/stocked/blob/master/Screens/Screen3.jpg)
 
 ####Timeline Screen:
 
-![timelineScreen] (https://github.com/av-7/GroceryManagR/blob/master/Screens/Screen4.jpg)
+![timelineScreen] (https://github.com/av-7/stocked/blob/master/Screens/Screen4.jpg)
 
 ####Notification to user:
 
-![notification] (https://github.com/av-7/GroceryManagR/blob/master/Screens/Screen5.jpg)
+![notification] (https://github.com/av-7/stocked/blob/master/Screens/Screen5.jpg)
 
 ####Select Dialog box for updating item - expired or consumed
 
-![dialogBox] (https://github.com/av-7/GroceryManagR/blob/master/Screens/Screen6.jpg)
+![dialogBox] (https://github.com/av-7/stocked/blob/master/Screens/Screen6.jpg)
 
