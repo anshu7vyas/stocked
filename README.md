@@ -1,9 +1,3 @@
->>**San Francisco State University**
-<br/>
-> Department of Computer Science
-<br/>
-> CSC780 Application Development for Mobile Devices
-
 #### Platform - Android OS
 
 App name -
@@ -18,7 +12,9 @@ App name -
 > - [Home Tab] (https://github.com/av-7/stocked/wiki/QA-Test-Plan---main-functionality)
 > - [Shopping List Tab] (https://github.com/av-7/stocked/wiki/QA-Test-Plan---Shopping-List-Tab)
 
-> For App javadocs: [Stocked! JavaDocs](http://anshulvyas.com/stocked/)
+> Google Play Store Live: [Stocked!](https://play.google.com/store/apps/details?id=com.anshulvyas.csc780.grocerymanagr&hl=en)
+
+> For App privacy policy: [Stocked! Privacy Policy](http://av-7.github.io/stocked/)
 
 ## Introduction
 
