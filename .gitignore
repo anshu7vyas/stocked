@@ -27,11 +27,24 @@ proguard/
 *.log
 
 #android studio files
-/Source/.gradle
-/Source/local.properties
-/Source/.idea/workspace.xml
-/Source/.DS_Store
-/Source/build
-/Source/captures
-/Source/.idea/dictionaries/av7.xml
+.gradle
+local.properties
+.idea/workspace.xml
+.idea/*
+*.DS_Store
+build
+captures
+.idea/dictionaries/av7.xml
 .DS_Store
+
+## Directory-based project format:
+.idea/
+# if you remove the above rule, at least ignore the following:
+
+# User-specific stuff:
+# .idea/workspace.xml
+# .idea/tasks.xml
+# .idea/dictionaries
+
+
+
