@@ -42,7 +42,9 @@ import java.time.format.DateTimeFormatter
 /**
  * Bottom sheet for adding a pantry item: name, emoji category chips, and
  * quick-pick expiry (+3 days / +1 week / +2 weeks / custom date).
- * [initialName] supports the shopping-list "move to pantry" flow.
+ * [initialName] and [initialCategory] support the shopping-list "move to pantry"
+ * flow — today quick-added shopping items have empty category, but Phase 5
+ * AppFunctions will create categorized ones that pre-select the correct chip.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -50,10 +52,13 @@ fun AddItemSheet(
     onDismiss: () -> Unit,
     onSave: (name: String, category: String, expiry: LocalDate) -> Unit,
     initialName: String = "",
+    initialCategory: String = "",
 ) {
     val categories = stringArrayResource(R.array.items_list)
     var name by rememberSaveable { mutableStateOf(initialName) }
-    var category by rememberSaveable { mutableStateOf(categories.first()) }
+    var category by rememberSaveable {
+        mutableStateOf(initialCategory.takeIf { it.isNotEmpty() && it in categories } ?: categories.first())
+    }
     var expiry by rememberSaveable { mutableStateOf<String?>(null) } // ISO date
     var showDatePicker by remember { mutableStateOf(false) }
     var showNameError by remember { mutableStateOf(false) }
