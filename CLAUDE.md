@@ -21,7 +21,9 @@ Medium blog series.
       package rename to `io.github.anshu7vyas.stocked` / minSdk 26, targetSdk 36
 - [x] Phase 2 — 100% Kotlin, Room v1 (`stocked.db`, epochDay dates), Hilt, ViewModels +
       StateFlow, WorkManager expiry worker, unit tests (Robolectric DAO + Turbine VM)
-- [ ] Phase 3 — Compose like-for-like + Navigation 3 (skills: migrate-xml-views-to-jetpack-compose, navigation-3)
+- [x] Phase 3 — Compose like-for-like (BOM 2026.05.01, M3, single MainActivity, SplashScreen API,
+      TabRow+HorizontalPager, LazyColumn) + Navigation 3 (1.1.2, explicit entryDecorators incl.
+      ViewModelStore — NOT default!), all XML/fragments/adapters deleted, 19 tests
 - [ ] Phase 4 — Stitch redesign via Playwright MCP → Material 3 Expressive + edge-to-edge + adaptive
 - [ ] Phase 5 — In-app AI: Gemini Nano suggestions w/ lookup fallback + AppFunctions (skill: appfunctions)
 - [ ] Phase 6 — R8, fastlane rewrite, Play internal → production rollout
