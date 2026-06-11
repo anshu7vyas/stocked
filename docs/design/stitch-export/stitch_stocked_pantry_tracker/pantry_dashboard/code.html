@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Stocked! - My Pantry</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface-variant": "#3e4a3d",
+                        "secondary-container": "#a8f37d",
+                        "surface-container": "#ebefe6",
+                        "tertiary-container": "#956e00",
+                        "on-tertiary-fixed": "#261a00",
+                        "on-secondary-fixed-variant": "#1f5100",
+                        "inverse-primary": "#67de7c",
+                        "on-primary-fixed-variant": "#00531e",
+                        "surface": "#f7fbf2",
+                        "on-tertiary": "#ffffff",
+                        "secondary": "#2b6c00",
+                        "secondary-fixed": "#abf680",
+                        "surface-container-lowest": "#ffffff",
+                        "on-background": "#181d18",
+                        "primary": "#006b29",
+                        "primary-fixed": "#84fb95",
+                        "on-secondary-container": "#2f7103",
+                        "error": "#ba1a1a",
+                        "surface-dim": "#d7dbd3",
+                        "surface-container-highest": "#e0e4db",
+                        "on-secondary": "#ffffff",
+                        "background": "#f7fbf2",
+                        "outline-variant": "#bdcab9",
+                        "primary-container": "#008736",
+                        "inverse-surface": "#2d322c",
+                        "on-tertiary-container": "#fffbff",
+                        "on-error": "#ffffff",
+                        "inverse-on-surface": "#eef2e9",
+                        "on-primary": "#ffffff",
+                        "on-primary-fixed": "#002108",
+                        "tertiary-fixed-dim": "#fbbc00",
+                        "on-tertiary-fixed-variant": "#5c4300",
+                        "surface-variant": "#e0e4db",
+                        "surface-tint": "#006e2a",
+                        "surface-container-low": "#f1f5ec",
+                        "on-error-container": "#93000a",
+                        "surface-container-high": "#e5eae1",
+                        "tertiary-fixed": "#ffdfa0",
+                        "on-secondary-fixed": "#082100",
+                        "error-container": "#ffdad6",
+                        "on-surface": "#181d18",
+                        "surface-bright": "#f7fbf2",
+                        "tertiary": "#765700",
+                        "secondary-fixed-dim": "#90d967",
+                        "on-primary-container": "#f7fff2",
+                        "primary-fixed-dim": "#67de7c",
+                        "outline": "#6e7a6c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "stack-md": "12px",
+                        "margin-desktop": "32px",
+                        "margin-tablet": "24px",
+                        "base": "8px",
+                        "stack-lg": "24px",
+                        "stack-sm": "4px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "label-lg": ["Be Vietnam Pro"],
+                        "body-md": ["Be Vietnam Pro"],
+                        "body-lg": ["Be Vietnam Pro"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "title-lg": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "label-sm": ["Be Vietnam Pro"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["57px", {"lineHeight": "64px", "letterSpacing": "-0.25px", "fontWeight": "700"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "500"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.25px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "letterSpacing": "0.5px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                        "title-lg": ["22px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "label-sm": ["11px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "500"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .progress-ring { transform: rotate(-90deg); transform-origin: 50% 50%; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-mobile py-base bg-surface/80 backdrop-blur-md">
+<button aria-label="Menu" class="w-10 h-10 flex items-center justify-center rounded-full text-primary hover:bg-surface-container-high transition-colors active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<h1 class="font-display-lg text-title-lg font-bold text-primary">Stocked!</h1>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-fixed cursor-pointer active:scale-95 transition-transform">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="A professional and friendly high-resolution portrait of a young adult with a warm smile, set against a soft-focus garden background. The lighting is bright and natural, reflecting the healthy, organic aesthetic of the 'The Helpful Gardener' brand. The style is clean and modern, with a slight vibrant tilt to match the primary green color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFrujCMRQlnKQ7YF39KdatiZ9vUqBIPUOXuFBYUJ4X476z98N4LZD2YDVwVsu7lx8VVp9QuTqzk5khEwW3yy40-tt0k4cXNU5qauqDLEMlV3q_knlMIa5aSBh5e2kozaGypKCuGjkVqdP7PQgi6yeP1WW9lER75OcXXGD2PcJx8Ggs7xoUoZx9Yyv--sSceA2VeyyE5cwu6fIpjpELxftM3XCusthRNBB6qrqY4OHkOVVLWmVsmDxny4A_ywxQCHpRlay5uobBj6Op"/>
+</div>
+</header>
+<main class="pt-20 px-margin-mobile">
+<!-- Friendly Greeting -->
+<section class="mt-stack-lg mb-stack-lg">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Hi Alex,</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary" style="font-variation-settings: 'FILL' 1;">error</span>
+                5 items need attention today.
+            </p>
+</section>
+<!-- Use it up! Section -->
+<section class="mb-stack-lg">
+<div class="flex items-center justify-between mb-stack-md">
+<h3 class="font-title-lg text-title-lg text-on-surface">Use it up!</h3>
+<button class="text-primary font-label-lg text-label-lg">See all</button>
+</div>
+<div class="flex gap-4 overflow-x-auto hide-scrollbar -mx-margin-mobile px-margin-mobile pb-4">
+<!-- Urgent Card 1 -->
+<div class="min-w-[180px] bg-surface-container-low rounded-lg p-4 flex flex-col gap-3 shadow-sm border-l-8 border-error active:scale-95 transition-transform">
+<div class="relative w-12 h-12">
+<svg class="progress-ring w-12 h-12">
+<circle class="text-error/20" cx="24" cy="24" fill="transparent" r="20" stroke="currentColor" stroke-width="4"></circle>
+<circle class="text-error" cx="24" cy="24" fill="transparent" r="20" stroke="currentColor" stroke-dasharray="125.6" stroke-dashoffset="100" stroke-linecap="round" stroke-width="4"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center font-bold text-error">!</div>
+</div>
+<div>
+<p class="font-title-lg text-body-lg font-bold">🥩 Beef</p>
+<span class="inline-flex items-center px-2 py-1 rounded-full bg-error-container text-on-error-container text-label-sm font-label-sm">Expired</span>
+</div>
+</div>
+<!-- Urgent Card 2 -->
+<div class="min-w-[180px] bg-surface-container-low rounded-lg p-4 flex flex-col gap-3 shadow-sm border-l-8 border-tertiary active:scale-95 transition-transform">
+<div class="relative w-12 h-12">
+<svg class="progress-ring w-12 h-12">
+<circle class="text-tertiary/20" cx="24" cy="24" fill="transparent" r="20" stroke="currentColor" stroke-width="4"></circle>
+<circle class="text-tertiary" cx="24" cy="24" fill="transparent" r="20" stroke="currentColor" stroke-dasharray="125.6" stroke-dashoffset="40" stroke-linecap="round" stroke-width="4"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center font-bold text-tertiary">2d</div>
+</div>
+<div>
+<p class="font-title-lg text-body-lg font-bold">🥛 Milk</p>
+<span class="inline-flex items-center px-2 py-1 rounded-full bg-tertiary-container text-on-tertiary-container text-label-sm font-label-sm">Dairy</span>
+</div>
+</div>
+<!-- Urgent Card 3 -->
+<div class="min-w-[180px] bg-surface-container-low rounded-lg p-4 flex flex-col gap-3 shadow-sm border-l-8 border-tertiary active:scale-95 transition-transform">
+<div class="relative w-12 h-12">
+<svg class="progress-ring w-12 h-12">
+<circle class="text-tertiary/20" cx="24" cy="24" fill="transparent" r="20" stroke="currentColor" stroke-width="4"></circle>
+<circle class="text-tertiary" cx="24" cy="24" fill="transparent" r="20" stroke="currentColor" stroke-dasharray="125.6" stroke-dashoffset="60" stroke-linecap="round" stroke-width="4"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center font-bold text-tertiary">3d</div>
+</div>
+<div>
+<p class="font-title-lg text-body-lg font-bold">🥬 Spinach</p>
+<span class="inline-flex items-center px-2 py-1 rounded-full bg-secondary-container text-on-secondary-container text-label-sm font-label-sm">Greens</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Inventory List -->
+<section class="flex flex-col gap-stack-lg">
+<!-- Group: Today -->
+<div>
+<h4 class="font-label-lg text-label-lg text-on-surface-variant uppercase tracking-wider mb-stack-md">Today</h4>
+<div class="flex flex-col gap-base">
+<!-- Item -->
+<div class="flex items-center justify-between p-4 bg-surface-container-lowest rounded-lg border border-outline-variant/30 active:scale-[0.98] transition-transform">
+<div class="flex items-center gap-4">
+<div class="relative w-10 h-10">
+<svg class="progress-ring w-10 h-10">
+<circle class="text-error/10" cx="20" cy="20" fill="transparent" r="17" stroke="currentColor" stroke-width="3"></circle>
+<circle class="text-error" cx="20" cy="20" fill="transparent" r="17" stroke="currentColor" stroke-dasharray="106.8" stroke-dashoffset="100" stroke-linecap="round" stroke-width="3"></circle>
+</svg>
+<span class="absolute inset-0 flex items-center justify-center text-label-sm font-bold text-error">!</span>
+</div>
+<div>
+<p class="font-body-lg text-body-lg font-semibold">Organic Chicken</p>
+<div class="flex gap-2 mt-1">
+<span class="text-label-sm px-2 py-0.5 rounded-full bg-surface-container-high">❄️ Frozen</span>
+</div>
+</div>
+</div>
+<button class="text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Group: This Week -->
+<div>
+<h4 class="font-label-lg text-label-lg text-on-surface-variant uppercase tracking-wider mb-stack-md">This Week</h4>
+<div class="flex flex-col gap-base">
+<!-- Item -->
+<div class="flex items-center justify-between p-4 bg-surface-container-lowest rounded-lg border border-outline-variant/30 active:scale-[0.98] transition-transform">
+<div class="flex items-center gap-4">
+<div class="relative w-10 h-10">
+<svg class="progress-ring w-10 h-10">
+<circle class="text-primary/10" cx="20" cy="20" fill="transparent" r="17" stroke="currentColor" stroke-width="3"></circle>
+<circle class="text-primary" cx="20" cy="20" fill="transparent" r="17" stroke="currentColor" stroke-dasharray="106.8" stroke-dashoffset="20" stroke-linecap="round" stroke-width="3"></circle>
+</svg>
+<span class="absolute inset-0 flex items-center justify-center text-label-sm font-bold text-primary">5d</span>
+</div>
+<div>
+<p class="font-body-lg text-body-lg font-semibold">Greek Yogurt</p>
+<div class="flex gap-2 mt-1">
+<span class="text-label-sm px-2 py-0.5 rounded-full bg-surface-container-high">🥛 Dairy</span>
+</div>
+</div>
+</div>
+<button class="text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+<!-- Item -->
+<div class="flex items-center justify-between p-4 bg-surface-container-lowest rounded-lg border border-outline-variant/30 active:scale-[0.98] transition-transform">
+<div class="flex items-center gap-4">
+<div class="relative w-10 h-10">
+<svg class="progress-ring w-10 h-10">
+<circle class="text-primary/10" cx="20" cy="20" fill="transparent" r="17" stroke="currentColor" stroke-width="3"></circle>
+<circle class="text-primary" cx="20" cy="20" fill="transparent" r="17" stroke="currentColor" stroke-dasharray="106.8" stroke-dashoffset="40" stroke-linecap="round" stroke-width="3"></circle>
+</svg>
+<span class="absolute inset-0 flex items-center justify-center text-label-sm font-bold text-primary">6d</span>
+</div>
+<div>
+<p class="font-body-lg text-body-lg font-semibold">Tofu Block</p>
+<div class="flex gap-2 mt-1">
+<span class="text-label-sm px-2 py-0.5 rounded-full bg-surface-container-high">🥣 Pantry</span>
+</div>
+</div>
+</div>
+<button class="text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Group: Later -->
+<div>
+<h4 class="font-label-lg text-label-lg text-on-surface-variant uppercase tracking-wider mb-stack-md">Later</h4>
+<div class="flex flex-col gap-base">
+<!-- Item -->
+<div class="flex items-center justify-between p-4 bg-surface-container-lowest rounded-lg border border-outline-variant/30 active:scale-[0.98] transition-transform">
+<div class="flex items-center gap-4">
+<div class="relative w-10 h-10">
+<svg class="progress-ring w-10 h-10">
+<circle class="text-primary/10" cx="20" cy="20" fill="transparent" r="17" stroke="currentColor" stroke-width="3"></circle>
+<circle class="text-primary" cx="20" cy="20" fill="transparent" r="17" stroke="currentColor" stroke-dasharray="106.8" stroke-dashoffset="10" stroke-linecap="round" stroke-width="3"></circle>
+</svg>
+<span class="absolute inset-0 flex items-center justify-center text-label-sm font-bold text-primary">14d</span>
+</div>
+<div>
+<p class="font-body-lg text-body-lg font-semibold">Honey Jar</p>
+<div class="flex gap-2 mt-1">
+<span class="text-label-sm px-2 py-0.5 rounded-full bg-surface-container-high">🍯 Pantry</span>
+</div>
+</div>
+</div>
+<button class="text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Extended FAB -->
+<button class="fixed bottom-24 right-margin-mobile flex items-center gap-3 px-6 py-4 bg-primary text-on-primary rounded-lg shadow-lg active:scale-90 transition-all duration-200 z-50">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+<span class="font-label-lg text-label-lg">Add item</span>
+</button>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-base pb-base pt-2 bg-surface-container shadow-lg rounded-t-lg">
+<!-- Pantry (Active) -->
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-6 py-1 active:scale-90 transition-all duration-200" href="#">
+<div class="relative">
+<span class="material-symbols-outlined" data-icon="inventory_2" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+<span class="absolute -top-1 -right-1 w-2 h-2 bg-error rounded-full"></span>
+</div>
+<span class="font-label-lg text-label-lg">Pantry</span>
+</a>
+<!-- Shopping -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-6 py-1 hover:bg-on-surface-variant/5 active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+<span class="font-label-lg text-label-lg">Shopping</span>
+</a>
+<!-- Timeline -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-6 py-1 hover:bg-on-surface-variant/5 active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="font-label-lg text-label-lg">Timeline</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction: FAB scroll behavior
+        let lastScroll = 0;
+        const fab = document.querySelector('button.fixed.bottom-24');
+        
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            if (currentScroll > lastScroll && currentScroll > 100) {
+                // Scrolling down - shrink FAB
+                fab.classList.add('scale-75', 'opacity-80');
+            } else {
+                // Scrolling up - restore FAB
+                fab.classList.remove('scale-75', 'opacity-80');
+            }
+            lastScroll = currentScroll;
+        });
+
+        // Toggle ripples or interactions (Visual feedback only)
+        document.querySelectorAll('.active\\:scale-95').forEach(el => {
+            el.addEventListener('click', () => {
+                // Optional: trigger haptic feedback if supported
+                if (window.navigator.vibrate) window.navigator.vibrate(5);
+            });
+        });
+    </script>
+</body></html>

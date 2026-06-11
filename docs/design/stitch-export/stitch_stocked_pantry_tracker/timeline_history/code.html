@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Stocked! - Timeline</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#abf680",
+                        "tertiary": "#765700",
+                        "secondary-fixed-dim": "#90d967",
+                        "surface-dim": "#d7dbd3",
+                        "on-primary": "#ffffff",
+                        "inverse-on-surface": "#eef2e9",
+                        "tertiary-fixed-dim": "#fbbc00",
+                        "on-secondary-fixed": "#082100",
+                        "error": "#ba1a1a",
+                        "primary-container": "#008736",
+                        "secondary-container": "#a8f37d",
+                        "inverse-surface": "#2d322c",
+                        "inverse-primary": "#67de7c",
+                        "on-surface": "#181d18",
+                        "surface-bright": "#f7fbf2",
+                        "error-container": "#ffdad6",
+                        "surface-variant": "#e0e4db",
+                        "outline": "#6e7a6c",
+                        "on-secondary": "#ffffff",
+                        "secondary": "#2b6c00",
+                        "outline-variant": "#bdcab9",
+                        "surface-container-highest": "#e0e4db",
+                        "tertiary-fixed": "#ffdfa0",
+                        "tertiary-container": "#956e00",
+                        "on-surface-variant": "#3e4a3d",
+                        "on-secondary-fixed-variant": "#1f5100",
+                        "on-tertiary-container": "#fffbff",
+                        "on-background": "#181d18",
+                        "primary-fixed-dim": "#67de7c",
+                        "on-tertiary-fixed": "#261a00",
+                        "on-primary-fixed": "#002108",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed": "#84fb95",
+                        "primary": "#006b29",
+                        "on-error": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-high": "#e5eae1",
+                        "background": "#f7fbf2",
+                        "surface": "#f7fbf2",
+                        "surface-container-low": "#f1f5ec",
+                        "on-secondary-container": "#2f7103",
+                        "surface-container": "#ebefe6",
+                        "surface-tint": "#006e2a",
+                        "on-primary-fixed-variant": "#00531e",
+                        "on-error-container": "#93000a",
+                        "on-primary-container": "#f7fff2",
+                        "on-tertiary-fixed-variant": "#5c4300"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "4px",
+                        "margin-mobile": "16px",
+                        "base": "8px",
+                        "margin-tablet": "24px",
+                        "stack-md": "12px",
+                        "gutter": "16px",
+                        "stack-lg": "24px",
+                        "margin-desktop": "32px"
+                    },
+                    "fontFamily": {
+                        "label-lg": ["Be Vietnam Pro"],
+                        "body-md": ["Be Vietnam Pro"],
+                        "body-lg": ["Be Vietnam Pro"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "label-sm": ["Be Vietnam Pro"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "title-lg": ["Plus Jakarta Sans"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "500"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.25px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "letterSpacing": "0.5px", "fontWeight": "400"}],
+                        "display-lg": ["57px", {"lineHeight": "64px", "letterSpacing": "-0.25px", "fontWeight": "700"}],
+                        "label-sm": ["11px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "500"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "title-lg": ["22px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .item-row:active {
+            transform: scale(0.98);
+            transition: transform 0.1s ease;
+        }
+        /* Hide scrollbar for clean look */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-md min-h-screen pb-32">
+<!-- Top Navigation -->
+<header class="flex justify-between items-center px-margin-mobile py-base w-full z-50 bg-surface/80 backdrop-blur-md sticky top-0">
+<div class="flex items-center gap-base">
+<span class="material-symbols-outlined text-primary">menu</span>
+</div>
+<h1 class="font-display-lg text-display-lg font-bold text-primary dark:text-primary-fixed leading-none" style="font-size: 24px;">Stocked!</h1>
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center overflow-hidden">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A professional studio headshot of a friendly, smiling young woman with warm lighting. She has a natural look, suggesting a healthy lifestyle. The background is a soft, blurred kitchen setting with fresh vegetables, maintaining the vibrant brand green and organic aesthetic of the app." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBGDCAYF15wKMHs0a_1RETT__ybLNIwfFtqKFpQjpBVuBBpbUsPd_3oWgSiJFa2vZNa51SldecJJR528ge84gE6GWFIR8h_S0gVWlXE8sUAWC4JiAm94k9OGE12udvYLThGWya0RSUSaDWait36wHHeLW2IoFpiOF1lRngmg6BO1nnv40xmRmMDdObFQi88-4lw3yU5VCU1of_RbaGJZiBTIfxRrNSTj4KkKQr3DtyfkNGY8w9Pc7kqMblLOSUtume5_Oo3XVrsCGI"/>
+</div>
+</header>
+<main class="px-margin-mobile pt-stack-lg">
+<!-- Page Title -->
+<div class="mb-stack-lg">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Timeline</h2>
+</div>
+<!-- Stats Strip -->
+<div class="bg-surface-container-low rounded-lg p-stack-md flex items-center justify-between mb-stack-lg shadow-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" style="font-size: 20px;">query_stats</span>
+<p class="font-label-lg text-label-lg text-on-surface-variant">This month:</p>
+</div>
+<div class="flex gap-stack-md">
+<div class="flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-label-lg text-label-lg font-bold text-secondary">12 consumed</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+<span class="font-label-lg text-label-lg font-bold text-error">3 expired</span>
+</div>
+</div>
+</div>
+<!-- Timeline History -->
+<section class="space-y-stack-lg">
+<!-- Group: October -->
+<div class="relative">
+<div class="sticky top-14 bg-background/95 py-base z-40 backdrop-blur-sm">
+<h3 class="font-display-lg text-title-lg text-primary tracking-tight">October</h3>
+</div>
+<div class="mt-base space-y-stack-md">
+<!-- Item Row 1 -->
+<div class="item-row bg-surface-container-lowest rounded-DEFAULT p-stack-md flex items-center justify-between shadow-sm border border-outline-variant/30">
+<div class="flex items-center gap-stack-md">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-xl">
+                                ❄️
+                            </div>
+<div>
+<p class="font-title-lg text-body-lg font-semibold text-on-surface">Organic Chicken</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Oct 12</p>
+</div>
+</div>
+<span class="px-3 py-1 rounded-full bg-secondary-container/30 text-on-secondary-container font-label-sm text-[10px] uppercase tracking-wider font-bold">CONSUMED</span>
+</div>
+<!-- Item Row 2 -->
+<div class="item-row bg-surface-container-lowest rounded-DEFAULT p-stack-md flex items-center justify-between shadow-sm border border-outline-variant/30">
+<div class="flex items-center gap-stack-md">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-xl">
+                                🥛
+                            </div>
+<div>
+<p class="font-title-lg text-body-lg font-semibold text-on-surface">Greek Yogurt</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Oct 10</p>
+</div>
+</div>
+<span class="px-3 py-1 rounded-full bg-primary-container/20 text-primary font-label-sm text-[10px] uppercase tracking-wider font-bold">STOCKED</span>
+</div>
+<!-- Item Row 3 -->
+<div class="item-row bg-surface-container-lowest rounded-DEFAULT p-stack-md flex items-center justify-between shadow-sm border border-outline-variant/30">
+<div class="flex items-center gap-stack-md">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-xl">
+                                🥬
+                            </div>
+<div>
+<p class="font-title-lg text-body-lg font-semibold text-on-surface">Baby Spinach</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Oct 08</p>
+</div>
+</div>
+<span class="px-3 py-1 rounded-full bg-error-container/30 text-error font-label-sm text-[10px] uppercase tracking-wider font-bold">EXPIRED</span>
+</div>
+</div>
+</div>
+<!-- Group: September -->
+<div class="relative pt-base">
+<div class="sticky top-14 bg-background/95 py-base z-40 backdrop-blur-sm">
+<h3 class="font-display-lg text-title-lg text-primary tracking-tight">September</h3>
+</div>
+<div class="mt-base space-y-stack-md">
+<!-- Item Row 4 -->
+<div class="item-row bg-surface-container-lowest rounded-DEFAULT p-stack-md flex items-center justify-between shadow-sm border border-outline-variant/30">
+<div class="flex items-center gap-stack-md">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-xl">
+                                🥚
+                            </div>
+<div>
+<p class="font-title-lg text-body-lg font-semibold text-on-surface">Dozen Eggs</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Sep 28</p>
+</div>
+</div>
+<span class="px-3 py-1 rounded-full bg-secondary-container/30 text-on-secondary-container font-label-sm text-[10px] uppercase tracking-wider font-bold">CONSUMED</span>
+</div>
+<!-- Item Row 5 -->
+<div class="item-row bg-surface-container-lowest rounded-DEFAULT p-stack-md flex items-center justify-between shadow-sm border border-outline-variant/30">
+<div class="flex items-center gap-stack-md">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-xl">
+                                🫐
+                            </div>
+<div>
+<p class="font-title-lg text-body-lg font-semibold text-on-surface">Blueberries</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Sep 25</p>
+</div>
+</div>
+<span class="px-3 py-1 rounded-full bg-secondary-container/30 text-on-secondary-container font-label-sm text-[10px] uppercase tracking-wider font-bold">CONSUMED</span>
+</div>
+<!-- Item Row 6 -->
+<div class="item-row bg-surface-container-lowest rounded-DEFAULT p-stack-md flex items-center justify-between shadow-sm border border-outline-variant/30">
+<div class="flex items-center gap-stack-md">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-xl">
+                                🥩
+                            </div>
+<div>
+<p class="font-title-lg text-body-lg font-semibold text-on-surface">Ground Beef</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Sep 22</p>
+</div>
+</div>
+<span class="px-3 py-1 rounded-full bg-error-container/30 text-error font-label-sm text-[10px] uppercase tracking-wider font-bold">EXPIRED</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- FAB -->
+<button class="fixed bottom-24 right-margin-mobile w-14 h-14 bg-primary text-on-primary rounded-2xl shadow-lg flex items-center justify-center hover:scale-105 active:scale-95 transition-all z-40">
+<span class="material-symbols-outlined" style="font-size: 32px;">add</span>
+</button>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-base pb-base pt-2 bg-surface-container dark:bg-surface-container shadow-lg rounded-t-lg">
+<!-- Pantry Tab -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-6 py-1 hover:bg-on-surface-variant/5 dark:hover:bg-on-surface-variant/10 active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined mb-1">inventory_2</span>
+<span class="font-label-lg text-label-lg">Pantry</span>
+</a>
+<!-- Shopping Tab -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-6 py-1 hover:bg-on-surface-variant/5 dark:hover:bg-on-surface-variant/10 active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined mb-1">shopping_cart</span>
+<span class="font-label-lg text-label-lg">Shopping</span>
+</a>
+<!-- Timeline Tab (Active) -->
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-full px-6 py-1 active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">history</span>
+<span class="font-label-lg text-label-lg">Timeline</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for item rows
+        document.querySelectorAll('.item-row').forEach(row => {
+            row.addEventListener('click', () => {
+                // Subtle visual feedback or expansion could go here
+            });
+        });
+
+        // Dynamic background effect (subtle)
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.item-row').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(10px)';
+            el.style.transition = 'all 0.4s ease-out';
+            observer.observe(el);
+        });
+    </script>
+</body></html>
