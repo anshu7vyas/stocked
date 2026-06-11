@@ -102,3 +102,43 @@
   deletes (adapter `submitList` dedup, fragment collect boilerplate, ViewHolder pattern, validation helpers) and
   architecture seams kept on purpose (repository pass-throughs, `HomeUiState` wrapper — both grow in Phases 3–5).
   Noted for Phase 3: consider moving the open-sweep from `HomeViewModel.init` into the repository/app layer.
+
+### Session 1 (cont.) — PR model + CI bootstrap (~23:00–23:40 PDT)
+
+- Stacked per-phase PRs for incremental review: **#11** (Phases 0–1 → master), **#12** (Phase 2 → phase-1).
+- **CI never fired** until a workflow existed on the *default branch* — bootstrapped via PR **#13**
+  (deliberately red: master is still the 2018 code; that failure is the migration's thesis in one screenshot).
+- **Pain point:** Phase 1 updated only `gradle-wrapper.properties`; the 2018-era `gradle-wrapper.jar`
+  fails gradle/actions checksum validation. Lesson: always regenerate the wrapper
+  (`./gradlew wrapper --gradle-version X`) — the jar and scripts version too, not just the URL.
+- After the fix + stack rebase: **PR #11 ✓ green, PR #12 ✓ green, stocked-revamp ✓ green.**
+
+### Session 1 (cont.) — Phase 3: Compose like-for-like + Navigation 3 (~23:45 → 00:50 PDT)
+
+- **Done:** all 11 XML layouts, 4 activities, 3 fragments, 4 adapters → deleted. Single `MainActivity`
+  (ComponentActivity + SplashScreen API + edge-to-edge) hosting Compose (BOM 2026.05.01, M3) with
+  **Navigation 3** (1.1.2): `@Serializable` NavKey routes, `rememberNavBackStack`, NavDisplay.
+  Tabs = TabRow + HorizontalPager; ListViews → LazyColumn. **ViewModels reused unchanged — the Phase 2
+  payoff in one diff.** Theme = legacy palette in M3 clothes (Phase 4 redesigns). 19 tests green
+  (+ Compose UI tests via Robolectric). Data survived the upgrade install untouched.
+- **Pain points:**
+  - material3 (BOM 2026) no longer pulls `material-icons-core` — explicit dep needed.
+  - AGP 9 + Compose: `org.jetbrains.kotlin.plugin.compose`/`serialization` must pin to the **embedded**
+    KGP version (2.2.10) — easy to grab latest (2.4.0) and break.
+  - Nav3 1.1.2 decorator API names differ from docs/recipes (`rememberSaveableStateHolderNavEntryDecorator`,
+    scene-setup one is `internal`) — resolved by reading the AAR with `javap`.
+- **Adversarial review gate:**
+  - **HIGH (both agents, bytecode-verified):** `NavDisplay` does NOT install `ViewModelStoreNavEntryDecorator`
+    by default → every `hiltViewModel()` silently fell back to Activity scope; the "entry-scoped lifecycle"
+    Nav3 story wasn't actually wired. Fixed with explicit `entryDecorators`. Beautiful interaction: entry-scoped
+    AddItem VM now dies on pop — its insert survives only because of Phase 2's `@ApplicationScope` write fix.
+    *The gates compound.*
+  - MED: FAB double-tap pushed duplicate routes → `lastOrNull` guard. LOW: long-press accessibility label added.
+  - Refuted by agents (with decompilation receipts): kotlinx-serialization-core suffices for Nav3 saveable
+    back stacks (no JSON artifact needed); DatePicker UTC round-trip has no off-by-one; snackbar wiring sound.
+    Noted for Phase 6: R8 keep rules for `@Serializable` routes.
+- **`/simplify`:** shared `stockedTopBarColors()` + `Modifier.cardListItem()` helpers; resource purge —
+  4 dpi drawable dirs, spinner art, dimens, 10 dead color entries (only splash `@color/primary` remains in XML;
+  colors live in `Theme.kt`).
+- **Verification:** emulator end-to-end — tabs, add item (M3 date picker), shopping add, timeline badges,
+  long-press consume (reactive), nav push/pop, data intact across Phase 2 → 3 upgrade install.

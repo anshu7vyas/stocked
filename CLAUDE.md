@@ -21,10 +21,22 @@ Medium blog series.
       package rename to `io.github.anshu7vyas.stocked` / minSdk 26, targetSdk 36
 - [x] Phase 2 — 100% Kotlin, Room v1 (`stocked.db`, epochDay dates), Hilt, ViewModels +
       StateFlow, WorkManager expiry worker, unit tests (Robolectric DAO + Turbine VM)
-- [ ] Phase 3 — Compose like-for-like + Navigation 3 (skills: migrate-xml-views-to-jetpack-compose, navigation-3)
+- [x] Phase 3 — Compose like-for-like (BOM 2026.05.01, M3, single MainActivity, SplashScreen API,
+      TabRow+HorizontalPager, LazyColumn) + Navigation 3 (1.1.2, explicit entryDecorators incl.
+      ViewModelStore — NOT default!), all XML/fragments/adapters deleted, 19 tests
 - [ ] Phase 4 — Stitch redesign via Playwright MCP → Material 3 Expressive + edge-to-edge + adaptive
 - [ ] Phase 5 — In-app AI: Gemini Nano suggestions w/ lookup fallback + AppFunctions (skill: appfunctions)
 - [ ] Phase 6 — R8, fastlane rewrite, Play internal → production rollout
+
+## Branch & PR model (user-directed: incremental review)
+
+- `stocked-revamp` = integration branch where work happens.
+- Each phase gets a snapshot branch + **stacked PR**: `phase-1-resurrection` (PR #11, base master),
+  `phase-2-kotlin-architecture` (PR #12, base phase-1). Continue the pattern:
+  after a phase's commits land on stocked-revamp, `git branch phase-N-<name> <sha>`,
+  push, `gh pr create --base phase-(N-1)-... --head phase-N-...`.
+- GitHub Actions enabled but **0 runs ever fired** as of 2026-06-10 — user should check
+  the repo's Actions tab (may need first-run approval/billing).
 
 ## Working conventions (user-directed)
 

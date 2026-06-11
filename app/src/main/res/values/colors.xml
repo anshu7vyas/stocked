@@ -1,16 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <!-- Splash window background; all other colors live in ui/theme/Theme.kt -->
     <color name="primary">#00933B</color>
-    <color name="primary_dark">#085108</color>
-    <color name="accent">#00933B</color>
-    <color name="textView">#000000</color>
-    <color name="textWhite">#FFF</color>
-    <color name="stocked">#55acee</color>
-    <color name="expired">#d73d32</color>#d73d32
-    <color name="consumed">#20c05c</color>
-    <color name="card_background">#C8E6C9</color>
-    <drawable name="transparent">#00000000</drawable>
-
-
 </resources>
