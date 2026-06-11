@@ -33,8 +33,9 @@ Medium blog series.
 
 ## Next session: Phase 5 pickup (concrete steps)
 
-1. `git checkout stocked-revamp && git pull` — HEAD should be the amended Phase 4 commit;
-   PRs #11→#12→#14→#15 stacked and green. Boot emulator: `android emulator start Pixel_9_Pro`.
+1. `git checkout stocked-revamp && git pull` — PRs #11→#15 are **all merged** (2026-06-11,
+   review comments addressed; see MIGRATION_LOG Session 3); master == phase-4 redesign,
+   stocked-revamp = master + docs. Boot emulator: `android emulator start Pixel_9_Pro`.
 2. Build `ai/` package: `SuggestionService` interface (suggest(name) → category + shelf-life days),
    `LocalLookupSuggestionService` (~100-item bundled table — ALWAYS works) +
    `GeminiNanoSuggestionService` (ML Kit GenAI / AICore, runtime capability check; expect
@@ -47,8 +48,8 @@ Medium blog series.
 4. Run the **appfunctions skill** → expose `addPantryItem`, `addToShoppingList`,
    `queryExpiringItems` from ProductRepository; verify on API 36 emulator.
 5. Gate as usual (kotlin-specialist + architect agents → verify → /simplify decision →
-   smart-commit) → branch `phase-5-ai` → PR base `phase-4-redesign` → update MIGRATION_LOG
-   + this checklist.
+   smart-commit) → branch `phase-5-ai` → PR base `master` (stack is merged) → update
+   MIGRATION_LOG + this checklist.
 6. Phase 6 checklist additions discovered along the way: R8 keep rules for @Serializable
    Nav3 routes; bundled font fallback (offline-first launch); dynamic-color user setting.
 
@@ -65,12 +66,14 @@ Structure + asset map: `docs/blog/BLOG_PLAN.md`. Voice samples: `Documents/previ
 ## Branch & PR model (user-directed: incremental review)
 
 - `stocked-revamp` = integration branch where work happens.
-- Each phase gets a snapshot branch + **stacked PR**: `phase-1-resurrection` (PR #11, base master),
-  `phase-2-kotlin-architecture` (PR #12, base phase-1). Continue the pattern:
-  after a phase's commits land on stocked-revamp, `git branch phase-N-<name> <sha>`,
-  push, `gh pr create --base phase-(N-1)-... --head phase-N-...`.
-- GitHub Actions enabled but **0 runs ever fired** as of 2026-06-10 — user should check
-  the repo's Actions tab (may need first-run approval/billing).
+- Phases 1–4: snapshot branches + stacked PRs #11→#12→#14→#15 — **all merged to master
+  2026-06-11** (bottom-up, merge commits, manual `gh pr edit --base master` retarget per merge;
+  snapshot branches kept for the blog). Review-comment triage in MIGRATION_LOG Session 3.
+- Phase 5+: branch `phase-N-<name>` off stocked-revamp, PR base `master` (stack is gone).
+- Stacked-PR lesson: fix commits on a lower branch touch files upper branches delete —
+  ripple-merge upward resolving modify/delete to the deletion, BEFORE merging bottom-up.
+- GitHub Actions ("Android CI") fires on pushes and is green as of 2026-06-11.
+- Per-phase progression screenshots: `docs/progression/` (same Milk item across phases).
 
 ## Working conventions (user-directed)
 

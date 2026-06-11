@@ -169,3 +169,34 @@
 - **Verification:** 20 tests green; emulator end-to-end: sheet add w/ quick chips, shopping quick-add,
   check → move-to-pantry → lands in pantry w/ ring + badge update, kebab consume reactive,
   timeline stats. Phase 6 additions: R8 keep rules for @Serializable routes; bundled font fallback.
+
+### Session 3 — 2026-06-11 — Review response: 13 bot comments triaged, stack merged (11:00 → 11:45 PDT)
+
+- **Gemini Code Assist reviewed all four stacked PRs (13 inline comments). Verified every claim
+  before fixing — per-project convention, and it paid off again: 9 fixed, 4 declined with receipts.**
+- **Fixed (one parallel agent per branch, isolated worktrees):**
+  - PR #11 `92065e8`/`bf5779c`: **real 2018 Parcel bug inherited by the migration** — `writeToParcel`
+    wrote 8 fields, the Parcel constructor read 4 (silent corruption on unparcel); plus
+    `new HomeFragment()` per row-bind in `ProductAdapter.getView()` → static `getLeftDays` + null guard;
+    `createNotification` → method-local `requireContext()` + empty guard.
+  - PR #12 `d0d7448`/`34fe87e`: **real regression** — legacy long-press shopping-list delete was dropped
+    in the Kotlin migration (Compose phases re-added delete, but the snapshot lost it); restored w/
+    confirm dialog. Splash `Handler.postDelayed` → `lifecycleScope` + `delay`.
+  - PR #14 `fbd132f`: local `expiry` capture (bot's "compilation issue" claim was **wrong** — platform-type
+    `CharSequence!` compiles fine; applied as hygiene); `key = Product::id` → `{ it.id }` (R8 claim
+    unfounded; done for codebase convention).
+  - PR #15 `ccf8095`/`d1e5f89`: `initialCategory` preserved through move-to-pantry (future-proofs Phase 5
+    AppFunctions); **RadioButton → IconToggleButton w/ CheckCircle** — bot wanted M3 `Checkbox`, but the
+    Stitch design specifies round circles; icon toggle keeps design fidelity AND fixes TalkBack semantics.
+- **Declined:** spinner null-fallback (populated synchronously from static resource array; `""` fallback
+  masks an impossible state), try-catch swallow in `applicationScope` (silent data loss > loud failure).
+- **Stacked-PR mechanics:** fix commits on lower branches touch files upper branches delete →
+  ripple-merged 1→2→3→4→stocked-revamp resolving modify/delete conflicts to the deletions
+  (every ripple merge tree-delta was empty — history-only). Merged bottom-up with merge commits,
+  manually retargeting each PR to master (`gh pr edit --base master`) to keep snapshot branches alive.
+  **PRs #11, #12, #14, #15 all MERGED; master == phase-4 redesign.**
+- **New: per-phase progression gallery** (`docs/progression/`, linked from each PR body, pinned to SHA
+  `2088564`): same Milk/Dairy/+7d item through all four phases — 1↔2 pixel-identical (behavior
+  preservation made visible), 3 = like-for-like Compose, 4 = redesign (+ round-toggle verification shot).
+- **Blog gold:** the bot found a real 8-year-old Parcel bug AND was confidently wrong twice
+  (phantom "compilation issue", unfounded R8 claim) in the same review — verify-before-fix is the lesson.
