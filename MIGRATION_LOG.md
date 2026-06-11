@@ -102,3 +102,13 @@
   deletes (adapter `submitList` dedup, fragment collect boilerplate, ViewHolder pattern, validation helpers) and
   architecture seams kept on purpose (repository pass-throughs, `HomeUiState` wrapper — both grow in Phases 3–5).
   Noted for Phase 3: consider moving the open-sweep from `HomeViewModel.init` into the repository/app layer.
+
+### Session 1 (cont.) — PR model + CI bootstrap (~23:00–23:40 PDT)
+
+- Stacked per-phase PRs for incremental review: **#11** (Phases 0–1 → master), **#12** (Phase 2 → phase-1).
+- **CI never fired** until a workflow existed on the *default branch* — bootstrapped via PR **#13**
+  (deliberately red: master is still the 2018 code; that failure is the migration's thesis in one screenshot).
+- **Pain point:** Phase 1 updated only `gradle-wrapper.properties`; the 2018-era `gradle-wrapper.jar`
+  fails gradle/actions checksum validation. Lesson: always regenerate the wrapper
+  (`./gradlew wrapper --gradle-version X`) — the jar and scripts version too, not just the URL.
+- After the fix + stack rebase: **PR #11 ✓ green, PR #12 ✓ green, stocked-revamp ✓ green.**
