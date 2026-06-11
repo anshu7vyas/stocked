@@ -3,9 +3,9 @@ package io.github.anshu7vyas.stocked
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.postDelayed
-import android.os.Handler
-import android.os.Looper
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 /** Replaced by the SplashScreen API in Phase 3. */
 class SplashActivity : AppCompatActivity() {
@@ -14,8 +14,9 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        Handler(Looper.getMainLooper()).postDelayed(SPLASH_TIME_OUT_MS) {
-            startActivity(Intent(this, HomeActivity::class.java))
+        lifecycleScope.launch {
+            delay(SPLASH_TIME_OUT_MS)
+            startActivity(Intent(this@SplashActivity, HomeActivity::class.java))
             finish()
         }
     }
