@@ -247,7 +247,8 @@ public class HomeFragment extends Fragment {
      * @param productObj Product object
      * @return number of days
      */
-    public int getLeftDays(Product productObj) {
+    public static int getLeftDays(Product productObj) {
+        if (productObj == null || productObj.getExpiryDate() == null) return Integer.MAX_VALUE;
         // M/d (not MM/dd): the picker writes unpadded dates like "6/18/2026", which the
         // legacy SimpleDateFormat only accepted because of lenient parsing.
         DateTimeFormatter format = DateTimeFormatter.ofPattern("M/d/yyyy");
@@ -269,26 +270,27 @@ public class HomeFragment extends Fragment {
      * Creates notification when called!
      */
     public void createNotification() {
-        if (notificationList.isEmpty()) {
+        if (notificationList == null || notificationList.isEmpty()) {
             return;
         }
+        Context context = requireContext();
         // areNotificationsEnabled() is correct on every API level; checking the
         // POST_NOTIFICATIONS permission directly reports DENIED on API < 33 where
         // the permission does not exist.
-        if (!NotificationManagerCompat.from(myContext).areNotificationsEnabled()) {
+        if (!NotificationManagerCompat.from(context).areNotificationsEnabled()) {
             return;
         }
 
-        Intent intent = new Intent(myContext, HomeActivity.class);
+        Intent intent = new Intent(context, HomeActivity.class);
         Integer[] simpleArray = new Integer[notificationList.size()];
         notificationList.toArray(simpleArray);
 
         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("List", simpleArray);
-        PendingIntent pIntent = PendingIntent.getActivity(myContext, 0, intent,
+        PendingIntent pIntent = PendingIntent.getActivity(context, 0, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
-        Notification notification = new NotificationCompat.Builder(myContext, StockedApp.CHANNEL_EXPIRY)
+        Notification notification = new NotificationCompat.Builder(context, StockedApp.CHANNEL_EXPIRY)
                 .setContentTitle("Stocked!")
                 .setContentText(notificationList.size() + " Item(s) about to expire")
                 .setSmallIcon(R.mipmap.ic_launcher)
@@ -296,7 +298,7 @@ public class HomeFragment extends Fragment {
                 .setAutoCancel(true)
                 .build();
 
-        NotificationManagerCompat.from(myContext).notify(0, notification);
+        NotificationManagerCompat.from(context).notify(0, notification);
     }
 
 }

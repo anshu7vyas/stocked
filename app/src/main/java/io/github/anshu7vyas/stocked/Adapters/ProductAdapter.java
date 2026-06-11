@@ -72,8 +72,7 @@ public class ProductAdapter extends ArrayAdapter<Product> {
             if(productObj.isExpired()) {
                 productExpiry.setText("Expired");
             } else {
-                HomeFragment homeFragment = new HomeFragment();
-                productExpiry.setText("expire in " + homeFragment.getLeftDays(productObj) + " days");
+                productExpiry.setText("expire in " + HomeFragment.getLeftDays(productObj) + " days");
             }
         }
         return convertView;
