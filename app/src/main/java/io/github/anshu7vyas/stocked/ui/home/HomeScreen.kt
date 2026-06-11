@@ -178,6 +178,7 @@ fun HomeScreen(
         AddItemSheet(
             onDismiss = { addSheet = null },
             initialName = request.prefillName,
+            initialCategory = request.moving?.category ?: "",
             onSave = { name, category, expiry ->
                 homeViewModel.saveToPantry(request.moving, name, category, expiry)
                 addSheet = null
