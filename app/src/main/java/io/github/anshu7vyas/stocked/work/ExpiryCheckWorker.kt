@@ -11,7 +11,7 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import io.github.anshu7vyas.stocked.HomeActivity
+import io.github.anshu7vyas.stocked.MainActivity
 import io.github.anshu7vyas.stocked.R
 import io.github.anshu7vyas.stocked.StockedApp
 import io.github.anshu7vyas.stocked.data.ProductRepository
@@ -39,7 +39,7 @@ class ExpiryCheckWorker @AssistedInject constructor(
     }
 
     private fun buildNotification(count: Int): Notification {
-        val intent = Intent(applicationContext, HomeActivity::class.java).apply {
+        val intent = Intent(applicationContext, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
         }
         val pendingIntent = PendingIntent.getActivity(
