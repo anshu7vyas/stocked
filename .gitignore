@@ -48,3 +48,8 @@ captures
 
 
 
+
+# Signing — never commit
+keystore/
+local.properties
+*.iml
