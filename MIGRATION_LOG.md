@@ -43,3 +43,21 @@
 - [x] New upload keystore generated: `keystore/stocked-upload.jks` (RSA 4096, 30-yr validity, alias `stocked-upload`), creds in `keystore/keystore.properties` — both git-ignored. **TODO(user): back up keystore + properties to a password manager; enroll new Play listing in Play App Signing at creation.**
 - [ ] Playwright MCP → Stitch smoke test (deferred to Phase 4 prep)
 - [ ] Play Console: create new app entry + service-account JSON (user)
+
+### Session 1 (cont.) — Phase 1: build system resurrection
+
+- **Phase 0 + 1 wall-clock so far:** ~35 min (20:52 → 21:25 PDT), fully AI-driven.
+- **Done:** Gradle 4.6 → **9.5.1**, AGP 3.2.1 → **9.2.1** (Kotlin DSL + version catalog, straight rewrite — no Upgrade Assistant, no Jetifier), package renamed to `io.github.anshu7vyas.stocked` (sources moved, manifest `package` → Gradle `namespace`), Support Lib → AndroidX/Material via deterministic sed map (12 Java + 6 XML class mappings), minSdk 16→26, target/compileSdk 28→36, JodaTime deleted → `java.time`, `Notification.Builder` → NotificationCompat + channel + POST_NOTIFICATIONS runtime request, GitHub Actions CI, signed release AAB (4.99 MB) via new upload keystore.
+- **Bugs the migration *surfaced* (blog gold):**
+  1. `StockedApp` was never registered in the manifest — `JodaTimeAndroid.init()` was dead code for 8 years; the app only worked because Joda's core bundles default tz data.
+  2. Date picker writes **unpadded** dates (`6/18/2026`, `AddItemActivity.java:75`); legacy `SimpleDateFormat("MM/dd/yyyy")` parsed them only via lenient mode. Strict `java.time` rejected them → items instantly "Expired". Fixed with `M/d/yyyy`; epochDay in Phase 2 kills the whole bug class.
+  3. Legacy `getLeftDays` had a time-of-day-dependent off-by-one (Joda day-diff truncation compensated with `+1`); now calendar-day exact.
+  4. `windowOptOutEdgeToEdgeEnforcement` is **ignored at targetSdk 36** — plan assumed it would carry us to Phase 4; instead `fitsSystemWindows` stopgap on activity roots.
+- **Metrics:** debug APK 2.9 MB → release (unsigned-minify-off) APK 5.4 MB / AAB 4.99 MB — AndroidX+Material weight, R8 off until Phase 6 (honest number). Clean build 33 s; incremental 4 s (config cache on).
+- **Verification:** fresh install on API 36 emulator; add-item flow end-to-end (layout-tree-driven automation via `android layout` — more reliable than coordinate taps); notification permission prompt works (first time notifications can fire since Android 8).
+- **Adversarial review gate** (architect-reviewer + code-reviewer agents, ~5 min, findings verified before fixing):
+  - **Confirmed HIGH:** my `checkSelfPermission(POST_NOTIFICATIONS)` gate silently killed notifications on API 26–32 (permission doesn't exist pre-33 → always DENIED). Fixed with `areNotificationsEnabled()`. *AI reviewing AI caught an AI bug.*
+  - **Confirmed:** day-count regressions — first my calendar-day "fix" expired items a day early; then the reviewer's suggested `+1` showed 9 where legacy showed 8. Truth (verified on emulator against baseline): legacy = plain day diff, except expiry day = "1 day left". Lesson: *verify reviewer fixes too* — both directions of the off-by-one shipped past one layer of review.
+  - **Confirmed:** parse-failure path destructively marked items expired → now inert sentinel. Dead `windowOptOutEdgeToEdgeEnforcement` attr removed (ignored at targetSdk 36).
+  - **Refuted:** "viewpager 1.1.0 may not exist" (build resolves it); deferred: first-launch permission race (notification path moves to WorkManager in Phase 2).
+- `/simplify` skipped this phase by design: remaining Java is deleted/converted in Phase 2; polishing doomed code is churn.
