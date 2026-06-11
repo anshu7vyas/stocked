@@ -2,9 +2,12 @@
     <string name="app_name">Stocked!</string>
     <string name="channel_expiry_name">Expiry alerts</string>
     <string name="channel_expiry_description">Notifies you when stocked items are about to expire</string>
+    <plurals name="expiry_notification_text">
+        <item quantity="one">%d item is about to expire</item>
+        <item quantity="other">%d items are about to expire</item>
+    </plurals>
     <string name="add_item">Add Item</string>
     <string name="tagline">To better manage groceries...</string>
-    <string name="action_settings">Settings</string>
     <string name="cart_item">Next Product</string>
 
 
@@ -16,6 +19,24 @@
     <string name="cat4">Dishes</string>
     <string name="default_cat">Greens</string>
     <string name="item_days">Expire in (days)</string>
-    <string name="item_notify">Notify me every (days)</string>
-    <string name="checkBox1">1 day before the item expires</string>
+
+    <string name="tab_home">Home</string>
+    <string name="tab_shopping_list">Shopping List</string>
+    <string name="tab_timeline">Timeline</string>
+    <string name="expired">Expired</string>
+    <string name="expire_in_days">expire in %d days</string>
+    <string name="flag_stocked">STOCKED</string>
+    <string name="flag_expired">EXPIRED</string>
+    <string name="flag_consumed">CONSUMED</string>
+    <string name="item_action_title">What to do with %s?</string>
+    <string name="item_action_message">Please select action.</string>
+    <string name="action_consumed">Consumed</string>
+    <string name="action_expired">Expired</string>
+    <string name="action_delete">Delete</string>
+    <string name="delete_title">Delete?</string>
+    <string name="delete_message">Are you sure you want to delete?</string>
+    <string name="deleted_confirmation">%s deleted</string>
+    <string name="error_item_name_required">Please enter name of an item.</string>
+    <string name="error_expiry_required">Please set an expiry date.</string>
+    <string name="select_date">Select date</string>
 </resources>

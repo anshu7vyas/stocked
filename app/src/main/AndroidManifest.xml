@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
@@ -31,13 +32,28 @@
 
         <!--Add Item Screen-->
         <activity
-            android:name=".AddItemActivity"
+            android:name=".ui.additem.AddItemActivity"
             android:label="@string/add_item">
         </activity>
 
         <!--Add Item to Shopping Cart Screen-->
-        <activity android:name=".ShoppingItemActivity"
+        <activity android:name=".ui.shopping.ShoppingItemActivity"
             android:label="@string/cart_item"/>
+
+        <!-- WorkManager must NOT self-initialize: its startup initializer runs before
+             Application.onCreate with a default factory that cannot construct
+             @AssistedInject workers. Removing it makes WorkManager.getInstance fall
+             back to StockedApp's Configuration.Provider (HiltWorkerFactory). -->
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+        </provider>
 
     </application>
 
