@@ -1,19 +1,24 @@
-package com.anshulvyas.csc780.grocerymanagr;
+package io.github.anshu7vyas.stocked;
 
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import android.os.Build;
+import com.google.android.material.tabs.TabLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 
-import com.anshulvyas.csc780.grocerymanagr.Adapters.PagerAdapter;
-import com.anshulvyas.csc780.grocerymanagr.Model.DBManager;
+import io.github.anshu7vyas.stocked.Adapters.PagerAdapter;
+import io.github.anshu7vyas.stocked.Model.DBManager;
 
 /**
  * The main activity which constitutes of all 3 fragments - HomeFragment, ShoppingListFragment, TimelineFragment
@@ -44,6 +49,13 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         savedState = savedInstanceState;
         setContentView(R.layout.activity_home);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                        != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                    this, new String[] {Manifest.permission.POST_NOTIFICATIONS}, 0);
+        }
 
         /**
          * Instantiate ToolBar

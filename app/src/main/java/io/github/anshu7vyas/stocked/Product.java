@@ -1,4 +1,4 @@
-package com.anshulvyas.csc780.grocerymanagr;
+package io.github.anshu7vyas.stocked;
 
 
 import android.os.Parcel;

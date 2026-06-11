@@ -1,13 +1,13 @@
-package com.anshulvyas.csc780.grocerymanagr.Adapters;
+package io.github.anshu7vyas.stocked.Adapters;
 
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import com.anshulvyas.csc780.grocerymanagr.HomeFragment;
-import com.anshulvyas.csc780.grocerymanagr.ShoppingListFragment;
-import com.anshulvyas.csc780.grocerymanagr.TimelineFragment;
+import io.github.anshu7vyas.stocked.HomeFragment;
+import io.github.anshu7vyas.stocked.ShoppingListFragment;
+import io.github.anshu7vyas.stocked.TimelineFragment;
 
 
 /**

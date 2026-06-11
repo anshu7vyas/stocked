@@ -1,4 +1,4 @@
-package com.anshulvyas.csc780.grocerymanagr.Model;
+package io.github.anshu7vyas.stocked.Model;
 
 
 import android.content.ContentValues;
@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.anshulvyas.csc780.grocerymanagr.Product;
+import io.github.anshu7vyas.stocked.Product;
 
 import java.util.ArrayList;
 import java.util.List;

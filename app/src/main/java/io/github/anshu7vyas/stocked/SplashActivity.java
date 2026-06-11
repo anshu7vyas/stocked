@@ -1,10 +1,10 @@
-package com.anshulvyas.csc780.grocerymanagr;
+package io.github.anshu7vyas.stocked;
 
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * The first activity with which the application starts

@@ -1,4 +1,4 @@
-package com.anshulvyas.csc780.grocerymanagr;
+package io.github.anshu7vyas.stocked;
 
 
 import android.app.AlertDialog;
@@ -6,9 +6,9 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +16,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.anshulvyas.csc780.grocerymanagr.Adapters.ShoppingAdapter;
-import com.anshulvyas.csc780.grocerymanagr.Model.DBManager;
+import io.github.anshu7vyas.stocked.Adapters.ShoppingAdapter;
+import io.github.anshu7vyas.stocked.Model.DBManager;
 
 import java.util.ArrayList;
 import java.util.List;

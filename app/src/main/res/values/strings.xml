@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Stocked!</string>
+    <string name="channel_expiry_name">Expiry alerts</string>
+    <string name="channel_expiry_description">Notifies you when stocked items are about to expire</string>
     <string name="add_item">Add Item</string>
     <string name="tagline">To better manage groceries...</string>
     <string name="action_settings">Settings</string>

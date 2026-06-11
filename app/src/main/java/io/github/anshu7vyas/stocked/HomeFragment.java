@@ -1,17 +1,18 @@
-package com.anshulvyas.csc780.grocerymanagr;
+package io.github.anshu7vyas.stocked;
 
 
 import android.app.AlertDialog;
 import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,16 +20,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.anshulvyas.csc780.grocerymanagr.Adapters.ProductAdapter;
-import com.anshulvyas.csc780.grocerymanagr.Model.DBManager;
+import io.github.anshu7vyas.stocked.Adapters.ProductAdapter;
+import io.github.anshu7vyas.stocked.Model.DBManager;
 
-import org.joda.time.DateTime;
-import org.joda.time.Days;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -150,7 +149,7 @@ public class HomeFragment extends Fragment {
                 public boolean onItemLongClick(AdapterView<?> parent, final View view, int position, long id) {
 
                     final int viewPosition = position;
-                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(getActivity());
+                    androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getActivity());
                     builder.setTitle("What to do with " + productAdapter.getItem(viewPosition).getProductName() + "?");
                     builder.setMessage("Please select action.");
                     builder.setPositiveButton("Consumed", new DialogInterface.OnClickListener() {
@@ -212,7 +211,7 @@ public class HomeFragment extends Fragment {
                             deleteDialog.show();
                         }
                     });
-                    android.support.v7.app.AlertDialog alert = builder.create();
+                    androidx.appcompat.app.AlertDialog alert = builder.create();
                     alert.show();
                     return false;
 
@@ -249,53 +248,55 @@ public class HomeFragment extends Fragment {
      * @return number of days
      */
     public int getLeftDays(Product productObj) {
-        Calendar now = Calendar.getInstance();
-
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-        Calendar expiry = Calendar.getInstance();
+        // M/d (not MM/dd): the picker writes unpadded dates like "6/18/2026", which the
+        // legacy SimpleDateFormat only accepted because of lenient parsing.
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("M/d/yyyy");
         try {
-            expiry.setTime(format.parse(productObj.getExpiryDate()));
-        } catch (ParseException e) {
+            LocalDate expiry = LocalDate.parse(productObj.getExpiryDate(), format);
+            // Legacy semantics (Joda truncation toward zero, then +1): future dates
+            // count as plain calendar-day difference, but the expiry date itself is
+            // "1 day left" — items flip to expired only the day after expiry.
+            int diff = (int) ChronoUnit.DAYS.between(LocalDate.now(), expiry);
+            return diff == 0 ? 1 : diff;
+        } catch (DateTimeParseException e) {
+            // Unparseable dates must not destructively mark items expired.
             e.printStackTrace();
+            return Integer.MAX_VALUE;
         }
-
-        DateTime dateTimeNow = new DateTime(now.getTime());
-        DateTime dateTimeExp = new DateTime(expiry.getTime());
-
-        Days days = Days.daysBetween(dateTimeNow, dateTimeExp);
-
-        return days.getDays() + 1;
     }
 
     /**
      * Creates notification when called!
      */
     public void createNotification() {
-        // Prepare intent which is triggered if the
-        // notification is selected
+        if (notificationList.isEmpty()) {
+            return;
+        }
+        // areNotificationsEnabled() is correct on every API level; checking the
+        // POST_NOTIFICATIONS permission directly reports DENIED on API < 33 where
+        // the permission does not exist.
+        if (!NotificationManagerCompat.from(myContext).areNotificationsEnabled()) {
+            return;
+        }
+
         Intent intent = new Intent(myContext, HomeActivity.class);
         Integer[] simpleArray = new Integer[notificationList.size()];
         notificationList.toArray(simpleArray);
 
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra( "List", simpleArray);
-        PendingIntent pIntent = PendingIntent.getActivity(myContext, (int) System.currentTimeMillis(), intent, 0);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("List", simpleArray);
+        PendingIntent pIntent = PendingIntent.getActivity(myContext, 0, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
-        if(notificationList.size() > 0) {
-            Notification notification = new Notification.Builder(myContext)
-                    .setContentTitle("Stocked!")
-                    .setContentText(String.valueOf(notificationList.size()) + " Item(s) about to expire")
-                    .setSmallIcon(R.mipmap.ic_launcher)
-                    .setContentIntent(pIntent)
-                    .build();
-            NotificationManager notificationManager = (NotificationManager) myContext.getSystemService(Context.NOTIFICATION_SERVICE);
+        Notification notification = new NotificationCompat.Builder(myContext, StockedApp.CHANNEL_EXPIRY)
+                .setContentTitle("Stocked!")
+                .setContentText(notificationList.size() + " Item(s) about to expire")
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentIntent(pIntent)
+                .setAutoCancel(true)
+                .build();
 
-            // hide the notification after its selected
-            notification.flags |= Notification.FLAG_AUTO_CANCEL;
-
-            notificationManager.notify(0, notification);
-        }
+        NotificationManagerCompat.from(myContext).notify(0, notification);
     }
 
 }

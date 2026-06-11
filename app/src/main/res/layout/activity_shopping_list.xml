@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/shoopingCoordinatorLayout">
+    android:id="@+id/shoopingCoordinatorLayout"
+    android:fitsSystemWindows="true">
 
 
     <RelativeLayout
@@ -50,7 +51,7 @@
 
     </RelativeLayout>
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/FAB_check_shop"
         android:src="@drawable/ic_check_white_12dp"
 
@@ -66,4 +67,4 @@
         app:elevation="6dp"
         app:pressedTranslationZ="12dp"/>
 
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

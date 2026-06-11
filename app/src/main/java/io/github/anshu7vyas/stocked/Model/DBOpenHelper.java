@@ -1,4 +1,4 @@
-package com.anshulvyas.csc780.grocerymanagr.Model;
+package io.github.anshu7vyas.stocked.Model;
 
 
 import android.content.Context;
