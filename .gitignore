@@ -53,3 +53,5 @@ captures
 keystore/
 local.properties
 *.iml
+Documents/
+.playwright-mcp/

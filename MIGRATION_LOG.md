@@ -142,3 +142,30 @@
   colors live in `Theme.kt`).
 - **Verification:** emulator end-to-end — tabs, add item (M3 date picker), shopping add, timeline badges,
   long-press consume (reactive), nav push/pop, data intact across Phase 2 → 3 upgrade install.
+
+### Session 2 — 2026-06-11 — Phase 4: Stitch redesign → Material 3 (00:00 → 00:55 PDT)
+
+- **Design generation (Playwright MCP driving stitch.withgoogle.com, user present for one 2FA tap):**
+  prompted four screens in the "Fresh Expressive Tracker" system; steered Stitch away from
+  barcode-scanner scope creep mid-conversation. Exported .zip = per-screen PNG + HTML + a full
+  `DESIGN.md` token sheet (M3 color roles, type scale, shapes) → `docs/design/`. Total design time: ~15 min.
+- **User-directed UX overhaul (not like-for-like):** bottom NavigationBar (badge = expiring-soon count),
+  Pantry as freshness dashboard (greeting, "Use it up!" urgent carousel w/ days-left rings,
+  Today/This week/Later buckets), kebab menus replace invisible long-press, Add = ModalBottomSheet
+  w/ emoji category chips + quick expiry chips (+3d/+1w/+2w/custom), shopping checkbox →
+  "Moved to pantry?" → prefilled sheet (new `moveToPantry` repository op), timeline stats strip.
+- **Data-honest scope cuts:** no "this month" stats or month grouping (no status-change timestamp in
+  schema — noted as possible v2 column), AI suggestion banner deferred to Phase 5 (slot designed),
+  no drag-reorder (no order column).
+- **Pain points:** Material You dynamic color hijacked the brand on first run (wallpaper lavender) —
+  brand green now the default, dynamic color a future setting; material3 BOM no longer bundles
+  icons (added icons-extended; R8 strips later); Google Fonts needs the GMS cert boilerplate.
+- **Adversarial gate:** architect found the save path split across two ViewModels (sheet branching to
+  ShoppingViewModel.moveToPantry vs AddItemViewModel) → consolidated into `HomeViewModel.saveToPantry`,
+  deleted AddItemViewModel entirely; kotlin-specialist caught "needs attention today" copy lying about
+  ≤3-day items ("expiring soon" now), midnight-drift chip deselection (hoisted now()), config-change
+  sheet loss (rememberSaveable + Serializable). The altitude review WAS this phase's /simplify —
+  it deleted a ViewModel.
+- **Verification:** 20 tests green; emulator end-to-end: sheet add w/ quick chips, shopping quick-add,
+  check → move-to-pantry → lands in pantry w/ ring + badge update, kebab consume reactive,
+  timeline stats. Phase 6 additions: R8 keep rules for @Serializable routes; bundled font fallback.

@@ -40,6 +40,17 @@ class ProductRepository @Inject constructor(
 
     suspend fun delete(product: Product) = dao.delete(product)
 
+    /** A bought shopping-list item becomes a stocked pantry item with an expiry. */
+    suspend fun moveToPantry(product: Product, expiry: LocalDate) {
+        dao.update(
+            product.copy(
+                onShoppingList = false,
+                stocked = true,
+                expiryEpochDay = expiry.toEpochDay(),
+            )
+        )
+    }
+
     /** Sweep stocked items whose expiry date has passed; returns rows flipped. */
     suspend fun expireOverdue(today: LocalDate = LocalDate.now()): Int =
         dao.markOverdueAsExpired(today.toEpochDay())

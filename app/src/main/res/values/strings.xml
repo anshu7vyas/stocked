@@ -6,37 +6,66 @@
         <item quantity="one">%d item is about to expire</item>
         <item quantity="other">%d items are about to expire</item>
     </plurals>
-    <string name="add_item">Add Item</string>
-    <string name="tagline">To better manage groceries...</string>
-    <string name="cart_item">Next Product</string>
 
-
-    <string name="item_name">Item name:</string>
-    <string name="item_category">Item category:</string>
     <string name="cat1">Frozen Items</string>
     <string name="cat2">Green vegetables</string>
     <string name="cat3">Dairy products</string>
     <string name="cat4">Dishes</string>
-    <string name="default_cat">Greens</string>
-    <string name="item_days">Expire in (days)</string>
 
-    <string name="tab_home">Home</string>
-    <string name="tab_shopping_list">Shopping List</string>
-    <string name="tab_timeline">Timeline</string>
+    <!-- Navigation -->
+    <string name="nav_pantry">Pantry</string>
+    <string name="nav_shopping">Shopping</string>
+    <string name="nav_timeline">Timeline</string>
+
+    <!-- Pantry dashboard -->
+    <string name="greeting">Hi there,</string>
+    <plurals name="items_need_attention">
+        <item quantity="one">%d item is expiring soon.</item>
+        <item quantity="other">%d items are expiring soon.</item>
+    </plurals>
+    <string name="all_fresh">Everything is fresh. Nice!</string>
+    <string name="use_it_up">Use it up!</string>
+    <string name="section_today">Today</string>
+    <string name="section_this_week">This week</string>
+    <string name="section_later">Later</string>
+    <string name="pantry_empty">🧺 Your pantry is empty.\nAdd your first item to start tracking freshness.</string>
     <string name="expired">Expired</string>
     <string name="expire_in_days">expire in %d days</string>
+    <string name="item_menu">Item actions</string>
+
+    <!-- Add item sheet -->
+    <string name="add_item">Add item</string>
+    <string name="item_name_hint">What are we adding?</string>
+    <string name="item_category">Category</string>
+    <string name="expires_in">Expires in</string>
+    <string name="expiry_plus_3_days">+3 days</string>
+    <string name="expiry_plus_1_week">+1 week</string>
+    <string name="expiry_plus_2_weeks">+2 weeks</string>
+    <string name="expiry_custom">📅 Custom date</string>
+    <string name="expiry_custom_set">📅 %s</string>
+    <string name="add_to_pantry">Add to pantry</string>
+    <string name="error_item_name_required">Please enter name of an item.</string>
+    <string name="error_expiry_required">Please set an expiry date.</string>
+
+    <!-- Shopping list -->
+    <string name="shopping_title">Shopping List</string>
+    <string name="shopping_quick_add_hint">Add to list…</string>
+    <string name="shopping_empty">🛒 Nothing to buy.\nAdd items you need for your next grocery run.</string>
+    <string name="move_to_pantry_prompt">Moved to pantry?</string>
+
+    <!-- Timeline -->
+    <string name="timeline_title">Timeline</string>
+    <string name="timeline_stats">%1$d consumed · %2$d expired</string>
+    <string name="timeline_empty">🕰️ No history yet.\nItems you track will show up here.</string>
     <string name="flag_stocked">STOCKED</string>
     <string name="flag_expired">EXPIRED</string>
     <string name="flag_consumed">CONSUMED</string>
-    <string name="item_action_title">What to do with %s?</string>
-    <string name="item_action_message">Please select action.</string>
+
+    <!-- Item actions -->
     <string name="action_consumed">Consumed</string>
     <string name="action_expired">Expired</string>
     <string name="action_delete">Delete</string>
     <string name="delete_title">Delete?</string>
     <string name="delete_message">Are you sure you want to delete?</string>
     <string name="deleted_confirmation">%s deleted</string>
-    <string name="error_item_name_required">Please enter name of an item.</string>
-    <string name="error_expiry_required">Please set an expiry date.</string>
-    <string name="select_date">Select date</string>
 </resources>

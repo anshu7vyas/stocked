@@ -5,8 +5,10 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.anshu7vyas.stocked.data.Product
 import io.github.anshu7vyas.stocked.data.ProductRepository
+import io.github.anshu7vyas.stocked.di.ApplicationScope
 import java.time.LocalDate
 import javax.inject.Inject
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
@@ -25,6 +27,7 @@ data class StockedItem(
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val repository: ProductRepository,
+    @param:ApplicationScope private val applicationScope: CoroutineScope,
 ) : ViewModel() {
 
     val uiState: StateFlow<HomeUiState> =
@@ -51,5 +54,20 @@ class HomeViewModel @Inject constructor(
 
     fun delete(product: Product) {
         viewModelScope.launch { repository.delete(product) }
+    }
+
+    /**
+     * Saves the add-sheet result: a brand-new pantry item, or a shopping-list
+     * item being moved (with possibly edited name/category). Application scope:
+     * the write must persist even if Home leaves composition mid-write.
+     */
+    fun saveToPantry(moving: Product?, name: String, category: String, expiry: LocalDate) {
+        applicationScope.launch {
+            if (moving != null) {
+                repository.moveToPantry(moving.copy(name = name, category = category), expiry)
+            } else {
+                repository.addStockedProduct(name, category, expiry)
+            }
+        }
     }
 }

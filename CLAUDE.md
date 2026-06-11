@@ -24,7 +24,10 @@ Medium blog series.
 - [x] Phase 3 — Compose like-for-like (BOM 2026.05.01, M3, single MainActivity, SplashScreen API,
       TabRow+HorizontalPager, LazyColumn) + Navigation 3 (1.1.2, explicit entryDecorators incl.
       ViewModelStore — NOT default!), all XML/fragments/adapters deleted, 19 tests
-- [ ] Phase 4 — Stitch redesign via Playwright MCP → Material 3 Expressive + edge-to-edge + adaptive
+- [x] Phase 4 — Stitch redesign shipped: bottom nav + badge, pantry dashboard (urgent carousel,
+      expiry buckets), add bottom sheet (quick expiry chips), shopping move-to-pantry flow,
+      timeline stats; design assets + DESIGN.md tokens in docs/design/. Deferred: adaptive
+      (tablet rail), dynamic-color setting, month grouping (needs status-date column)
 - [ ] Phase 5 — In-app AI: Gemini Nano suggestions w/ lookup fallback + AppFunctions (skill: appfunctions)
 - [ ] Phase 6 — R8, fastlane rewrite, Play internal → production rollout
 
