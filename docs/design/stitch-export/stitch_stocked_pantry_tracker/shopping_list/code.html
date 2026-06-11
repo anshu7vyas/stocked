@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Stocked! - Shopping List</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        h1, h2, h3, .font-display {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .custom-checkbox:checked + div {
+            background-color: #006b29;
+            border-color: #006b29;
+        }
+        .custom-checkbox:checked + div span {
+            display: block;
+        }
+        .glass-effect {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary-container": "#a8f37d",
+                      "on-background": "#181d18",
+                      "on-secondary-container": "#2f7103",
+                      "surface-variant": "#e0e4db",
+                      "on-primary-fixed": "#002108",
+                      "on-error": "#ffffff",
+                      "secondary-fixed-dim": "#90d967",
+                      "secondary-fixed": "#abf680",
+                      "on-tertiary-fixed-variant": "#5c4300",
+                      "outline": "#6e7a6c",
+                      "on-secondary": "#ffffff",
+                      "primary-fixed-dim": "#67de7c",
+                      "surface-bright": "#f7fbf2",
+                      "tertiary-fixed": "#ffdfa0",
+                      "surface-container-highest": "#e0e4db",
+                      "primary-container": "#008736",
+                      "on-tertiary-fixed": "#261a00",
+                      "inverse-surface": "#2d322c",
+                      "primary": "#006b29",
+                      "inverse-on-surface": "#eef2e9",
+                      "surface-container-low": "#f1f5ec",
+                      "on-error-container": "#93000a",
+                      "background": "#f7fbf2",
+                      "surface-container-lowest": "#ffffff",
+                      "on-primary-fixed-variant": "#00531e",
+                      "primary-fixed": "#84fb95",
+                      "outline-variant": "#bdcab9",
+                      "surface-container-high": "#e5eae1",
+                      "on-surface": "#181d18",
+                      "surface-container": "#ebefe6",
+                      "surface": "#f7fbf2",
+                      "on-tertiary": "#ffffff",
+                      "surface-tint": "#006e2a",
+                      "secondary": "#2b6c00",
+                      "on-secondary-fixed-variant": "#1f5100",
+                      "on-primary": "#ffffff",
+                      "error": "#ba1a1a",
+                      "tertiary-fixed-dim": "#fbbc00",
+                      "on-secondary-fixed": "#082100",
+                      "on-tertiary-container": "#fffbff",
+                      "on-primary-container": "#f7fff2",
+                      "on-surface-variant": "#3e4a3d",
+                      "error-container": "#ffdad6",
+                      "tertiary": "#765700",
+                      "surface-dim": "#d7dbd3",
+                      "tertiary-container": "#956e00",
+                      "inverse-primary": "#67de7c"
+              },
+              "borderRadius": {
+                      "DEFAULT": "1rem",
+                      "lg": "2rem",
+                      "xl": "3rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "base": "8px",
+                      "stack-sm": "4px",
+                      "stack-lg": "24px",
+                      "stack-md": "12px",
+                      "margin-mobile": "16px",
+                      "margin-desktop": "32px",
+                      "margin-tablet": "24px",
+                      "gutter": "16px"
+              },
+              "fontFamily": {
+                      "display-lg": ["Plus Jakarta Sans"],
+                      "body-lg": ["Be Vietnam Pro"],
+                      "label-lg": ["Be Vietnam Pro"],
+                      "headline-lg-mobile": ["Plus Jakarta Sans"],
+                      "label-sm": ["Be Vietnam Pro"],
+                      "title-lg": ["Plus Jakarta Sans"],
+                      "headline-lg": ["Plus Jakarta Sans"],
+                      "body-md": ["Be Vietnam Pro"]
+              },
+              "fontSize": {
+                      "display-lg": ["57px", {"lineHeight": "64px", "letterSpacing": "-0.25px", "fontWeight": "700"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "letterSpacing": "0.5px", "fontWeight": "400"}],
+                      "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.1px", "fontWeight": "500"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+                      "label-sm": ["11px", {"lineHeight": "16px", "letterSpacing": "0.5px", "fontWeight": "500"}],
+                      "title-lg": ["22px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                      "body-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.25px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+      </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-40">
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md flex justify-between items-center px-margin-mobile py-base">
+<button class="material-symbols-outlined text-primary p-2 active:scale-95 transition-transform" data-icon="menu">menu</button>
+<h1 class="font-title-lg text-title-lg text-primary text-center flex-1">Shopping List</h1>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary-container">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A professional studio portrait of a friendly, smiling woman in her early 30s with a warm and approachable expression. She is set against a soft, blurred background of a modern, sunlit kitchen filled with fresh herbs and organic vegetables. The lighting is bright and airy, following a clean, high-energy light-mode aesthetic with vibrant greens and soft whites that match a healthy lifestyle brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCx2oD8SjJFMfxhaeTHk_QLXXE3qdqcxwQGgHuTJr012UCoboOgWixcAzv0DoArPVfMQ3XXXSjrjCr3DwnYDFVMDyyQg9AzzOVeZ_swfXaNfKfe17gfaG8UIIaCmNzKgJEexAzYDMk9PSYzOLuh2U21w39siwyC0U8_Eji1ot65cli8k3UVzkzqmfnJQ0R0O-laBiZKTAK5Bu514n5oPTKbcv7exbmTvgoN1vX_1FamxeMp5C7FdbShuRKWWxwMrBshq3V1JkpWkMS7"/>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="pt-20 px-margin-mobile max-w-2xl mx-auto">
+<!-- Quick Stats / Chips (Category Filters) -->
+<div class="flex gap-2 overflow-x-auto pb-stack-lg no-scrollbar">
+<button class="px-4 py-2 rounded-full border border-primary bg-primary text-on-primary font-label-lg text-label-lg whitespace-nowrap">All Items</button>
+<button class="px-4 py-2 rounded-full border border-outline text-on-surface-variant font-label-lg text-label-lg whitespace-nowrap hover:bg-surface-container-high transition-colors">Produce</button>
+<button class="px-4 py-2 rounded-full border border-outline text-on-surface-variant font-label-lg text-label-lg whitespace-nowrap hover:bg-surface-container-high transition-colors">Dairy</button>
+<button class="px-4 py-2 rounded-full border border-outline text-on-surface-variant font-label-lg text-label-lg whitespace-nowrap hover:bg-surface-container-high transition-colors">Bakery</button>
+</div>
+<!-- Shopping List Items -->
+<div class="space-y-stack-md" id="shopping-list">
+<!-- Item: Checked (Eggs) -->
+<div class="flex items-center p-4 bg-surface-container-low rounded-lg transition-all duration-300 group">
+<label class="relative flex items-center cursor-pointer">
+<input checked="" class="custom-checkbox sr-only" type="checkbox"/>
+<div class="w-6 h-6 rounded-full border-2 border-outline transition-colors flex items-center justify-center bg-primary border-primary">
+<span class="material-symbols-outlined text-white text-[18px] block" data-icon="check">check</span>
+</div>
+</label>
+<div class="ml-4 flex-1 flex flex-wrap items-center gap-2">
+<span class="font-body-lg text-body-lg text-on-surface-variant line-through opacity-60">Eggs</span>
+<button class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-label-sm font-label-sm flex items-center gap-1 active:scale-95 transition-transform animate-pulse">
+<span class="material-symbols-outlined text-[14px]" data-icon="move_to_inbox">move_to_inbox</span>
+                        Moved to pantry?
+                    </button>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity" data-icon="more_vert">more_vert</button>
+</div>
+<!-- Item: Spinach -->
+<div class="flex items-center p-4 bg-surface-container-lowest border border-outline-variant rounded-lg transition-all duration-200">
+<label class="relative flex items-center cursor-pointer">
+<input class="custom-checkbox sr-only" type="checkbox"/>
+<div class="w-6 h-6 rounded-full border-2 border-outline transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[18px] hidden" data-icon="check">check</span>
+</div>
+</label>
+<div class="ml-4 flex-1">
+<span class="font-body-lg text-body-lg text-on-surface font-medium">Spinach</span>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant" data-icon="drag_indicator">drag_indicator</button>
+</div>
+<!-- Item: Bread -->
+<div class="flex items-center p-4 bg-surface-container-lowest border border-outline-variant rounded-lg transition-all duration-200">
+<label class="relative flex items-center cursor-pointer">
+<input class="custom-checkbox sr-only" type="checkbox"/>
+<div class="w-6 h-6 rounded-full border-2 border-outline transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[18px] hidden" data-icon="check">check</span>
+</div>
+</label>
+<div class="ml-4 flex-1">
+<span class="font-body-lg text-body-lg text-on-surface font-medium">Whole Wheat Bread</span>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant" data-icon="drag_indicator">drag_indicator</button>
+</div>
+<!-- Item: Milk -->
+<div class="flex items-center p-4 bg-surface-container-lowest border border-outline-variant rounded-lg transition-all duration-200">
+<label class="relative flex items-center cursor-pointer">
+<input class="custom-checkbox sr-only" type="checkbox"/>
+<div class="w-6 h-6 rounded-full border-2 border-outline transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[18px] hidden" data-icon="check">check</span>
+</div>
+</label>
+<div class="ml-4 flex-1">
+<span class="font-body-lg text-body-lg text-on-surface font-medium">Oat Milk</span>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant" data-icon="drag_indicator">drag_indicator</button>
+</div>
+</div>
+<!-- Empty State Section (Hidden by default, shown when list empty) -->
+<div class="hidden flex-col items-center justify-center py-20 text-center" id="empty-state">
+<div class="w-48 h-48 mb-6 relative">
+<img alt="Empty List" class="w-full h-full object-contain" data-alt="A charming, hand-drawn character illustration of a cheerful shopping bag with a cute face, standing in a bright, minimalist modern kitchen. The character is vibrant primary green and surrounded by floating, colorful fruit and vegetable icons. The lighting is sunny and optimistic, utilizing a soft-focus background with a color palette of fresh greens, crisp whites, and warm wooden textures, evoking a feeling of readiness and organization." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4WEBoft9KqBiQ2CzcuHZeSx5TWrGWBrvj5NK0yHPfLQyAXSedS9K8g55TV_WyJA9cVCJTqUnxNQWIppaYNt7OeVZdn7yDLw4jxEVL4lhWbMIjnWGix8p4AaidyxkZsKkE9YxaGwXjEmo5EN_0Q7N0pf9G_h4_twC61lYEfAyMwELimjxSvbMnY81zMg6MNMKRlLai1V2_awkfD_Js2xKsatRPrIu5SZwFuKzOXw5QpYL3GiZVmSIea7NvI5mAZiALN505SJBJa1nF"/>
+</div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface mb-2">Your list is empty.</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-[240px]">Ready to restock? Start adding items below to keep your pantry full.</p>
+</div>
+</main>
+<!-- Fixed Bottom Controls -->
+<div class="fixed bottom-0 w-full z-40">
+<!-- Quick Add Field (Pinned above Nav) -->
+<div class="px-margin-mobile pb-28">
+<div class="max-w-2xl mx-auto flex items-center bg-surface-container-highest rounded-full shadow-lg p-2 gap-2 border border-white/20 glass-effect">
+<div class="flex-1 px-4 py-2">
+<input class="bg-transparent border-none outline-none w-full font-body-md text-body-md text-on-surface placeholder-on-surface-variant/60 focus:ring-0" placeholder="Add to list..." type="text"/>
+</div>
+<button class="bg-primary text-on-primary w-10 h-10 rounded-full flex items-center justify-center active:scale-90 transition-transform shadow-md">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+</div>
+</div>
+<!-- Bottom Navigation Bar -->
+<nav class="bg-surface-container dark:bg-surface-container fixed bottom-0 w-full z-50 flex justify-around items-center px-base pb-base pt-2 shadow-lg rounded-t-lg">
+<!-- Pantry Tab -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-6 py-1 hover:bg-on-surface-variant/5 transition-all active:scale-90">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-label-lg text-label-lg">Pantry</span>
+</button>
+<!-- Shopping Tab (Active) -->
+<button class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary text-on-secondary-container dark:text-on-secondary rounded-full px-6 py-1 active:scale-90 transition-all duration-200">
+<span class="material-symbols-outlined fill-icon" data-icon="shopping_cart">shopping_cart</span>
+<span class="font-label-lg text-label-lg">Shopping</span>
+</button>
+<!-- Timeline Tab -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant px-6 py-1 hover:bg-on-surface-variant/5 transition-all active:scale-90">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+<span class="font-label-lg text-label-lg">Timeline</span>
+</button>
+</nav>
+</div>
+<!-- Micro-interactions Script -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const checkboxes = document.querySelectorAll('.custom-checkbox');
+            const shoppingList = document.getElementById('shopping-list');
+            const emptyState = document.getElementById('empty-state');
+
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const parentCard = this.closest('.flex');
+                    const label = parentCard.querySelector('span');
+                    const iconBox = this.nextElementSibling;
+                    const checkIcon = iconBox.querySelector('span');
+
+                    if (this.checked) {
+                        iconBox.classList.add('bg-primary', 'border-primary');
+                        checkIcon.classList.remove('hidden');
+                        label.classList.add('line-through', 'opacity-60');
+                    } else {
+                        iconBox.classList.remove('bg-primary', 'border-primary');
+                        checkIcon.classList.add('hidden');
+                        label.classList.remove('line-through', 'opacity-60');
+                    }
+                });
+            });
+
+            // Functional demo for adding items (UI only)
+            const input = document.querySelector('input[type="text"]');
+            const addButton = document.querySelector('.bg-primary.w-10');
+
+            addButton.addEventListener('click', () => {
+                if (input.value.trim() !== "") {
+                    // Logic to add item could go here
+                    input.value = "";
+                }
+            });
+        });
+    </script>
+</body></html>

@@ -15,7 +15,7 @@ data class Product(
     val stocked: Boolean = false,
     val consumed: Boolean = false,
     val expired: Boolean = false,
-) {
+) : java.io.Serializable {
     /**
      * Days until expiry, preserving legacy semantics: the expiry date itself counts
      * as "1 day left"; items count as expired only from the day after.

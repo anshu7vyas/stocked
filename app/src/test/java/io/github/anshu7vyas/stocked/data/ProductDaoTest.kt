@@ -90,6 +90,21 @@ class ProductDaoTest {
     }
 
     @Test
+    fun `moveToPantry converts a shopping item into a stocked item with expiry`() = runTest {
+        val repository = ProductRepository(dao)
+        val id = dao.insert(Product(name = "Eggs", category = "", onShoppingList = true))
+        val shoppingItem = dao.shoppingListProducts().first().first { it.id == id }
+
+        repository.moveToPantry(shoppingItem, today.plusDays(3))
+
+        val moved = dao.stockedProducts().first().first { it.id == id }
+        assertTrue(moved.stocked)
+        assertTrue(!moved.onShoppingList)
+        assertEquals(today.plusDays(3).toEpochDay(), moved.expiryEpochDay)
+        assertTrue(dao.shoppingListProducts().first().isEmpty())
+    }
+
+    @Test
     fun `shopping list returns only shopping items`() = runTest {
         dao.insert(Product(name = "Eggs", category = "", onShoppingList = true))
         dao.insert(stocked("Milk", today.plusDays(3)))
