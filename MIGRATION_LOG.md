@@ -61,3 +61,44 @@
   - **Confirmed:** parse-failure path destructively marked items expired → now inert sentinel. Dead `windowOptOutEdgeToEdgeEnforcement` attr removed (ignored at targetSdk 36).
   - **Refuted:** "viewpager 1.1.0 may not exist" (build resolves it); deferred: first-launch permission race (notification path moves to WorkManager in Phase 2).
 - `/simplify` skipped this phase by design: remaining Java is deleted/converted in Phase 2; polishing doomed code is churn.
+
+### Session 1 (cont.) — Phase 2: Kotlin + Room + architecture
+
+- **Wall-clock Phase 2:** ~45 min (21:30 → 22:15 PDT).
+- **Done:** 1,870 lines of Java → **0** (22 Kotlin files); Room v1 `stocked.db` with
+  `expiryEpochDay: Long?` (nullable — shopping items have no expiry; date-string bug class eliminated);
+  ProductDao Flow queries replace rawQuery string concat; ProductRepository; Hilt everywhere;
+  4 ViewModels exposing StateFlow; fragments collect via `repeatOnLifecycle`; main-thread DB access dead;
+  `ExpiryCheckWorker` (daily WorkManager) — notifications now fire without opening the app, and the
+  in-Home notification hack is gone; unit tests: 14 (Product day-math semantics incl. cross-year
+  lexicographic-bug proof, DAO via Robolectric in-memory Room, HomeViewModel via Turbine + FakeProductDao).
+- **Deleted legacy horrors:** `new HomeFragment()` inside ProductAdapter just to call getLeftDays;
+  FragmentRefreshListener callback web (reactive Flows made it free); destructive `DROP TABLE` onUpgrade.
+- **Pain points:**
+  - androidx.core 1.19.0 demands compileSdk 37 → pinned 1.17.0 (compileSdk 36). Library-vs-SDK
+    treadmill is alive and well in 2026.
+  - ViewModel-under-test gotcha: a VM constructed in `@Before` with `init { launch { … } }` raced the
+    test's seed data; constructing the VM after seeding (realistic: sweep runs against existing data) fixed it.
+  - KSP versioning changed format (now standalone `2.3.x`, not `2.2.x-y`) — easy to query the wrong metadata.
+- **Verification:** full suite green; emulator end-to-end: add item ("expire in 8 days" matches baseline),
+  shopping add, timeline badges, long-press consume → Home updates instantly via Flow emission (UDF payoff visible).
+- Created repo `CLAUDE.md` — session-resume protocol so context loss can't strand the project.
+- **Adversarial review gate** (kotlin-specialist + architect-reviewer, parallel; findings verified before fixing):
+  - **CRITICAL (kotlin-specialist, proven by disassembling WorkManager 2.11.2 bytecode):** WorkManager's
+    androidx.startup initializer self-initializes with the default factory *before* `Application.onCreate`,
+    so `Configuration.Provider`/`HiltWorkerFactory` was never consulted → `ExpiryCheckWorker` (@AssistedInject,
+    no 2-arg ctor) would FAIL on every run, silently, forever. Unit tests couldn't catch it (FakeProductDao
+    bypasses WorkManager). Fixed via manifest `tools:node="remove"` of WorkManagerInitializer; **verified on
+    emulator**: forced a one-time run → `Worker result SUCCESS` + real notification on `expiry_alerts` channel.
+  - **HIGH (architect-reviewer):** `viewModelScope.launch { insert }` + immediate `finish()` in the two add
+    screens = write cancelled with the ViewModel → possible data loss of the exact thing the screen exists to
+    save. Fixed with `@ApplicationScope` CoroutineScope (SupervisorJob) for must-survive writes.
+  - Accepted smaller: NULLs-first `ORDER BY` on nullable expiry (latent trap → `IS NULL,` prefix), UTC/DST-fragile
+    `minDate` millis math (→ local-midnight-tomorrow), missing `@Singleton` on DAO provider, test double-sweep
+    (VM now constructed per-test after seeding), cross-reference comments pinning the expiry-boundary invariant.
+- **`/simplify` gate** (4 parallel angle agents: reuse/simplification/efficiency/altitude): applied — unused
+  legacy strings removed, `LocalDate.now()` hoisted once per emission, worker's duplicate
+  `NotificationManagerCompat.from()` collapsed. **Deliberately skipped** findings invested in code Phase 3
+  deletes (adapter `submitList` dedup, fragment collect boilerplate, ViewHolder pattern, validation helpers) and
+  architecture seams kept on purpose (repository pass-throughs, `HomeUiState` wrapper — both grow in Phases 3–5).
+  Noted for Phase 3: consider moving the open-sweep from `HomeViewModel.init` into the repository/app layer.
