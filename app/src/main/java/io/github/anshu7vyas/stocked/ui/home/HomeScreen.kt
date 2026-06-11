@@ -47,7 +47,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.anshu7vyas.stocked.R
-import io.github.anshu7vyas.stocked.data.Product
 import io.github.anshu7vyas.stocked.ui.shopping.ShoppingViewModel
 import io.github.anshu7vyas.stocked.ui.theme.CardBackground
 import io.github.anshu7vyas.stocked.ui.theme.cardListItem
@@ -235,7 +234,7 @@ private fun ShoppingTab(
                 .fillMaxSize()
                 .testTag("shopping_list"),
         ) {
-            items(items, key = Product::id) { product ->
+            items(items, key = { it.id }) { product ->
                 Text(
                     text = product.name,
                     style = MaterialTheme.typography.titleLarge,
@@ -264,6 +263,6 @@ private fun TimelineTab(viewModel: TimelineViewModel = hiltViewModel()) {
             .fillMaxSize()
             .testTag("timeline_list"),
     ) {
-        items(items, key = Product::id) { product -> TimelineRow(product) }
+        items(items, key = { it.id }) { product -> TimelineRow(product) }
     }
 }

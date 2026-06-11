@@ -81,14 +81,15 @@ fun AddItemScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
+                    val currentExpiry = expiry
                     when {
                         name.isBlank() ->
                             scope.launch { snackbarHostState.showSnackbar(nameRequired) }
-                        expiry == null ->
+                        currentExpiry == null ->
                             scope.launch { snackbarHostState.showSnackbar(expiryRequired) }
                         else -> {
                             viewModel.addStockedProduct(
-                                name.trim(), category, LocalDate.parse(expiry),
+                                name.trim(), category, LocalDate.parse(currentExpiry),
                             )
                             onDone()
                         }
