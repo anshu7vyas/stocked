@@ -31,6 +31,10 @@ public class Product implements Parcelable {
         productId = in.readInt();
         expiryDate = in.readString();
         category = in.readString();
+        stocked = in.readByte() != 0;
+        expired = in.readByte() != 0;
+        consumed = in.readByte() != 0;
+        shoppingCheck = in.readByte() != 0;
     }
 
     /**
