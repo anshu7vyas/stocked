@@ -55,4 +55,3 @@ local.properties
 *.iml
 Documents/
 .playwright-mcp/
-docs/blog/
