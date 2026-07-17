@@ -28,30 +28,28 @@ Medium blog series.
       expiry buckets), add bottom sheet (quick expiry chips), shopping move-to-pantry flow,
       timeline stats; design assets + DESIGN.md tokens in docs/design/. Deferred: adaptive
       (tablet rail), dynamic-color setting, month grouping (needs status-date column)
-- [ ] Phase 5 — In-app AI: Gemini Nano suggestions w/ lookup fallback + AppFunctions (skill: appfunctions)
+- [x] Phase 5 — In-app AI shipped (Session 4, 2026-07-16): ai/ package (SuggestionService →
+      Fallback(GeminiNano via com.google.mlkit:genai-prompt:1.0.0-beta3, LocalLookup 125 keywords),
+      corpus 93.3%), debounced AddItemSheet suggestion row + Apply, AppFunctions
+      (androidx.appfunctions:1.0.0-alpha09, compileSdk 37, 3 functions, ISO-String dates —
+      alpha09 KSP rejects java.time params). Branch `phase-5-ai`. Nano is UNAVAILABLE on
+      emulator BY DESIGN — test the real path on a physical Pixel 9/10-class device.
 - [ ] Phase 6 — R8, fastlane rewrite, Play internal → production rollout
 
-## Next session: Phase 5 pickup (concrete steps)
+## Next session: Phase 6 pickup (concrete steps)
 
-1. `git checkout stocked-revamp && git pull` — PRs #11→#15 are **all merged** (2026-06-11,
-   review comments addressed; see MIGRATION_LOG Session 3); master == phase-4 redesign,
-   stocked-revamp = master + docs. Boot emulator: `android emulator start Pixel_9_Pro`.
-2. Build `ai/` package: `SuggestionService` interface (suggest(name) → category + shelf-life days),
-   `LocalLookupSuggestionService` (~100-item bundled table — ALWAYS works) +
-   `GeminiNanoSuggestionService` (ML Kit GenAI / AICore, runtime capability check; expect
-   UNAVAILABLE on emulator — the fallback architecture is the story). Hilt-bind with Nano
-   preferred, lookup fallback.
-3. Wire into `AddItemSheet`: debounced suggestion row under the name field
-   ("Looks like 🥛 Dairy — usually keeps ~7 days" + Apply chip) — the slot exists in the
-   Stitch design (`docs/design/stitch-export/.../add_item_modal/`). Suggestion fills
-   category + expiry quick-pick. Tests: fake service; 30-item quality corpus → MIGRATION_LOG.
-4. Run the **appfunctions skill** → expose `addPantryItem`, `addToShoppingList`,
-   `queryExpiringItems` from ProductRepository; verify on API 36 emulator.
-5. Gate as usual (kotlin-specialist + architect agents → verify → /simplify decision →
-   smart-commit) → branch `phase-5-ai` → PR base `master` (stack is merged) → update
-   MIGRATION_LOG + this checklist.
-6. Phase 6 checklist additions discovered along the way: R8 keep rules for @Serializable
-   Nav3 routes; bundled font fallback (offline-first launch); dynamic-color user setting.
+1. Merge PR for `phase-5-ai` if still open (base master), then branch `phase-6-release`.
+2. R8/minify ON: keep rules for @Serializable Nav3 routes, AppFunctions
+   (@AppFunction/@AppFunctionSerializable reflection surface — check library consumer rules
+   first), ML Kit GenAI. Compare APK/AAB size vs Phase 1 honest number (5.4 MB / 4.99 MB).
+3. Bundled font fallback (offline-first launch); dynamic-color user setting (deferred from Ph4).
+4. fastlane rewrite + Play internal track. **Still blocked on user:** Play Console new-app
+   entry for `io.github.anshu7vyas.stocked`, service-account JSON, keystore backup
+   (`keystore/` git-ignored, NOT backed up anywhere yet!).
+5. Manual QA on a Nano-capable physical device (Pixel 9/10 class): real GeminiNano path +
+   AppFunctions invoke via `adb shell cmd app_function` (needs API 37+; the API 36 emulator
+   has no shell impl — registration was verified via APK assets/app_functions_v2.xml).
+6. Emulator/adb hygiene: a physical device may be attached — ALWAYS `-s emulator-5554`.
 
 **Still owed by user (blocks Phase 6 release only):** Play Console new-app entry for
 `io.github.anshu7vyas.stocked`, service-account JSON for fastlane, keystore backup

@@ -26,8 +26,8 @@ class ProductRepository @Inject constructor(
         )
     }
 
-    suspend fun addShoppingItem(name: String) {
-        dao.insert(Product(name = name, category = "", onShoppingList = true))
+    suspend fun addShoppingItem(name: String, category: String = "") {
+        dao.insert(Product(name = name, category = category, onShoppingList = true))
     }
 
     suspend fun markConsumed(product: Product) {

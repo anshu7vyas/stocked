@@ -1,6 +1,10 @@
 package io.github.anshu7vyas.stocked.ui.home
 
 import app.cash.turbine.test
+import io.github.anshu7vyas.stocked.ai.NameSuggestion
+import io.github.anshu7vyas.stocked.ai.Suggestion
+import io.github.anshu7vyas.stocked.ai.SuggestionCategories
+import io.github.anshu7vyas.stocked.ai.SuggestionService
 import io.github.anshu7vyas.stocked.data.Product
 import io.github.anshu7vyas.stocked.data.ProductDao
 import io.github.anshu7vyas.stocked.data.ProductRepository
@@ -27,6 +31,7 @@ class HomeViewModelTest {
 
     private val dispatcher = StandardTestDispatcher()
     private lateinit var fakeDao: FakeProductDao
+    private lateinit var fakeSuggestions: FakeSuggestionService
 
     // Constructed per-test AFTER seeding: the init-block sweep runs on creation, and a
     // second instance from setUp would run a concurrent sweep against the same fake.
@@ -36,10 +41,15 @@ class HomeViewModelTest {
     fun setUp() {
         Dispatchers.setMain(dispatcher)
         fakeDao = FakeProductDao()
+        fakeSuggestions = FakeSuggestionService()
     }
 
     private fun createViewModel(): HomeViewModel =
-        HomeViewModel(ProductRepository(fakeDao), CoroutineScope(SupervisorJob() + dispatcher))
+        HomeViewModel(
+            ProductRepository(fakeDao),
+            fakeSuggestions,
+            CoroutineScope(SupervisorJob() + dispatcher),
+        )
 
     @After
     fun tearDown() {
@@ -91,6 +101,112 @@ class HomeViewModelTest {
         val updated = fakeDao.current().first { it.id == 1L }
         assertTrue(updated.consumed)
         assertTrue(!updated.stocked)
+    }
+
+    @Test
+    fun `suggestion emitted for a known name`() = runTest {
+        fakeSuggestions.put("Milk", Suggestion(SuggestionCategories.DAIRY_PRODUCTS, 7))
+        viewModel = createViewModel()
+
+        viewModel.suggestion.test {
+            assertEquals(null, awaitItem())
+            viewModel.onNameChanged("Milk")
+            assertEquals(
+                NameSuggestion("Milk", Suggestion(SuggestionCategories.DAIRY_PRODUCTS, 7)),
+                awaitItem(),
+            )
+        }
+    }
+
+    @Test
+    fun `suggestion is tagged with the trimmed name it was computed for`() = runTest {
+        fakeSuggestions.put("Milk", Suggestion(SuggestionCategories.DAIRY_PRODUCTS, 7))
+        viewModel = createViewModel()
+
+        viewModel.suggestion.test {
+            assertEquals(null, awaitItem())
+            viewModel.onNameChanged("  Milk  ")
+            // The UI compares this name against the field to reject stale proposals.
+            assertEquals(
+                NameSuggestion("Milk", Suggestion(SuggestionCategories.DAIRY_PRODUCTS, 7)),
+                awaitItem(),
+            )
+        }
+    }
+
+    @Test
+    fun `suggestion debounce coalesces rapid typing into one query`() = runTest {
+        fakeSuggestions.put("Milk", Suggestion(SuggestionCategories.DAIRY_PRODUCTS, 7))
+        viewModel = createViewModel()
+
+        viewModel.suggestion.test {
+            assertEquals(null, awaitItem())
+            // Second keystroke lands inside the 300ms window: the first query never fires.
+            viewModel.onNameChanged("Mil")
+            dispatcher.scheduler.advanceTimeBy(150)
+            viewModel.onNameChanged("Milk")
+            dispatcher.scheduler.advanceTimeBy(150)
+            expectNoEvents()
+
+            dispatcher.scheduler.advanceTimeBy(200)
+            assertEquals(
+                NameSuggestion("Milk", Suggestion(SuggestionCategories.DAIRY_PRODUCTS, 7)),
+                awaitItem(),
+            )
+            assertEquals(1, fakeSuggestions.suggestCalls)
+        }
+    }
+
+    @Test
+    fun `blank or too-short names never query the service`() = runTest {
+        fakeSuggestions.put("ab", Suggestion(SuggestionCategories.DISHES, 3))
+        viewModel = createViewModel()
+
+        viewModel.suggestion.test {
+            assertEquals(null, awaitItem())
+            viewModel.onNameChanged("   ")
+            dispatcher.scheduler.advanceTimeBy(400)
+            viewModel.onNameChanged("ab")
+            dispatcher.scheduler.advanceTimeBy(400)
+
+            expectNoEvents()
+            assertEquals(0, fakeSuggestions.suggestCalls)
+        }
+    }
+
+    @Test
+    fun `clearSuggestion resets the suggestion when the sheet closes`() = runTest {
+        fakeSuggestions.put("Milk", Suggestion(SuggestionCategories.DAIRY_PRODUCTS, 7))
+        viewModel = createViewModel()
+
+        viewModel.suggestion.test {
+            assertEquals(null, awaitItem())
+            viewModel.onNameChanged("Milk")
+            assertEquals(
+                NameSuggestion("Milk", Suggestion(SuggestionCategories.DAIRY_PRODUCTS, 7)),
+                awaitItem(),
+            )
+
+            viewModel.clearSuggestion()
+            assertEquals(null, awaitItem())
+        }
+    }
+}
+
+/** In-memory suggestion table keyed by name (case-insensitive), counting queries. */
+class FakeSuggestionService : SuggestionService {
+    private val table = mutableMapOf<String, Suggestion>()
+
+    var suggestCalls = 0
+        private set
+
+    fun put(name: String, suggestion: Suggestion) {
+        table[name.lowercase()] = suggestion
+    }
+
+    override suspend fun suggest(name: String): Suggestion? {
+        suggestCalls++
+        return table[name.lowercase()]
     }
 }
 

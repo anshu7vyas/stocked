@@ -47,6 +47,17 @@
     <string name="error_item_name_required">Please enter name of an item.</string>
     <string name="error_expiry_required">Please set an expiry date.</string>
 
+    <!-- AI suggestion row: %1$s emoji, %2$s category, %3$s formatted day count -->
+    <string name="suggestion_looks_like">Looks like %1$s %2$s — usually keeps ~%3$s</string>
+    <plurals name="suggestion_keeps_days">
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
+    </plurals>
+    <string name="suggestion_apply">Apply</string>
+
+    <!-- AppFunctions: user-visible capability description shown by system agent surfaces -->
+    <string name="appfunctions_display_description">Add pantry or shopping-list items and check what\'s expiring soon.</string>
+
     <!-- Shopping list -->
     <string name="shopping_title">Shopping List</string>
     <string name="shopping_quick_add_hint">Add to list…</string>

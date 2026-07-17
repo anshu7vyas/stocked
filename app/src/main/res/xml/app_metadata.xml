@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AppFunctionAppMetadata xmlns:appfn="http://schemas.android.com/apk/androidx.appfunctions"
+    appfn:description="This app tracks pantry groceries with expiry dates and keeps a shopping list.
+Operational Patterns:
+- Use 'queryExpiringItems' to find what expires today or tomorrow before suggesting meals or purchases.
+- 'addPantryItem' and 'addToShoppingList' infer category (and shelf life) from the item name via on-device AI when those arguments are omitted; pass explicit values only to override or when inference fails.
+Constraints:
+- Categories are limited to exactly: Frozen Items, Green vegetables, Dairy products, Dishes.
+- Pantry expiry dates must be tomorrow or later; an item counts as expired the day AFTER its expiry date."
+    appfn:displayDescription="@string/appfunctions_display_description" />

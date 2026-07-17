@@ -22,17 +22,21 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import io.github.anshu7vyas.stocked.R
+import io.github.anshu7vyas.stocked.ai.NameSuggestion
 import io.github.anshu7vyas.stocked.ui.common.categoryEmoji
 import java.time.Instant
 import java.time.LocalDate
@@ -45,12 +49,20 @@ import java.time.format.DateTimeFormatter
  * [initialName] and [initialCategory] support the shopping-list "move to pantry"
  * flow — today quick-added shopping items have empty category, but Phase 5
  * AppFunctions will create categorized ones that pre-select the correct chip.
+ * [suggestion] is hoisted state (owned by HomeViewModel, fed by [onNameChanged]):
+ * a non-null value shows an AI suggestion row under the name field whose Apply
+ * chip fills category + expiry — never applied automatically, and only while
+ * the proposal still matches the name in the field (a debounced query can
+ * resolve after further edits). Opening with a non-blank name seeds the
+ * pipeline so prefilled names get a suggestion without a keystroke.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddItemSheet(
     onDismiss: () -> Unit,
     onSave: (name: String, category: String, expiry: LocalDate) -> Unit,
+    suggestion: NameSuggestion? = null,
+    onNameChanged: (String) -> Unit = {},
     initialName: String = "",
     initialCategory: String = "",
 ) {
@@ -67,6 +79,13 @@ fun AddItemSheet(
     // would deselect a chip if the clock crossed midnight while the sheet is open.
     val sheetToday = remember { LocalDate.now() }
 
+    // Prefilled names (move-to-pantry, AppFunctions) never pass through the
+    // text field's onValueChange, so seed the suggestion pipeline on open.
+    // Keyed on Unit: re-runs after process death with the restored name.
+    LaunchedEffect(Unit) {
+        if (name.isNotBlank()) onNameChanged(name)
+    }
+
     ModalBottomSheet(onDismissRequest = onDismiss) {
         Column(
             Modifier
@@ -82,6 +101,7 @@ fun AddItemSheet(
                 onValueChange = {
                     name = it
                     showNameError = false
+                    onNameChanged(it)
                 },
                 label = { Text(stringResource(R.string.item_name_hint)) },
                 isError = showNameError,
@@ -93,6 +113,42 @@ fun AddItemSheet(
                     .fillMaxWidth()
                     .testTag("item_name_field"),
             )
+
+            // Only surface a proposal computed for the name currently in the
+            // field: a debounced query can resolve after further edits, and
+            // applying it would write the previous name's category/expiry.
+            suggestion?.takeIf { it.name.equals(name.trim(), ignoreCase = true) }?.let { (_, proposal) ->
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    Text(
+                        text = stringResource(
+                            R.string.suggestion_looks_like,
+                            categoryEmoji(proposal.category),
+                            proposal.category,
+                            pluralStringResource(
+                                R.plurals.suggestion_keeps_days,
+                                proposal.shelfLifeDays,
+                                proposal.shelfLifeDays,
+                            ),
+                        ),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.weight(1f),
+                    )
+                    SuggestionChip(
+                        onClick = {
+                            category = proposal.category
+                            // Matches a quick-pick chip when shelf life is 3/7/14 days.
+                            expiry = sheetToday.plusDays(proposal.shelfLifeDays.toLong()).toString()
+                            showExpiryError = false
+                        },
+                        label = { Text(stringResource(R.string.suggestion_apply)) },
+                        modifier = Modifier.testTag("suggestion_apply_chip"),
+                    )
+                }
+            }
 
             Text(stringResource(R.string.item_category), style = MaterialTheme.typography.titleMedium)
             LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {

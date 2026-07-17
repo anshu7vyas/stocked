@@ -87,6 +87,7 @@ fun HomeScreen(
     val snackbarHostState = remember { SnackbarHostState() }
 
     val homeState by homeViewModel.uiState.collectAsStateWithLifecycle()
+    val suggestion by homeViewModel.suggestion.collectAsStateWithLifecycle()
     val shoppingItems by shoppingViewModel.items.collectAsStateWithLifecycle()
     val timelineItems by timelineViewModel.items.collectAsStateWithLifecycle()
 
@@ -176,12 +177,18 @@ fun HomeScreen(
 
     addSheet?.let { request ->
         AddItemSheet(
-            onDismiss = { addSheet = null },
+            onDismiss = {
+                addSheet = null
+                homeViewModel.clearSuggestion()
+            },
             initialName = request.prefillName,
             initialCategory = request.moving?.category ?: "",
+            suggestion = suggestion,
+            onNameChanged = homeViewModel::onNameChanged,
             onSave = { name, category, expiry ->
                 homeViewModel.saveToPantry(request.moving, name, category, expiry)
                 addSheet = null
+                homeViewModel.clearSuggestion()
             },
         )
     }

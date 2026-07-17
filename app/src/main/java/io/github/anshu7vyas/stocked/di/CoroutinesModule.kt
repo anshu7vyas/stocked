@@ -6,6 +6,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Qualifier
 import javax.inject.Singleton
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -14,6 +15,11 @@ import kotlinx.coroutines.SupervisorJob
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class ApplicationScope
+
+/** IO-bound work dispatcher; injected so tests can substitute a deterministic one. */
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class IoDispatcher
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -24,4 +30,8 @@ object CoroutinesModule {
     @ApplicationScope
     fun provideApplicationScope(): CoroutineScope =
         CoroutineScope(SupervisorJob() + Dispatchers.Default)
+
+    @Provides
+    @IoDispatcher
+    fun provideIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
 }
