@@ -93,6 +93,7 @@ dependencies {
     ksp(libs.hilt.compiler)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.serialization.core)
+    implementation(libs.mlkit.genai.prompt)
 
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
