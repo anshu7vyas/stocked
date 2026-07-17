@@ -16,7 +16,7 @@ val keystoreProperties = Properties().apply {
 
 android {
     namespace = "io.github.anshu7vyas.stocked"
-    compileSdk = 36
+    compileSdk = 37 // AppFunctions (Android 16 platform API via Jetpack) needs compileSdk 37+
 
     defaultConfig {
         applicationId = "io.github.anshu7vyas.stocked"
@@ -65,6 +65,10 @@ room {
     schemaDirectory("$projectDir/schemas")
 }
 
+ksp {
+    arg("appfunctions:aggregateAppFunctions", "true")
+}
+
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)
@@ -94,6 +98,9 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.serialization.core)
     implementation(libs.mlkit.genai.prompt)
+    implementation(libs.androidx.appfunctions)
+    implementation(libs.androidx.appfunctions.service)
+    ksp(libs.androidx.appfunctions.compiler)
 
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)

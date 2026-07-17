@@ -3,23 +3,33 @@ package io.github.anshu7vyas.stocked
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import androidx.appfunctions.service.AppFunctionConfiguration
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import dagger.hilt.android.HiltAndroidApp
+import io.github.anshu7vyas.stocked.appfunctions.PantryAppFunctions
 import io.github.anshu7vyas.stocked.work.ExpiryCheckWorker
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltAndroidApp
-class StockedApp : Application(), Configuration.Provider {
+class StockedApp : Application(), Configuration.Provider, AppFunctionConfiguration.Provider {
 
     @Inject lateinit var workerFactory: HiltWorkerFactory
+    @Inject lateinit var pantryAppFunctions: PantryAppFunctions
 
     override val workManagerConfiguration: Configuration
         get() = Configuration.Builder().setWorkerFactory(workerFactory).build()
+
+    // Getter (not initializer): Hilt field injection lands in super.onCreate(), and the
+    // factory lambda must read the injected instance, not capture a pre-injection null.
+    override val appFunctionConfiguration: AppFunctionConfiguration
+        get() = AppFunctionConfiguration.Builder()
+            .addEnclosingClassFactory(PantryAppFunctions::class.java) { pantryAppFunctions }
+            .build()
 
     override fun onCreate() {
         super.onCreate()

@@ -55,6 +55,9 @@
     </plurals>
     <string name="suggestion_apply">Apply</string>
 
+    <!-- AppFunctions: user-visible capability description shown by system agent surfaces -->
+    <string name="appfunctions_display_description">Add pantry or shopping-list items and check what\'s expiring soon.</string>
+
     <!-- Shopping list -->
     <string name="shopping_title">Shopping List</string>
     <string name="shopping_quick_add_hint">Add to list…</string>
