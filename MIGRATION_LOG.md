@@ -200,3 +200,59 @@
   preservation made visible), 3 = like-for-like Compose, 4 = redesign (+ round-toggle verification shot).
 - **Blog gold:** the bot found a real 8-year-old Parcel bug AND was confidently wrong twice
   (phantom "compilation issue", unfounded R8 claim) in the same review — verify-before-fix is the lesson.
+
+### Session 4 — 2026-07-16 — Phase 5: In-app AI — Nano suggestions + AppFunctions (19:20 → 21:10 PDT)
+
+- **Orchestration:** first ultracode run — a 26-agent workflow (recon ∥ → implement → adversarial
+  gate) built the suggestion feature end-to-end; AppFunctions followed via the appfunctions skill.
+- **SDK research (recon):** ML Kit GenAI **Prompt API** (`com.google.mlkit:genai-prompt:1.0.0-beta3`)
+  is the 2026 path for free-form on-device Gemini Nano; the old Google AI Edge SDK
+  (`com.google.ai.edge.aicore:0.0.1-exp02`) dead-ended March 2025 — do not build on it.
+  Emulator `checkStatus()` = UNAVAILABLE by design (allowlisted flagships only) — the fallback
+  architecture is the feature, not a workaround.
+- **ai/ package:** `SuggestionService` → `FallbackSuggestionService(GeminiNano, LocalLookup)`,
+  Hilt-bound. Lookup = 125 keywords, longest-match-wins ("frozen peas" → Frozen Items, not
+  vegetables); Nano = availability-gated, strict two-line prompt parse (category ∈ the 4,
+  days 1..365), 3s `withTimeoutOrNull`, API surface verified against the AAR via javap
+  before coding. **Quality corpus: 28/30 = 93.3%** (honest misses: sourdough bread, hummus —
+  no lookup entry beats a wrong guess).
+- **UI:** `HomeViewModel` debounced (300 ms) `mapLatest` suggestion flow; `AddItemSheet` row
+  "Looks like 🥛 Dairy products — usually keeps ~7 days" + Apply chip (fills category chip +
+  expiry, never auto-applies).
+- **Workflow gate:** 9 findings → 7 refuted by 2-vote adversarial verify (incl. both
+  "client-per-query" perf claims and "fallback withheld 3s"), 2 confirmed + fixed:
+  move-to-pantry prefill never seeded the pipeline (→ `LaunchedEffect` seed) and a
+  stale-apply window (→ `NameSuggestion` name-tagging; UI hides a proposal that no longer
+  matches the field).
+- **AppFunctions (skill):** compileSdk 36 → **37** (installed `platforms;android-37.0`),
+  `androidx.appfunctions:1.0.0-alpha09` (alpha10 exists but has no `-service` — pinned the
+  coherent set). Three functions on `PantryAppFunctions` over ProductRepository:
+  `addPantryItem` / `addToShoppingList` (both suggestion-backed when args omitted;
+  categorized shopping items pre-select the chip on move-to-pantry, closing the Session-3
+  future-proofing loop) / `queryExpiringItems` (the notification set). `app_metadata.xml`
+  + manifest property + `StockedApp : AppFunctionConfiguration.Provider` (getter, not
+  initializer — the factory lambda must read the Hilt field post-injection).
+- **alpha09 sharp edges:** KSP rejects `java.time` function params (supported set is
+  primitives/String/Uri) → ISO-8601 String dates with parse validation;
+  `AppFunctionInvalidArgumentException` touches `Bundle.EMPTY` → Robolectric runner for its
+  tests; **real `Dispatchers.IO` deadlocks Robolectric** (a `withContext` exception on a pool
+  thread never resumes the sandboxed main thread — jstack showed the parked join) → new
+  `@IoDispatcher` qualifier injected into `PantryAppFunctions`, `UnconfinedTestDispatcher`
+  in tests. API 36 emulator has the `app_function` service but no shell `cmd` implementation
+  (API 37+) → registration verified via APK `assets/app_functions_v2.xml` (3 function IDs,
+  24 KDoc descriptions extracted).
+- **Phase gate (kotlin-specialist + architect, verify-before-fix):** 2 confirmed → fixed:
+  explicit-category + inferred-expiry borrowed a shelf life computed for a *different*
+  category (Milk stored as Frozen Items inherited the 7-day dairy expiry → false alerts;
+  now `takeIf { it.category == resolvedCategory }` + explicit-expiry error) and unbounded
+  far-future expiry truncating `daysLeft` through `.toInt()` (now a 100-year cap).
+  Dismissed with receipts: Hilt scoping, additive-only security surface, ISO string sort
+  chronology, dispatcher plumbing. /simplify decision: skipped standalone pass — the
+  architect lens covered altitude (layering clean, no dead code).
+- **Verification:** 42 tests green (7 suites); emulator e2e: type Milk → suggestion row →
+  Apply (expiry +7d, Dairy chip) → saved with 7d ring in "This week"; the stale-binding
+  guard proved itself live when a stray keystroke ("Milkv") correctly hid the row.
+  Screenshots: `docs/progression/phase5_home.png`, `phase5_suggestion.png`.
+- **Environment gotchas for next time:** a physical device was attached — pin every adb/android
+  command with `-s emulator-5554`; the AVD snapshot had other apps in recents, so BACK past
+  the app root lands in them (one mis-captured screenshot was deleted and retaken).
